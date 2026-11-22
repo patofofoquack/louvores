@@ -145,17 +145,6 @@ function secondOfDay(record,history){
  const dayRecords=chronologicalDay(history,record.data);
  return !isSunday(record.data)&&dayRecords.length>1&&dayRecords.findIndex(r=>r.id===record.id)>0;
 }
-async function markFirstSundayEbd(history,second){
- if(!isSunday(second.data))return false;
- const first=chronologicalDay(history,second.data).find(r=>r.id!==second.id);
- if(!first||first.ebd)return true;
- let pin='';try{pin=localStorage.getItem('louvores_edit_pin_v1')||''}catch{}
- if(!pin)return false; // Não exige PIN dos instrumentistas para salvar cultos novos.
- const payload={action:'editar',pin,culto:{id:first.id,data:first.data,ebd:true,especial:!!first.especial,titulo:first.titulo||'',versao:first.versao,musicas:first.musicas}};
- const confirmed=await sendWrite(payload);
- confirmedLocal(confirmed);
- return true;
-}
 function confirmedLocal(rec){
  const i=state.history.findIndex(r=>r.id===rec.id);if(i>=0)state.history.splice(i,1);
  state.history.unshift(rec);state.history.sort((a,b)=>b.data.localeCompare(a.data));state.historyReady=true;
@@ -182,11 +171,12 @@ async function syncPending(){
      const duplicate=result.historico.find(r=>sameRepertoire(r,c));
      if(duplicate){confirmed=duplicate;} // Um culto igual já existe: não reenviar.
      else{
-      confirmed=await sendWrite(p);
-      if(isSunday(c.data)){
-       try{await markFirstSundayEbd([...result.historico,confirmed],confirmed)}
-       catch(e){console.warn('EBD automático pendente:',e)}
+      if(isSunday(c.data)&&result.historico.some(r=>r.data===c.data)){
+       c.ebd=false; // O primeiro culto será marcado EBD pelo próprio servidor.
+       const saved=pendingList(),item=saved.find(x=>x.payload.culto.id===c.id);
+       if(item){item.payload.culto.ebd=false;setPending(saved)}
       }
+      confirmed=await sendWrite(p);
      }
     }
     // Só retira da fila com confirmação completa do servidor.
@@ -398,7 +388,11 @@ async function save(){
  const songs=selected();if(!songs.length){$('status').textContent='Escolha pelo menos um louvor.';return}
  if(state.saving)return;
  if(!navigator.onLine&&state.editing){$('status').textContent='Conecte-se para editar um culto já registrado.';return}
- const pin=state.editing?getEditPin():'';if(state.editing&&!pin)return;
+ const future=state.date>localISO(new Date());
+ if(future&&!navigator.onLine){$('status').textContent='Para registrar um culto futuro, conecte-se e informe a senha.';return}
+ // Edição já autorizada mantém o PIN deste aparelho; data futura pede a senha sempre.
+ const pin=state.editing?getEditPin():(future?(prompt('Senha para registrar culto futuro:')||''):'');
+ if((state.editing||future)&&!pin)return;
  const musicas=apiSongs(),signature=JSON.stringify({editing:state.editing,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,musicas});
  const retry=state.pending?.signature===signature?state.pending:null;
  const recordId=state.editing||(retry?retry.id:'r'+(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)));
@@ -422,11 +416,10 @@ async function save(){
    existingHistory=result.historico;
   }
   const duplicate=existingHistory?.find(r=>sameRepertoire(r,payload.culto));
-  const confirmed=duplicate||await sendWrite(payload);
-  if(!duplicate&&existingHistory&&isSunday(payload.culto.data)){
-   try{await markFirstSundayEbd([...existingHistory,confirmed],confirmed)}
-   catch(e){console.warn('EBD automático pendente:',e)}
+  if(!duplicate&&!state.editing&&isSunday(payload.culto.data)&&existingHistory?.some(r=>r.data===payload.culto.data)){
+   payload.culto.ebd=false; // O Apps Script marca o primeiro como EBD ao salvar o segundo.
   }
+  const confirmed=duplicate||await sendWrite(payload);
   confirmedLocal(confirmed);
   state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);
   state.editing=null;state.editingVersion=null;state.slots=[null,null,null];state.active=0;
