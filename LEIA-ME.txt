@@ -1,0 +1,9 @@
+# Louvores — catálogo completo
+
+O catálogo inicial é uma amostra offline. Ao publicar a pasta no GitHub, use **Actions → Atualizar catálogo de louvores → Run workflow**. O fluxo importa as páginas públicas das três coleções, confere o total de 1530 títulos e substitui `catalogo.json`.
+
+O site carrega `catalogo.json` automaticamente, inclusive no modo offline após uma visita com internet. Não há letras nem cifras copiadas, apenas números, nomes e categorias.
+
+Se o GitHub Actions não conseguir importar todos os 1530, ele falha sem sobrescrever o arquivo. Caso haja bloqueio ou mudança na estrutura do Louvando, o importador terá que ser ajustado. O GitHub precisa permitir Actions e escrita pelo `GITHUB_TOKEN` nas configurações do repositório.
+
+Arquivos do PWA ficam na raiz; a pasta `.github` precisa ser enviada junto. O site continua sem Google Sheets e o histórico ainda é local.
