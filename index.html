@@ -48,8 +48,21 @@ html:not(.app-ready) .app{visibility:hidden}
 </section>
 <section id="previewpage" class="hidden"><div id="previewCard" class="preview"></div><div class="actions" style="margin-top:12px"><button id="share" class="primary full">Compartilhar imagem</button><button id="download" class="outline full">Baixar PNG</button><button id="editFromPreview" class="outline full hidden">Editar repertório</button><button id="back" class="outline full">Voltar à montagem</button></div><p class="hint">No celular, o botão de compartilhar tenta abrir o menu nativo. Caso não esteja disponível, baixa a imagem.</p><div class="status" id="sharestatus"></div></section>
 <section id="history" class="hidden">
+<div id="historyBrowse">
 <div class="card"><div class="sectiontitle">Pesquisar no histórico</div><input class="simpleinput" id="historySearch" placeholder="Dia, data, louvor ou nome especial..." aria-label="Pesquisar no histórico"><div class="filter" id="periodFilters" style="margin-top:9px"><button data-period="all" class="on">Todos</button><button data-period="30">30 dias</button><button data-period="90">3 meses</button><button data-period="365">1 ano</button></div><div id="historyCount" class="hint"></div><div id="songOccurrences" class="hidden"></div></div>
-<div class="card"><div class="sectiontitle">Histórico compartilhado</div><div id="historylist"></div></div><div class="hint"><span id="historynote">Histórico sincronizado quando houver internet.</span></div></section>
+<div class="card"><div class="sectiontitle">Histórico compartilhado</div><div id="historylist"></div></div><div class="hint"><span id="historynote">Histórico sincronizado quando houver internet.</span></div>
+</div>
+<div id="historyDetail" class="hidden">
+<div id="historyDetailCard" class="preview"></div>
+<div class="actions" style="margin-top:12px">
+<button id="historyShare" class="primary full" type="button">Compartilhar imagem</button>
+<button id="historyDownload" class="outline full" type="button">Baixar PNG</button>
+<button id="historyEdit" class="outline full" type="button">Editar repertório</button>
+<button id="historyBack" class="outline full" type="button">Voltar ao histórico</button>
+</div>
+<div class="status" id="historyShareStatus"></div>
+</div>
+</section>
 <section id="manage" class="hidden">
 <div class="card"><div class="row"><div class="sectiontitle">Gerenciar louvores</div><button id="forgetPin" type="button" class="outline" style="font-size:10px;padding:6px">Esquecer senha</button></div><p class="hint">Adicione músicas ou corrija nome, número, categoria e tom do catálogo. As mudanças ficam na planilha e não alteram cultos antigos.</p><div class="manage-search-row"><input id="manageSearch" class="simpleinput" placeholder="Encontrar louvor pelo número ou nome..."><button id="onlyNoTone" type="button" class="tone-filter-toggle" aria-label="Mostrar apenas louvores sem tom" title="Apenas sem tom" aria-pressed="false">∅</button></div><div id="manageResults" class="manage-results"></div><button class="outline full" id="newSong" style="margin-top:9px">+ Cadastrar novo louvor</button></div>
 <div class="card hidden" id="manageForm"><div class="sectiontitle" id="manageFormTitle">Cadastro do louvor</div>
@@ -526,7 +539,7 @@ function page(p){
  if(p==='preview'){$('editFromPreview').classList.toggle('hidden',!state.historySelection);$('editFromPreview').disabled=!navigator.onLine;$('back').textContent=state.historySelection?'Voltar ao histórico':'Voltar à montagem';renderPreview()}
  if(p==='editor'){renderServiceOptions();refreshEditMode()}
  if(p==='manage'){renderManage();if(navigator.onLine)loadCatalogChanges().catch(()=>{})}
- if(p==='history'){renderHistory();if(navigator.onLine)loadHistory().catch(()=>{})}
+ if(p==='history'){renderHistory();renderHistoryDetail();if(navigator.onLine)loadHistory().catch(()=>{})}
  window.scrollTo({top:0,behavior:'instant'});
 }
 function selected(){return state.slots.filter(validSlot)}
@@ -726,10 +739,27 @@ async function loadCatalog(){
 }
 
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function renderHistoryDetail(){
+ const visible=state.page==='history'&&!!state.historySelection;
+ $('historyBrowse').classList.toggle('hidden',visible);
+ $('historyDetail').classList.toggle('hidden',!visible);
+ if(visible){
+  renderRepertoireCard($('historyDetailCard'),historyToPreview(state.historySelection),'Repertório não encontrado.');
+  $('historyEdit').disabled=!navigator.onLine;
+ }
+}
+function backToHistory(){
+ state.historySelection=null;
+ $('historyShareStatus').textContent='';
+ renderHistoryDetail();
+ renderHistory();
+ window.scrollTo({top:0,behavior:'instant'});
+}
 function openHistoryRecord(rec){
  state.historySelection=rec;
- $('sharestatus').textContent='';
- page('preview');
+ $('historyShareStatus').textContent='';
+ renderHistoryDetail();
+ window.scrollTo({top:0,behavior:'instant'});
 }
 function editHistoryRecord(rec){
  state.historySelection=null;
@@ -879,7 +909,7 @@ function canvasImage(){
  return canvas;
 }
 function pngBlob(canvas){return new Promise(resolve=>canvas.toBlob(resolve,'image/png'))}
-async function share(downloadOnly=false){const label=$('sharestatus');if(!previewRecord()){label.textContent='Salve o repertório primeiro.';return}try{const blob=await pngBlob(canvasImage());if(!blob)throw Error('Não foi possível gerar a imagem');const file=new File([blob],`louvores-${previewRecord().date}.png`,{type:'image/png'});if(!downloadOnly&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Louvores'});label.textContent='Imagem enviada para o compartilhamento.';return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);label.textContent='PNG gerado. Você pode enviá-lo pelo WhatsApp.'}catch(err){if(err.name==='AbortError')return;label.textContent='Falha ao compartilhar: '+err.message}}
+async function share(downloadOnly=false){const label=state.page==='history'&&state.historySelection?$('historyShareStatus'):$('sharestatus');if(!previewRecord()){label.textContent='Salve o repertório primeiro.';return}try{const blob=await pngBlob(canvasImage());if(!blob)throw Error('Não foi possível gerar a imagem');const file=new File([blob],`louvores-${previewRecord().date}.png`,{type:'image/png'});if(!downloadOnly&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Louvores'});label.textContent='Imagem enviada para o compartilhamento.';return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);label.textContent='PNG gerado. Você pode enviá-lo pelo WhatsApp.'}catch(err){if(err.name==='AbortError')return;label.textContent='Falha ao compartilhar: '+err.message}}
 $('date').value=state.date;renderServiceOptions();
 $('afterWordAdd').onclick=()=>{afterWordEditingId=null;afterWordExpanded=!afterWordExpanded;$('afterWordMessage').textContent='';refreshAfterWordActions();if(afterWordExpanded){afterWordMatches();$('afterWordSearch').focus()}};
 $('afterWordCancel').onclick=()=>{afterWordExpanded=false;afterWordEditingId=null;refreshAfterWordActions()};
@@ -896,7 +926,11 @@ $('specialTitle').oninput=e=>{state.titulo=e.target.value};
 $('historySearch').oninput=renderHistory;
 document.querySelectorAll('#periodFilters button').forEach(b=>b.onclick=()=>{state.period=b.dataset.period;document.querySelectorAll('#periodFilters button').forEach(x=>x.classList.toggle('on',x===b));renderHistory()});
 $('forgetPin').onclick=()=>{try{localStorage.removeItem('louvores_edit_pin_v1')}catch{};alert('Senha de edição esquecida neste aparelho.')};$('manageSearch').oninput=renderManage;$('onlyNoTone').onclick=()=>{manageOnlyNoTone=!manageOnlyNoTone;$('onlyNoTone').setAttribute('aria-pressed',String(manageOnlyNoTone));renderManage()};$('newSong').onclick=()=>openSongForm(null);
-$('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel').onclick=hideSongForm;$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('clearDraft').onclick=()=>{if(!confirm('Limpar todas as músicas desta montagem? O histórico não será alterado.'))return;resetDraft(false);page('editor')};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft(true);page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft(true);page('editor')};$('save').onclick=save;$('pendingSync').onclick=()=>{if(!navigator.onLine){alert('O culto está guardado neste aparelho até voltar a internet.');return}syncPending().then(()=>{const x=pendingList().find(x=>x.error);if(x)alert('Pendente: '+x.error)}).catch(console.warn)};$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};restoreDraft();ensureBlank();loadCachedHistory();
+$('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel').onclick=hideSongForm;$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('clearDraft').onclick=()=>{if(!confirm('Limpar todas as músicas desta montagem? O histórico não será alterado.'))return;resetDraft(false);page('editor')};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft(true);page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft(true);page('editor')};$('save').onclick=save;$('pendingSync').onclick=()=>{if(!navigator.onLine){alert('O culto está guardado neste aparelho até voltar a internet.');return}syncPending().then(()=>{const x=pendingList().find(x=>x.error);if(x)alert('Pendente: '+x.error)}).catch(console.warn)};$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);
+$('historyShare').onclick=()=>share(false);
+$('historyDownload').onclick=()=>share(true);
+$('historyEdit').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};
+$('historyBack').onclick=backToHistory;$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};restoreDraft();ensureBlank();loadCachedHistory();
 const savedProfile=storedProfile();if(savedProfile)startProfile(savedProfile);else showProfileChoice();
 renderSlots();renderPreview();updateCount();refreshPending();loadCatalog();
 if(navigator.onLine)syncPending().catch(console.warn);window.addEventListener('online',()=>syncPending().catch(console.warn));document.addEventListener('visibilitychange',()=>{if(!document.hidden){syncPending().catch(console.warn);if(state.page==='projection')refreshProjection().catch(console.warn)}});
