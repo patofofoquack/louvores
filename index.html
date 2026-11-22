@@ -528,15 +528,18 @@ async function loadHistory(){
  if(!navigator.onLine)throw new Error('Sem conexão');
  const result=await apiGet('historico');
  if(!result || !result.sucesso || !Array.isArray(result.historico))throw new Error('Histórico indisponível');
+ const oldToday=state.page==='projection'?chronologicalDay(state.history,localISO(new Date())).at(-1):null;
  state.history=result.historico;state.historyReady=true;
  projectionLastChecked=Date.now();
  if(state.page==='projection'){
   const record=state.history.filter(r=>r.data===localISO(new Date()));
   const current=projectionSignature(chronologicalDay(record,localISO(new Date())).at(-1)||null);
   if(projectionSeenSignature!==null&&projectionSeenSignature!==current){
-   const old=projectionSeenSignature;const priorCount=old?0:0;
    const just=chronologicalDay(record,localISO(new Date())).at(-1);
-   $('projectionNotice').textContent=just?.encerrado?'Culto encerrado':'Repertório atualizado';
+   const previousCount=oldToday?.id===just?.id?(oldToday?.musicas||[]).filter(m=>m.aposPalavra).length:0;
+   const newCount=(just?.musicas||[]).filter(m=>m.aposPalavra).length;
+   const diff=newCount-previousCount;
+   $('projectionNotice').textContent=just?.encerrado&&!oldToday?.encerrado?'Culto encerrado':diff>0?(diff===1?'1 louvor adicionado após a Palavra':diff+' louvores adicionados após a Palavra'):'Repertório atualizado';
    notifyProjectionChange();
   }
   projectionSeenSignature=current;
