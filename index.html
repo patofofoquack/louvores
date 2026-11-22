@@ -22,7 +22,9 @@ html:not(.app-ready) .app{visibility:hidden}
 <div id="afterWordActions" class="hidden" style="margin-top:12px">
 <button id="afterWordAdd" type="button" class="outline full">+ Adicionar louvor</button>
 <div id="afterWordPicker" class="card hidden" style="margin-top:10px">
-<div class="sectiontitle">Após a Palavra</div><input id="afterWordSearch" class="simpleinput" autocomplete="off" placeholder="Pesquisar louvor por número ou nome...">
+<div class="sectiontitle">Após a Palavra</div>
+<div class="filter" id="afterWordFilters"><button type="button" class="on" data-after-cat="Todos">Todos</button><button type="button" data-after-cat="Coletânea">Coletânea</button><button type="button" data-after-cat="Avulsos">Avulsos</button><button type="button" data-after-cat="CIA">CIA</button></div>
+<input id="afterWordSearch" class="simpleinput" autocomplete="off" placeholder="Pesquisar louvor por número ou nome...">
 <div id="afterWordResults" class="after-word-results"></div>
 <button type="button" id="afterWordCancel" class="outline full" style="margin-top:10px">Cancelar</button>
 <div id="afterWordMessage" class="status"></div>
@@ -117,7 +119,7 @@ const $=id=>document.getElementById(id);
 const PROFILE_KEY='louvores_perfil_v1',PROJECTION_CACHE_KEY='louvores_projecao_historico_v1';
 let userProfile=null,projectionLoading=false,profileStarting=false;
 let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTimer=null;
-let afterWordBusy=false,afterWordExpanded=false;
+let afterWordBusy=false,afterWordExpanded=false,afterWordCategory='Todos',afterWordOptimistic=null;
 const AFTER_WORD_LAST_KEY='louvores_ultima_adicao_v1';
 function lastAfterWord(){try{return JSON.parse(localStorage.getItem(AFTER_WORD_LAST_KEY)||'null')}catch{return null}}
 function setLastAfterWord(value){try{if(value)localStorage.setItem(AFTER_WORD_LAST_KEY,JSON.stringify(value));else localStorage.removeItem(AFTER_WORD_LAST_KEY)}catch{}}
@@ -143,7 +145,7 @@ function afterWordMatches(){
  const area=$('afterWordResults');area.replaceChildren();
  const q=norm($('afterWordSearch').value.trim());
  if(!q){const x=document.createElement('p');x.className='hint';x.textContent='Digite o nome ou número do louvor.';area.append(x);return}
- const matches=catalog.filter(m=>norm(m.id+' '+songDisplay(m).name).includes(q)).slice(0,40);
+ const matches=catalog.filter(m=>(afterWordCategory==='Todos'||m.cat===afterWordCategory)&&norm(m.id+' '+songDisplay(m).name).includes(q)).slice(0,40);
  matches.forEach(m=>{
   const b=document.createElement('button');b.type='button';b.className='after-word-result';
   const title=document.createElement('strong'),sub=document.createElement('small'),shown=songDisplay(m);
@@ -172,19 +174,17 @@ async function postAfterWord(body,check){
 async function appendAfterWord(m){
  const rec=projectionToday();if(!rec||rec.encerrado||afterWordBusy)return;
  const song=afterWordSong(m);
- if(!confirm('Adicionar '+song.nome+' após a Palavra?'))return;
  const operacaoId='ap'+(crypto.randomUUID?crypto.randomUUID().replace(/-/g,''):Date.now().toString(36)+Math.random().toString(36).slice(2));
- afterWordBusy=true;$('afterWordMessage').textContent='Salvando...';refreshAfterWordActions();
+ afterWordBusy=true;afterWordOptimistic={cultoId:rec.id,operacaoId, song:{historical:true,id:song.numero,name:song.nome,tom:song.tom,aposPalavra:true,operacaoId}};$('afterWordMessage').textContent='Salvando...';afterWordExpanded=false;renderProjection();
  try{
   await postAfterWord({action:'adicionar_pos_palavra',cultoId:rec.id,versao:rec.versao,operacaoId,musica:song},r=>r.musicas.some(x=>x.operacaoId===operacaoId));
-  setLastAfterWord({cultoId:rec.id,operacaoId});afterWordExpanded=false;$('afterWordSearch').value='';$('afterWordMessage').textContent='';
+  setLastAfterWord({cultoId:rec.id,operacaoId});$('afterWordSearch').value='';$('afterWordMessage').textContent='';
   $('projectionNotice').textContent='Louvor adicionado após a Palavra';notifyProjectionChange();
- }catch(e){$('afterWordMessage').textContent=e.message}
- finally{afterWordBusy=false;renderProjection()}
+ }catch(e){alert('Não foi possível salvar a adição: '+e.message)}
+ finally{afterWordOptimistic=null;afterWordBusy=false;renderProjection()}
 }
 async function undoAfterWord(){
  const rec=projectionToday(),last=lastAfterWord();if(!rec||!last||rec.encerrado||afterWordBusy)return;
- if(!confirm('Desfazer o último louvor acrescentado?'))return;
  afterWordBusy=true;refreshAfterWordActions();
  try{
   await postAfterWord({action:'desfazer_pos_palavra',cultoId:rec.id,versao:rec.versao,operacaoId:last.operacaoId},r=>!r.musicas.some(x=>x.operacaoId===last.operacaoId));
@@ -194,7 +194,6 @@ async function undoAfterWord(){
 }
 async function endService(){
  const rec=projectionToday();if(!rec||rec.encerrado||afterWordBusy)return;
- if(!confirm('Encerrar o culto de hoje? Não será possível acrescentar ou desfazer louvores após o encerramento.'))return;
  afterWordBusy=true;refreshAfterWordActions();
  try{
   await postAfterWord({action:'encerrar_culto',cultoId:rec.id,versao:rec.versao},r=>r.encerrado===true);
@@ -631,7 +630,9 @@ function renderPreview(){
 }
 function renderProjection(){
  if(!userProfile)return;
- renderRepertoireCard($('projectionCard'),projectionToday(),'Nenhum repertório registrado para hoje.');
+ const rec=projectionToday();
+ const display=afterWordOptimistic&&rec?.id===afterWordOptimistic.cultoId&&!rec.songs.some(x=>x.operacaoId===afterWordOptimistic.operacaoId)?{...rec,songs:[...rec.songs,afterWordOptimistic.song]}:rec;
+ renderRepertoireCard($('projectionCard'),display,'Nenhum repertório registrado para hoje.');
  refreshAfterWordActions();
  const status=projectionLoading?'Atualizando repertório...':timeSinceChecked();
  $('projectionStatus').textContent=!navigator.onLine?(status?status+' · Offline':'Offline · último histórico consultado'):status;
@@ -656,7 +657,7 @@ async function loadCatalog(){
   status.textContent=`${next.length} louvores no catálogo · disponível offline após carregar uma vez`;
   refreshLastDates();renderSlots();
   if(state.page==='preview')renderPreview();if(state.page==='projection')renderProjection();
-  renderResults(false);if(navigator.onLine)loadCatalogChanges().catch(()=>{});
+  renderResults(false);if(afterWordExpanded)afterWordMatches();if(navigator.onLine)loadCatalogChanges().catch(()=>{});
  }catch(err){
   status.textContent='Catálogo de demonstração · publicação do catálogo completo pendente';
   console.warn('Catálogo completo ainda não disponível:',err);applyCatalogChanges();
@@ -822,6 +823,7 @@ $('date').value=state.date;renderServiceOptions();
 $('afterWordAdd').onclick=()=>{afterWordExpanded=!afterWordExpanded;$('afterWordMessage').textContent='';refreshAfterWordActions();if(afterWordExpanded){afterWordMatches();$('afterWordSearch').focus()}};
 $('afterWordCancel').onclick=()=>{afterWordExpanded=false;refreshAfterWordActions()};
 $('afterWordSearch').oninput=afterWordMatches;
+document.querySelectorAll('#afterWordFilters button').forEach(button=>button.onclick=()=>{afterWordCategory=button.dataset.afterCat;document.querySelectorAll('#afterWordFilters button').forEach(x=>x.classList.toggle('on',x===button));afterWordMatches()});
 $('afterWordUndo').onclick=undoAfterWord;
 $('endService').onclick=endService;
 $('chooseInstrument').onclick=()=>startProfile('instrument');
