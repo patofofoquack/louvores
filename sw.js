@@ -1,5 +1,5 @@
 // Atualize este identificador a cada publicação para substituir o cache antigo.
-const CACHE = 'louvores-shell-v7-consulta-historico';
+const CACHE = 'louvores-shell-v8-consulta-data-corrigida';
 const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './catalogo.json'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));

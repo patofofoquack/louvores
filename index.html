@@ -137,7 +137,7 @@ function historyToSlots(record){return record.musicas.map(m=>{
  const found=catalog.find(x=>String(x.id)===String(m.numero)&&norm(songDisplay(x).name)===norm(songDisplay({name:m.nome}).name));
  return !m.personalizado&&found?found.key:{custom:true,id:m.numero,name:m.nome};
 });}
-function historyToPreview(record){return {...record,songs:historyToSlots(record)}}
+function historyToPreview(record){return {...record,date:record.data,songs:historyToSlots(record)}}
 function refreshLastDates(){
  for(const m of catalog){
   let latest='';
