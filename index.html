@@ -12,13 +12,24 @@
 <style>
 html:not(.app-ready) .app{visibility:hidden}
 :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#1f2937;background:#f5f6f8;--blue:#315b93;--line:#e7eaf0}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.35;cursor:default}.app{max-width:510px;margin:auto;padding:15px 14px 32px}.top{display:flex;justify-content:space-between;align-items:center;margin:5px 1px 14px}.top h1{font-size:23px;margin:0;letter-spacing:-.5px}.muted{font-size:12px;color:#84909e}.card{background:white;border:1px solid #e9edf2;border-radius:17px;padding:15px;margin-bottom:12px;box-shadow:0 2px 12px #17263a08}.nav{display:flex;background:#e9edf3;border-radius:11px;padding:3px;margin-bottom:14px;gap:3px}.nav button{flex:1;border:0;border-radius:9px;background:transparent;padding:11px 5px;color:#526175;font-size:13px;font-weight:650}.nav button.on{background:#fff;color:#1d2b3e;box-shadow:0 1px 5px #00000013}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.sectiontitle{font-size:14px;font-weight:750;margin-bottom:9px}.date{border:1px solid var(--line);background:white;color:#263448;border-radius:9px;padding:9px 10px;font-size:13px;max-width:163px}.slot{display:flex;align-items:stretch;gap:6px;margin:6px 0}.slot-main{flex:1;min-width:0;text-align:left;display:flex;gap:10px;align-items:center;border:1px solid #e4e8ee;border-radius:10px;padding:11px 10px;min-height:48px;background:white;color:#223044}.slot-main.active{border:2px solid var(--blue);padding:10px 9px;background:#f5f8fd}.slotnum{font-size:13px;color:#8b96a3;min-width:17px}.slot-fields{display:flex;flex:1;min-width:0;gap:6px;align-items:center}.slot-fields input{min-width:0;border:1px solid #dce2e9;border-radius:7px;padding:8px 7px;font-size:13px;background:#fff;color:#243246}.slot-fields .custom-id{width:85px;flex:none;text-align:center}.slot-fields .custom-name{flex:1}.slot-fields input:focus{outline:2px solid #8eb0df;outline-offset:0}.slot-selected{flex:1;min-width:0;display:flex;gap:10px;align-items:center}.slotname{font-size:13px;font-weight:600;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.empty{color:#a0a9b5;font-weight:450}.arrows{display:flex;flex-direction:column;gap:2px}.arrow{width:34px;height:24px;border:0;border-radius:6px;background:#f2f4f7;color:#64748b;font-size:17px;line-height:18px}.outline{background:#fff;border:1px solid #dde3eb;color:#516174;border-radius:9px;padding:10px 12px;font-size:13px;font-weight:650}.full{width:100%}.filter{display:flex;gap:3px;background:#f1f3f6;padding:3px;border-radius:10px;margin-bottom:10px}.filter button{flex:1;min-width:0;background:transparent;border:0;border-radius:8px;padding:9px 3px;font-weight:650;font-size:12px;color:#7d8998}.filter button.on{background:#fff;color:#244d7b;box-shadow:0 1px 4px #00000013}.field{display:flex;align-items:center;border:1px solid #dce2e9;border-radius:10px;background:#fff;padding:0 10px}.field input{min-width:0;flex:1;outline:none;border:0;padding:13px 3px;font-size:14px}.searchwrap{position:relative}.results{display:none;position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:5;background:#fff;border:1px solid #e1e6ee;border-radius:11px;box-shadow:0 9px 25px #172b4b26;max-height:260px;overflow:auto}.results.show{display:block}.resultcount{margin:7px 2px 0;color:#7b8796;font-size:11px;text-align:right;min-height:16px}.more-results{display:block;width:100%;padding:12px;background:#f6f8fb;color:#315b93;border:0;font-size:12px;font-weight:700}.more-results:active{background:#e8eef8}.result{display:block;width:100%;text-align:left;background:white;border:0;border-bottom:1px solid #f0f1f4;padding:10px 12px}.result:active{background:#eff4fc}.result strong{font-size:13px;font-weight:650}.result small{display:block;color:#8693a3;margin-top:3px;font-size:11px}.primary{border:0;border-radius:11px;padding:13px;background:#315b93;color:white;font-weight:750;font-size:14px}.hint{font-size:11px;color:#8b96a3;margin-top:8px;line-height:1.5}.actions{display:grid;gap:9px}.hidden{display:none!important}.historyitem{padding:12px 0;border-bottom:1px solid var(--line)}.historyitem:last-child{border:0}.history-open{display:block;flex:1;min-width:0;text-align:left;background:transparent;border:0;padding:8px 0;color:inherit}.history-open strong{display:block;margin-bottom:4px}.history-open:active{opacity:.65}.chip{font-size:10px;color:#748093;background:#f3f5f8;padding:4px 7px;border-radius:20px}.preview{background:#fff;border:1px solid #e8e8e8;border-radius:15px;padding:21px 17px;box-shadow:0 7px 25px #00000009}.pvhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.pvtitle{font-weight:780;font-size:27px;letter-spacing:-.65px}.pvdate{text-align:right;font-size:13px;font-weight:700}.pvdate span{display:block;color:#8b96a3;font-size:12px;font-weight:450;margin-top:3px}.pvline{height:1px;background:#e5e7eb;margin:17px 0 3px}.pvitem{padding:18px 0;border-bottom:1px solid #edf0f3;display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center}.pvitem:last-child{border:0}.pvnum{font-size:14px;font-weight:750;align-self:center;white-space:nowrap;text-align:center;line-height:1.3}.pvname{font-size:14px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}.pvsub{font-size:11px;color:#8c99a8;margin-top:5px;line-height:1.45}.status{min-height:18px;font-size:12px;color:#386b47;text-align:center}.foot{text-align:center;color:#9ba4af;font-size:11px;margin-top:15px}.simpleinput{display:block;width:100%;border:1px solid #dce2e9;border-radius:10px;background:#fff;padding:11px;font-size:14px;color:#263448;margin:5px 0 8px}.optionline{padding:9px 2px;font-size:13px}.optionline input{accent-color:#315b93}.formlabel{font-size:12px;font-weight:650;color:#556273;margin-top:8px;display:block}.manage-results{max-height:290px;overflow:auto}.manage-result{display:block;width:100%;padding:9px 3px;text-align:left;background:white;border:0;border-bottom:1px solid #eef1f4;font-size:13px}.manage-result small{display:block;color:#8793a0;margin-top:3px}.occ-card{padding:9px;background:#f6f8fb;border-radius:9px;font-size:12px;margin-top:8px}.occ-card button{display:block;width:100%;border:0;background:none;text-align:left;padding:7px;color:#315b93}.special-label{font-size:11px;color:#9b751c;font-weight:650}@media(min-width:640px){.app{padding-top:26px}} 
-.special-star{border:0;background:transparent;color:#a4acb7;font-size:25px;line-height:1;padding:3px 7px;min-width:38px;min-height:32px}.special-star[aria-pressed="true"]{color:#bd8e23}.ebd-small{font-size:11px;color:#8793a0;display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ebd-small input{accent-color:#315b93;width:13px;height:13px;margin:0}.date-choices{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.date-choices .ebd-small{white-space:nowrap}.draft-buttons{display:flex;gap:8px;margin-top:8px}.draft-buttons button{flex:1;min-width:0;font-size:12px;padding:10px 7px}.manage-search-row{display:flex;align-items:center;gap:5px}.manage-search-row .simpleinput{flex:1;min-width:0}.tone-filter-toggle{flex:none;min-width:25px;width:25px;height:25px;padding:0;border:1px solid transparent;border-radius:6px;background:transparent;color:#a7afb9;font-size:15px;font-weight:600;cursor:pointer}.tone-filter-toggle[aria-pressed="true"]{background:#e9f0fa;border-color:#b9cde4;color:#28558c}.tone-filter-toggle:focus-visible{outline:2px solid #6c9ac9;outline-offset:2px}.app.choosing-profile{min-height:100vh;min-height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding-bottom:max(6px,env(safe-area-inset-bottom,0px))}.app.choosing-profile #profileChoice{align-self:center;margin:0}.app.choosing-profile .foot{align-self:end;margin-top:48px;padding-bottom:0}.projection-notice{text-align:center;color:#315b93;font-size:12px;font-weight:600;margin:12px 0 3px}.profile-options{display:flex;flex-direction:column;gap:10px}.profile-options button{padding:15px}.profile-reset{border:0;background:transparent;color:#8995a4;font-size:11px;font-weight:500;padding:4px 7px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.special-star{border:0;background:transparent;color:#a4acb7;font-size:25px;line-height:1;padding:3px 7px;min-width:38px;min-height:32px}.special-star[aria-pressed="true"]{color:#bd8e23}.ebd-small{font-size:11px;color:#8793a0;display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ebd-small input{accent-color:#315b93;width:13px;height:13px;margin:0}.date-choices{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.date-choices .ebd-small{white-space:nowrap}.draft-buttons{display:flex;gap:8px;margin-top:8px}.draft-buttons button{flex:1;min-width:0;font-size:12px;padding:10px 7px}.manage-search-row{display:flex;align-items:center;gap:5px}.manage-search-row .simpleinput{flex:1;min-width:0}.tone-filter-toggle{flex:none;min-width:25px;width:25px;height:25px;padding:0;border:1px solid transparent;border-radius:6px;background:transparent;color:#a7afb9;font-size:15px;font-weight:600;cursor:pointer}.tone-filter-toggle[aria-pressed="true"]{background:#e9f0fa;border-color:#b9cde4;color:#28558c}.tone-filter-toggle:focus-visible{outline:2px solid #6c9ac9;outline-offset:2px}.app.choosing-profile{min-height:100vh;min-height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding-bottom:max(6px,env(safe-area-inset-bottom,0px))}.app.choosing-profile #profileChoice{align-self:center;margin:0}.app.choosing-profile .foot{align-self:end;margin-top:48px;padding-bottom:0}.after-word-title{font-size:11px;color:#8793a0;font-weight:650;text-align:center;letter-spacing:.04em;text-transform:uppercase;padding:15px 0 5px}.after-word-highlight{background:#f5f8fd;padding-left:8px;padding-right:8px;border-radius:7px}.after-word-results{max-height:250px;overflow-y:auto}.after-word-result{width:100%;display:block;text-align:left;background:white;border:0;border-bottom:1px solid #edf0f3;padding:11px 5px;font-size:13px}.after-word-result small{display:block;color:#8995a4;margin-top:4px}.after-word-undo{background:transparent;border:0;color:#78869b;font-size:11px;text-decoration:underline;display:block;margin:8px auto;padding:7px}.end-service{background:#b63b3b;color:white;border:0;border-radius:10px;font-size:12px;font-weight:650;padding:11px 14px;margin:12px auto 4px;display:block;min-width:160px}.after-word-closed{font-size:12px;color:#8b96a3;text-align:center;margin:12px 0}.projection-notice{text-align:center;color:#315b93;font-size:12px;font-weight:600;margin:12px 0 3px}.profile-options{display:flex;flex-direction:column;gap:10px}.profile-options button{padding:15px}.profile-reset{border:0;background:transparent;color:#8995a4;font-size:11px;font-weight:500;padding:4px 7px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 </style>
 </head><body><main class="app">
 <header class="top"><h1>♫ Louvores</h1><span class="muted" id="connectivity" aria-live="polite">Conectando...</span></header>
 <nav class="nav hidden" id="mainNav"><button data-page="projection">Lista</button><button data-page="editor">Montar</button><button data-page="preview">Imagem</button><button data-page="history">Histórico</button><button data-page="manage">Louvores</button></nav>
 <section id="profileChoice" class="card hidden"><div class="profile-options"><button class="outline full" id="chooseInstrument">♫ Instrumentista</button><button class="outline full" id="chooseProjection">▣ Projeção</button></div></section>
-<section id="projectionpage" class="hidden"><div id="projectionCard" class="preview"></div><p id="projectionNotice" class="projection-notice hidden" role="status" aria-live="polite">Repertório atualizado</p><p id="projectionStatus" class="hint" style="text-align:center;margin-top:9px" aria-live="polite"></p></section>
+<section id="projectionpage" class="hidden"><div id="projectionCard" class="preview"></div>
+<div id="afterWordActions" class="hidden" style="margin-top:12px">
+<button id="afterWordAdd" type="button" class="outline full">+ Adicionar louvor</button>
+<div id="afterWordPicker" class="card hidden" style="margin-top:10px">
+<div class="sectiontitle">Após a Palavra</div><input id="afterWordSearch" class="simpleinput" autocomplete="off" placeholder="Pesquisar louvor por número ou nome...">
+<div id="afterWordResults" class="after-word-results"></div>
+<button type="button" id="afterWordCancel" class="outline full" style="margin-top:10px">Cancelar</button>
+<div id="afterWordMessage" class="status"></div>
+</div>
+<button id="afterWordUndo" type="button" class="after-word-undo hidden">Desfazer última adição</button>
+<button id="endService" type="button" class="end-service">Encerrar culto</button>
+</div><p id="projectionNotice" class="projection-notice hidden" role="status" aria-live="polite">Repertório atualizado</p><p id="projectionStatus" class="hint" style="text-align:center;margin-top:9px" aria-live="polite"></p></section>
 <section id="editor" class="hidden">
 <div id="editingnotice" class="card hidden" role="status" style="border:1px solid #e5b568;background:#fff7e8"><div class="row"><strong id="editinglabel">Editando culto anterior</strong><button type="button" id="especial" class="special-star" aria-label="Marcar como culto especial" aria-pressed="false" title="Culto especial">☆</button></div>
 <p class="hint" style="margin:6px 0 10px">As alterações neste modo modificam um registro do histórico. Para montar um novo culto, saia da edição.</p>
@@ -106,9 +117,98 @@ const $=id=>document.getElementById(id);
 const PROFILE_KEY='louvores_perfil_v1',PROJECTION_CACHE_KEY='louvores_projecao_historico_v1';
 let userProfile=null,projectionLoading=false,profileStarting=false;
 let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTimer=null;
+let afterWordBusy=false,afterWordExpanded=false;
+const AFTER_WORD_LAST_KEY='louvores_ultima_adicao_v1';
+function lastAfterWord(){try{return JSON.parse(localStorage.getItem(AFTER_WORD_LAST_KEY)||'null')}catch{return null}}
+function setLastAfterWord(value){try{if(value)localStorage.setItem(AFTER_WORD_LAST_KEY,JSON.stringify(value));else localStorage.removeItem(AFTER_WORD_LAST_KEY)}catch{}}
+function afterWordSong(m){const shown=songDisplay(m),base=baseCatalog.find(x=>x.key===m.key);return {catalogoId:base?catRef(base):m.overrideId||'',numero:String(m.id),nome:String(shown.name),tom:String(shown.tom||''),personalizado:false}}
+function refreshAfterWordActions(){
+ const rec=projectionToday(),canView=userProfile==='instrument'&&!!rec;
+ $('afterWordActions').classList.toggle('hidden',!canView);
+ if(!canView)return;
+ const closed=!!rec.encerrado;
+ $('afterWordAdd').classList.toggle('hidden',closed);
+ $('afterWordAdd').disabled=afterWordBusy||!navigator.onLine;
+ $('endService').classList.toggle('hidden',closed);
+ $('endService').disabled=afterWordBusy||!navigator.onLine;
+ $('afterWordPicker').classList.toggle('hidden',closed||!afterWordExpanded);
+ const last=lastAfterWord(),songs=rec.songs||[],end=songs.at(-1);
+ $('afterWordUndo').classList.toggle('hidden',closed||!last||last.cultoId!==rec.id||!end?.aposPalavra||end.operacaoId!==last.operacaoId);
+ $('afterWordUndo').disabled=afterWordBusy||!navigator.onLine;
+ let msg=$('afterWordClosed');
+ if(!msg){msg=document.createElement('p');msg.id='afterWordClosed';msg.className='after-word-closed';$('afterWordActions').append(msg)}
+ msg.classList.toggle('hidden',!closed);msg.textContent=closed?'Culto encerrado':'';
+}
+function afterWordMatches(){
+ const area=$('afterWordResults');area.replaceChildren();
+ const q=norm($('afterWordSearch').value.trim());
+ if(!q){const x=document.createElement('p');x.className='hint';x.textContent='Digite o nome ou número do louvor.';area.append(x);return}
+ const matches=catalog.filter(m=>norm(m.id+' '+songDisplay(m).name).includes(q)).slice(0,40);
+ matches.forEach(m=>{
+  const b=document.createElement('button');b.type='button';b.className='after-word-result';
+  const title=document.createElement('strong'),sub=document.createElement('small'),shown=songDisplay(m);
+  title.textContent=m.id+' — '+shown.name;sub.textContent=[m.cat,shown.tom?'Tom: '+shown.tom:''].filter(Boolean).join(' · ');
+  b.append(title,sub);b.onclick=()=>appendAfterWord(m);area.append(b);
+ });
+ if(!matches.length){const x=document.createElement('p');x.className='hint';x.textContent='Nenhum louvor encontrado.';area.append(x)}
+}
+async function postAfterWord(body,check){
+ if(!navigator.onLine)throw Error('Conecte-se para atualizar a lista.');
+ const encoded=new URLSearchParams({payload:JSON.stringify(body)});
+ try{await fetch(API_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encoded})}catch(e){console.warn('Verificando confirmação no histórico:',e)}
+ for(let i=0;i<6;i++){
+  try{
+   const reply=await apiGet('historico');
+   if(reply?.sucesso&&Array.isArray(reply.historico)){
+    const rec=reply.historico.find(x=>x.id===body.cultoId);
+    if(rec&&check(rec)){await loadHistory();return rec}
+    if(rec&&Number(rec.versao)>Number(body.versao)){await loadHistory();throw Error('A lista mudou antes da alteração. Verifique o repertório.')}
+   }
+  }catch(e){if(/A lista mudou/.test(e.message))throw e}
+  await new Promise(resolve=>setTimeout(resolve,700*(i+1)));
+ }
+ throw Error('Não foi possível confirmar a alteração. Confira o Histórico antes de tentar novamente.');
+}
+async function appendAfterWord(m){
+ const rec=projectionToday();if(!rec||rec.encerrado||afterWordBusy)return;
+ const song=afterWordSong(m);
+ if(!confirm('Adicionar '+song.nome+' após a Palavra?'))return;
+ const pin=getEditPin();if(!pin)return;
+ const operacaoId='ap'+(crypto.randomUUID?crypto.randomUUID().replace(/-/g,''):Date.now().toString(36)+Math.random().toString(36).slice(2));
+ afterWordBusy=true;$('afterWordMessage').textContent='Salvando...';refreshAfterWordActions();
+ try{
+  await postAfterWord({action:'adicionar_pos_palavra',cultoId:rec.id,versao:rec.versao,operacaoId,musica:song,pin},r=>r.musicas.some(x=>x.operacaoId===operacaoId));
+  setLastAfterWord({cultoId:rec.id,operacaoId});afterWordExpanded=false;$('afterWordSearch').value='';$('afterWordMessage').textContent='';
+  $('projectionNotice').textContent='Louvor adicionado após a Palavra';notifyProjectionChange();
+ }catch(e){$('afterWordMessage').textContent=e.message}
+ finally{afterWordBusy=false;renderProjection()}
+}
+async function undoAfterWord(){
+ const rec=projectionToday(),last=lastAfterWord();if(!rec||!last||rec.encerrado||afterWordBusy)return;
+ if(!confirm('Desfazer o último louvor acrescentado?'))return;
+ const pin=getEditPin();if(!pin)return;
+ afterWordBusy=true;refreshAfterWordActions();
+ try{
+  await postAfterWord({action:'desfazer_pos_palavra',cultoId:rec.id,versao:rec.versao,operacaoId:last.operacaoId,pin},r=>!r.musicas.some(x=>x.operacaoId===last.operacaoId));
+  setLastAfterWord(null);$('projectionNotice').textContent='Última adição desfeita';notifyProjectionChange();
+ }catch(e){alert(e.message)}
+ finally{afterWordBusy=false;renderProjection()}
+}
+async function endService(){
+ const rec=projectionToday();if(!rec||rec.encerrado||afterWordBusy)return;
+ if(!confirm('Encerrar o culto de hoje? Não será possível acrescentar ou desfazer louvores após o encerramento.'))return;
+ const pin=getEditPin();if(!pin)return;
+ afterWordBusy=true;refreshAfterWordActions();
+ try{
+  await postAfterWord({action:'encerrar_culto',cultoId:rec.id,versao:rec.versao,pin},r=>r.encerrado===true);
+  afterWordExpanded=false;setLastAfterWord(null);
+  $('projectionNotice').textContent='Culto encerrado';notifyProjectionChange();
+ }catch(e){alert(e.message)}
+ finally{afterWordBusy=false;renderProjection()}
+}
 function projectionSignature(record){
  if(!record)return '';
- return JSON.stringify([record.id,record.data,record.ebd,record.especial,record.titulo,(record.musicas||[]).map(m=>[m.numero,m.nome,m.tom,m.catalogoId,m.personalizado])]);
+ return JSON.stringify([record.id,record.data,record.ebd,record.especial,record.titulo,record.encerrado,(record.musicas||[]).map(m=>[m.numero,m.nome,m.tom,m.catalogoId,m.personalizado,m.aposPalavra])]);
 }
 function timeSinceChecked(){
  if(!projectionLastChecked)return state.historyReady?'Aguardando sincronização':'';
@@ -198,7 +298,7 @@ function sameRepertoire(a,b){
  });
 }
 function chronologicalDay(records,date){
- return records.filter(r=>r.data===date).slice().reverse().sort((a,b)=>{
+ return records.filter(r=>r.data===date).slice().sort((a,b)=>{
   const dateOf=r=>{const value=r.criadoEm||r.criado_em||r.createdAt||r.created_at||r.criado||'';
    const time=Date.parse(value);return Number.isFinite(time)?time:0;};
   return dateOf(a)-dateOf(b);
@@ -401,7 +501,7 @@ function apiGet(action){
   document.head.append(script);
  });
 }
-function historyToSlots(record){return record.musicas.map(m=>({historical:true,id:m.numero,name:m.nome,tom:m.tom||'',catalogoId:m.catalogoId||'',personalizado:!!m.personalizado}));}
+function historyToSlots(record){return record.musicas.map(m=>({historical:true,id:m.numero,name:m.nome,tom:m.tom||'',catalogoId:m.catalogoId||'',personalizado:!!m.personalizado,aposPalavra:!!m.aposPalavra,operacaoId:m.operacaoId||''}));}
 function historyToPreview(record){return {...record,date:record.data,songs:historyToSlots(record)}}
 function matchSong(a,m){
  if(a.personalizado)return false;
@@ -428,13 +528,17 @@ async function loadHistory(){
  if(!navigator.onLine)throw new Error('Sem conexão');
  const result=await apiGet('historico');
  if(!result || !result.sucesso || !Array.isArray(result.historico))throw new Error('Histórico indisponível');
- const before=state.page==='projection'?projectionSignature(state.history.filter(r=>r.data===localISO(new Date())).slice().sort((a,b)=>(Date.parse(a.criadoEm||a.criado_em||a.createdAt||'')||0)-(Date.parse(b.criadoEm||b.criado_em||b.createdAt||'')||0)).at(-1)):null;
  state.history=result.historico;state.historyReady=true;
  projectionLastChecked=Date.now();
  if(state.page==='projection'){
   const record=state.history.filter(r=>r.data===localISO(new Date()));
   const current=projectionSignature(chronologicalDay(record,localISO(new Date())).at(-1)||null);
-  if(projectionSeenSignature!==null&&projectionSeenSignature!==current)notifyProjectionChange();
+  if(projectionSeenSignature!==null&&projectionSeenSignature!==current){
+   const old=projectionSeenSignature;const priorCount=old?0:0;
+   const just=chronologicalDay(record,localISO(new Date())).at(-1);
+   $('projectionNotice').textContent=just?.encerrado?'Culto encerrado':'Repertório atualizado';
+   notifyProjectionChange();
+  }
   projectionSeenSignature=current;
  }
  try{localStorage.setItem(PROJECTION_CACHE_KEY,JSON.stringify({records:state.history}))}catch{}
@@ -445,7 +549,7 @@ async function loadHistory(){
 }
 function apiSongs(){return selected().map(key=>{
  const m=byKey(key),custom=!!(key&&typeof key==='object'&&key.custom);
- if(key&&typeof key==='object'&&key.historical){return {catalogoId:key.catalogoId||'',numero:String(m.id),nome:String(m.name),tom:String(m.tom||''),personalizado:!!key.personalizado}}
+ if(key&&typeof key==='object'&&key.historical){return {catalogoId:key.catalogoId||'',numero:String(m.id),nome:String(m.name),tom:String(m.tom||''),personalizado:!!key.personalizado,aposPalavra:!!key.aposPalavra,operacaoId:key.operacaoId||''}}
  const original=baseCatalog.find(x=>x.key===key);
  const ref=custom?'':(original?catRef(original):(m.overrideId||String(m.cat)+'|'+String(m.id)+'|'+String(m.name)));
  return {catalogoId:ref,numero:String(m.id),nome:String(songDisplay(m).name),tom:String(songDisplay(m).tom||''),personalizado:custom};
@@ -519,7 +623,7 @@ async function save(){
  finally{state.saving=false;$('save').disabled=false}
 }
 function previewRecord(){return state.historySelection ? historyToPreview(state.historySelection) : (state.temporary || state.latest)}
-function renderRepertoireCard(root,rec,emptyMessage){root.replaceChildren();if(!rec){const msg=document.createElement('p');msg.className='hint';msg.textContent=emptyMessage;root.append(msg);return;}const head=document.createElement('div');head.className='pvhead';const title=document.createElement('div');title.className='pvtitle';title.textContent=rec.especial&&rec.titulo?rec.titulo:'Louvores';const dr=document.createElement('div');dr.className='pvdate';dr.append(document.createTextNode(cap(day(rec.date))));const ds=document.createElement('span');ds.textContent=fmt(rec.date);dr.append(ds);if(rec.ebd){const e=document.createElement('span');e.textContent='EBD';dr.append(e)}if(rec.especial){const e=document.createElement('span');e.textContent='⭐ Culto especial';dr.append(e)}head.append(title,dr);root.append(head);const divider=document.createElement('div');divider.className='pvline';root.append(divider);rec.songs.forEach(key=>{const m=byKey(key);if(!m)return;const r=document.createElement('div');r.className='pvitem';const num=document.createElement('div');num.className='pvnum';num.textContent=m.id;const txt=document.createElement('div');const name=document.createElement('div');name.className='pvname';const shown=songDisplay(m);name.textContent=shown.name;txt.append(name);if(shown.tom){const tone=document.createElement('div');tone.className='pvsub';tone.textContent=`Tom: ${shown.tom}`;txt.append(tone)}r.append(num,txt);root.append(r)})}
+function renderRepertoireCard(root,rec,emptyMessage){root.replaceChildren();if(!rec){const msg=document.createElement('p');msg.className='hint';msg.textContent=emptyMessage;root.append(msg);return;}const head=document.createElement('div');head.className='pvhead';const title=document.createElement('div');title.className='pvtitle';title.textContent=rec.especial&&rec.titulo?rec.titulo:'Louvores';const dr=document.createElement('div');dr.className='pvdate';dr.append(document.createTextNode(cap(day(rec.date))));const ds=document.createElement('span');ds.textContent=fmt(rec.date);dr.append(ds);if(rec.ebd){const e=document.createElement('span');e.textContent='EBD';dr.append(e)}if(rec.especial){const e=document.createElement('span');e.textContent='⭐ Culto especial';dr.append(e)}head.append(title,dr);root.append(head);const divider=document.createElement('div');divider.className='pvline';root.append(divider);let afterDivider=false;rec.songs.forEach(key=>{if(key&&typeof key==='object'&&key.aposPalavra&&!afterDivider){afterDivider=true;const d=document.createElement('div');d.className='after-word-title';d.textContent='Após a Palavra';root.append(d)}const m=byKey(key);if(!m)return;const r=document.createElement('div');if(key&&typeof key==='object'&&key.aposPalavra)r.classList.add('after-word-highlight');r.className='pvitem';const num=document.createElement('div');num.className='pvnum';num.textContent=m.id;const txt=document.createElement('div');const name=document.createElement('div');name.className='pvname';const shown=songDisplay(m);name.textContent=shown.name;txt.append(name);if(shown.tom){const tone=document.createElement('div');tone.className='pvsub';tone.textContent=`Tom: ${shown.tom}`;txt.append(tone)}r.append(num,txt);root.append(r)})}
 
 function renderPreview(){
  const rec=previewRecord();$('share').disabled=!rec;$('download').disabled=!rec;
@@ -528,6 +632,7 @@ function renderPreview(){
 function renderProjection(){
  if(!userProfile)return;
  renderRepertoireCard($('projectionCard'),projectionToday(),'Nenhum repertório registrado para hoje.');
+ refreshAfterWordActions();
  const status=projectionLoading?'Atualizando repertório...':timeSinceChecked();
  $('projectionStatus').textContent=!navigator.onLine?(status?status+' · Offline':'Offline · último histórico consultado'):status;
 }
@@ -714,6 +819,11 @@ function canvasImage(){
 function pngBlob(canvas){return new Promise(resolve=>canvas.toBlob(resolve,'image/png'))}
 async function share(downloadOnly=false){const label=$('sharestatus');if(!previewRecord()){label.textContent='Salve o repertório primeiro.';return}try{const blob=await pngBlob(canvasImage());if(!blob)throw Error('Não foi possível gerar a imagem');const file=new File([blob],`louvores-${previewRecord().date}.png`,{type:'image/png'});if(!downloadOnly&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Louvores'});label.textContent='Imagem enviada para o compartilhamento.';return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);label.textContent='PNG gerado. Você pode enviá-lo pelo WhatsApp.'}catch(err){if(err.name==='AbortError')return;label.textContent='Falha ao compartilhar: '+err.message}}
 $('date').value=state.date;renderServiceOptions();
+$('afterWordAdd').onclick=()=>{afterWordExpanded=!afterWordExpanded;$('afterWordMessage').textContent='';refreshAfterWordActions();if(afterWordExpanded){afterWordMatches();$('afterWordSearch').focus()}};
+$('afterWordCancel').onclick=()=>{afterWordExpanded=false;refreshAfterWordActions()};
+$('afterWordSearch').oninput=afterWordMatches;
+$('afterWordUndo').onclick=undoAfterWord;
+$('endService').onclick=endService;
 $('chooseInstrument').onclick=()=>startProfile('instrument');
 $('chooseProjection').onclick=()=>startProfile('projection');
 $('resetProfile').onclick=()=>{if(!confirm('Trocar perfil deste aparelho? Os registros não serão apagados.'))return;try{localStorage.removeItem(PROFILE_KEY)}catch{}showProfileChoice()};
