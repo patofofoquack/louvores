@@ -1,0 +1,31 @@
+name: Atualizar referência do catálogo
+on:
+  push:
+    branches: [main]
+    paths: [catalogo.json]
+  schedule:
+    - cron: '17 */3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  gerar-referencia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Gerar referência a partir do JSON atual
+        run: python scripts/gerar_catalogo_referencia.py
+      - name: Publicar referência se houver mudança
+        run: |
+          if ! git diff --quiet -- catalogo-referencia.txt || [ -n "$(git ls-files --others --exclude-standard -- catalogo-referencia.txt)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add catalogo-referencia.txt
+            git commit -m "Atualiza catálogo de referência"
+            git push
+          fi
