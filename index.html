@@ -128,8 +128,20 @@ function activateProfile(p){
 }
 async function startProfile(p){
  if(profileStarting)return;profileStarting=true;
- try{if(navigator.onLine){try{await loadHistory()}catch(e){console.warn('Falha na consulta inicial do histórico:',e)}}activateProfile(p)}
- finally{profileStarting=false}
+ // Exibe o perfil salvo imediatamente; a consulta remota não bloqueia a interface.
+ activateProfile(p);
+ try{
+  if(navigator.onLine){
+   try{
+    await loadHistory();
+    // Caso o instrumentista tenha uma lista para hoje que ainda não estava no cache,
+    // direciona para a lista apenas se ele continua na página inicial de montagem.
+    if(userProfile===p&&p==='instrument'&&state.page==='editor'&&projectionToday()&&!state.editing){
+     page('projection');
+    }
+   }catch(e){console.warn('Falha na consulta inicial do histórico:',e)}
+  }
+ }finally{profileStarting=false}
 }
 const DRAFT_KEY='louvores_rascunho_diario_v1';
 const OFFLINE_QUEUE_KEY='louvores_cultos_pendentes_v1';
