@@ -391,7 +391,7 @@ async function save(){
  const future=state.date>localISO(new Date());
  if(future&&!navigator.onLine){$('status').textContent='Para registrar um culto futuro, conecte-se e informe a senha.';return}
  // Edição já autorizada mantém o PIN deste aparelho; data futura pede a senha sempre.
- const pin=state.editing?getEditPin():(future?(prompt('Senha para registrar culto futuro:')||''):'');
+ const pin=future?(prompt('Senha para registrar culto futuro:')||''):(state.editing?getEditPin():'');
  if((state.editing||future)&&!pin)return;
  const musicas=apiSongs(),signature=JSON.stringify({editing:state.editing,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,musicas});
  const retry=state.pending?.signature===signature?state.pending:null;
