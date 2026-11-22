@@ -1,5 +1,5 @@
 // Atualize este identificador a cada publicação para substituir o cache antigo.
-const CACHE = 'louvores-shell-v18-pos-palavra-encerrar';
+const CACHE = 'louvores-shell-v19-sem-senha-culto';
 const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './catalogo.json'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
