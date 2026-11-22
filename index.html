@@ -260,7 +260,10 @@ function storedProfile(){try{const p=localStorage.getItem(PROFILE_KEY);return p=
 function projectionToday(){
  const date=localISO(new Date()),records=state.history.filter(r=>r.data===date);
  if(!records.length)return null;
- return historyToPreview(chronologicalDay(records,date).at(-1)||records[0]);
+ const latest=chronologicalDay(records,date).at(-1)||records[0];
+ // Ao encerrar o último culto do dia, a aba Lista volta ao aviso de lista vazia.
+ // O registro encerrado permanece integralmente disponível no Histórico.
+ return latest.encerrado?null:historyToPreview(latest);
 }
 function loadCachedHistory(){
  try{const cache=JSON.parse(localStorage.getItem(PROJECTION_CACHE_KEY)||'null');if(!state.historyReady&&Array.isArray(cache?.records)){state.history=cache.records;state.historyReady=true}}catch{}
