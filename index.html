@@ -37,7 +37,10 @@ html:not(.app-ready) .app{visibility:hidden}
 <button id="projectionShare" class="primary full" type="button">Compartilhar imagem</button>
 <div id="projectionShareStatus" class="status"></div>
 </div>
-<p id="projectionNotice" class="projection-notice hidden" role="status" aria-live="polite">Repertório atualizado</p><p id="projectionStatus" class="hint" style="text-align:center;margin-top:9px" aria-live="polite"></p></section>
+<p id="projectionNotice" class="projection-notice hidden" role="status" aria-live="polite">Repertório atualizado</p><p id="projectionStatus" class="hint" style="text-align:center;margin-top:9px" aria-live="polite"></p>
+<label id="vibrationSetting" class="hint hidden" style="display:flex;align-items:center;justify-content:center;gap:7px;margin:8px auto 0">
+<input id="vibrationEnabled" type="checkbox" checked> Vibração discreta ao atualizar
+</label></section>
 <section id="editor" class="hidden">
 <div id="editingnotice" class="card hidden" role="status" style="border:1px solid #e5b568;background:#fff7e8"><div class="row"><strong id="editinglabel">Editando culto anterior</strong><button type="button" id="especial" class="special-star" aria-label="Marcar como culto especial" aria-pressed="false" title="Culto especial">☆</button></div>
 <p class="hint" style="margin:6px 0 10px">As alterações neste modo modificam um registro do histórico. Para montar um novo culto, saia da edição.</p>
@@ -143,6 +146,39 @@ const $=id=>document.getElementById(id);
 const PROFILE_KEY='louvores_perfil_v1',PROJECTION_CACHE_KEY='louvores_projecao_historico_v1';
 let userProfile=null,projectionLoading=false,profileStarting=false;
 let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTimer=null;
+const VIBRATION_KEY='louvores_vibracao_v1';
+const VIBRATION_ARM_KEY='louvores_lista_acompanhamento_v1';
+let vibrationEnabled=localStorage.getItem(VIBRATION_KEY)!=='off';
+function readVibrationArm(){try{return JSON.parse(localStorage.getItem(VIBRATION_ARM_KEY)||'null')}catch{return null}}
+function setVibrationArm(value){try{if(value)localStorage.setItem(VIBRATION_ARM_KEY,JSON.stringify(value));else localStorage.removeItem(VIBRATION_ARM_KEY)}catch{}}
+function armVibrationForCurrentList(){
+ const date=localISO(new Date()),active=projectionToday(),previous=readVibrationArm();
+ // Uma visita anterior à Lista no mesmo culto continua valendo neste aparelho.
+ if(previous?.date===date&&(!previous.cultoId||previous.cultoId===active?.id||!active))return;
+ setVibrationArm({date,cultoId:active?.id||null,signature:active?projectionSignature(active):''});
+}
+function checkVibrationOnUpdate(activeRecord){
+ const arm=readVibrationArm(),date=localISO(new Date());
+ if(!arm||arm.date!==date)return;
+ if(!activeRecord){
+  // O encerramento manual ou automático desarma a vibração deste culto.
+  if(arm.cultoId)setVibrationArm(null);
+  return;
+ }
+ const signature=projectionSignature(activeRecord);
+ if(arm.cultoId&&arm.cultoId!==activeRecord.id){
+  // Outro culto no mesmo dia exige que a pessoa abra a Lista novamente.
+  setVibrationArm(null);
+  return;
+ }
+ if(arm.signature!==signature){
+  const shouldVibrate=vibrationEnabled&&state.page==='projection'&&!document.hidden&&!!userProfile;
+  setVibrationArm({date,cultoId:activeRecord.id,signature});
+  if(shouldVibrate&&typeof navigator.vibrate==='function')navigator.vibrate(30);
+ }else if(!arm.cultoId){
+  setVibrationArm({date,cultoId:activeRecord.id,signature});
+ }
+}
 let afterWordBusy=false,afterWordExpanded=false,afterWordCategory='Todos',afterWordOptimistic=null,afterWordEditingId=null;
 const AFTER_WORD_LAST_KEY='louvores_ultima_adicao_v1';
 function lastAfterWord(){try{return JSON.parse(localStorage.getItem(AFTER_WORD_LAST_KEY)||'null')}catch{return null}}
@@ -577,7 +613,11 @@ function page(p){
  $('history').classList.toggle('hidden',p!=='history');
  $('manage').classList.toggle('hidden',p!=='manage');
  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===p));
- if(p==='projection'){if(projectionSeenSignature===null)projectionSeenSignature=projectionSignature(chronologicalDay(state.history.filter(r=>r.data===localISO(new Date())),localISO(new Date())).at(-1)||null);renderProjection();if(navigator.onLine)refreshProjection()}
+ if(p==='projection'){
+  armVibrationForCurrentList();
+  if(projectionSeenSignature===null)projectionSeenSignature=projectionSignature(chronologicalDay(state.history.filter(r=>r.data===localISO(new Date())),localISO(new Date())).at(-1)||null);
+  renderProjection();if(navigator.onLine)refreshProjection();
+ }
  if(p==='preview'){$('editFromPreview').classList.toggle('hidden',!state.historySelection);$('editFromPreview').disabled=!navigator.onLine;$('back').textContent=state.historySelection?'Voltar ao histórico':'Voltar à montagem';renderPreview()}
  if(p==='editor'){renderServiceOptions();refreshEditMode()}
  if(p==='manage'){renderManage();if(navigator.onLine)loadCatalogChanges().catch(()=>{})}
@@ -629,6 +669,7 @@ async function loadHistory(){
  const oldToday=state.page==='projection'?chronologicalDay(state.history,localISO(new Date())).at(-1):null;
  state.history=result.historico;state.historyReady=true;
  projectionLastChecked=Date.now();
+ checkVibrationOnUpdate(projectionToday());
  if(state.page==='projection'){
   const record=state.history.filter(r=>r.data===localISO(new Date()));
   const todayLatest=chronologicalDay(record,localISO(new Date())).at(-1)||null;
@@ -751,6 +792,7 @@ function renderProjection(){
  }
  renderRepertoireCard($('projectionCard'),display,'Nenhum repertório registrado para hoje.');
  $('projectionShareActions').classList.toggle('hidden',!rec);
+ $('vibrationSetting').classList.toggle('hidden',!rec);
  refreshAfterWordActions();
  const status=projectionLoading?'Atualizando repertório...':timeSinceChecked();
  $('projectionStatus').textContent=!navigator.onLine?(status?status+' · Offline':'Offline · último histórico consultado'):status;
@@ -977,6 +1019,11 @@ $('afterWordCancel').onclick=()=>{afterWordExpanded=false;afterWordEditingId=nul
 $('afterWordSearch').oninput=afterWordMatches;
 document.querySelectorAll('#afterWordFilters button').forEach(button=>button.onclick=()=>{afterWordCategory=button.dataset.afterCat;document.querySelectorAll('#afterWordFilters button').forEach(x=>x.classList.toggle('on',x===button));afterWordMatches()});
 $('afterWordUndo').onclick=undoAfterWord;
+$('vibrationEnabled').checked=vibrationEnabled;
+$('vibrationEnabled').onchange=event=>{
+ vibrationEnabled=event.target.checked;
+ try{localStorage.setItem(VIBRATION_KEY,vibrationEnabled?'on':'off')}catch{}
+};
 $('endService').onclick=endService;
 $('cancelService').onclick=cancelService;
 $('projectionShare').onclick=()=>share();
