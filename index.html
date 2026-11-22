@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="./icon-192.png">
 <style>
 :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#1f2937;background:#f5f6f8;--blue:#315b93;--line:#e7eaf0}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.35;cursor:default}.app{max-width:510px;margin:auto;padding:15px 14px 32px}.top{display:flex;justify-content:space-between;align-items:center;margin:5px 1px 14px}.top h1{font-size:23px;margin:0;letter-spacing:-.5px}.muted{font-size:12px;color:#84909e}.card{background:white;border:1px solid #e9edf2;border-radius:17px;padding:15px;margin-bottom:12px;box-shadow:0 2px 12px #17263a08}.nav{display:flex;background:#e9edf3;border-radius:11px;padding:3px;margin-bottom:14px;gap:3px}.nav button{flex:1;border:0;border-radius:9px;background:transparent;padding:11px 5px;color:#526175;font-size:13px;font-weight:650}.nav button.on{background:#fff;color:#1d2b3e;box-shadow:0 1px 5px #00000013}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.sectiontitle{font-size:14px;font-weight:750;margin-bottom:9px}.date{border:1px solid var(--line);background:white;color:#263448;border-radius:9px;padding:9px 10px;font-size:13px;max-width:163px}.slot{display:flex;align-items:stretch;gap:6px;margin:6px 0}.slot-main{flex:1;min-width:0;text-align:left;display:flex;gap:10px;align-items:center;border:1px solid #e4e8ee;border-radius:10px;padding:11px 10px;min-height:48px;background:white;color:#223044}.slot-main.active{border:2px solid var(--blue);padding:10px 9px;background:#f5f8fd}.slotnum{font-size:13px;color:#8b96a3;min-width:17px}.slot-fields{display:flex;flex:1;min-width:0;gap:6px;align-items:center}.slot-fields input{min-width:0;border:1px solid #dce2e9;border-radius:7px;padding:8px 7px;font-size:13px;background:#fff;color:#243246}.slot-fields .custom-id{width:85px;flex:none;text-align:center}.slot-fields .custom-name{flex:1}.slot-fields input:focus{outline:2px solid #8eb0df;outline-offset:0}.slot-selected{flex:1;min-width:0;display:flex;gap:10px;align-items:center}.slotname{font-size:13px;font-weight:600;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.empty{color:#a0a9b5;font-weight:450}.arrows{display:flex;flex-direction:column;gap:2px}.arrow{width:34px;height:24px;border:0;border-radius:6px;background:#f2f4f7;color:#64748b;font-size:17px;line-height:18px}.outline{background:#fff;border:1px solid #dde3eb;color:#516174;border-radius:9px;padding:10px 12px;font-size:13px;font-weight:650}.full{width:100%}.filter{display:flex;gap:3px;background:#f1f3f6;padding:3px;border-radius:10px;margin-bottom:10px}.filter button{flex:1;min-width:0;background:transparent;border:0;border-radius:8px;padding:9px 3px;font-weight:650;font-size:12px;color:#7d8998}.filter button.on{background:#fff;color:#244d7b;box-shadow:0 1px 4px #00000013}.field{display:flex;align-items:center;border:1px solid #dce2e9;border-radius:10px;background:#fff;padding:0 10px}.field input{min-width:0;flex:1;outline:none;border:0;padding:13px 3px;font-size:14px}.searchwrap{position:relative}.results{display:none;position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:5;background:#fff;border:1px solid #e1e6ee;border-radius:11px;box-shadow:0 9px 25px #172b4b26;max-height:260px;overflow:auto}.results.show{display:block}.resultcount{margin:7px 2px 0;color:#7b8796;font-size:11px;text-align:right;min-height:16px}.more-results{display:block;width:100%;padding:12px;background:#f6f8fb;color:#315b93;border:0;font-size:12px;font-weight:700}.more-results:active{background:#e8eef8}.result{display:block;width:100%;text-align:left;background:white;border:0;border-bottom:1px solid #f0f1f4;padding:10px 12px}.result:active{background:#eff4fc}.result strong{font-size:13px;font-weight:650}.result small{display:block;color:#8693a3;margin-top:3px;font-size:11px}.primary{border:0;border-radius:11px;padding:13px;background:#315b93;color:white;font-weight:750;font-size:14px}.hint{font-size:11px;color:#8b96a3;margin-top:8px;line-height:1.5}.actions{display:grid;gap:9px}.hidden{display:none!important}.historyitem{padding:12px 0;border-bottom:1px solid var(--line)}.historyitem:last-child{border:0}.history-open{display:block;flex:1;min-width:0;text-align:left;background:transparent;border:0;padding:8px 0;color:inherit}.history-open strong{display:block;margin-bottom:4px}.history-open:active{opacity:.65}.chip{font-size:10px;color:#748093;background:#f3f5f8;padding:4px 7px;border-radius:20px}.preview{background:#fff;border:1px solid #e8e8e8;border-radius:15px;padding:21px 17px;box-shadow:0 7px 25px #00000009}.pvhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.pvtitle{font-weight:780;font-size:27px;letter-spacing:-.65px}.pvdate{text-align:right;font-size:13px;font-weight:700}.pvdate span{display:block;color:#8b96a3;font-size:12px;font-weight:450;margin-top:3px}.pvline{height:1px;background:#e5e7eb;margin:17px 0 3px}.pvitem{padding:18px 0;border-bottom:1px solid #edf0f3;display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center}.pvitem:last-child{border:0}.pvnum{font-size:14px;font-weight:750;align-self:center;white-space:nowrap;text-align:center;line-height:1.3}.pvname{font-size:14px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}.pvsub{font-size:11px;color:#8c99a8;margin-top:5px;line-height:1.45}.status{min-height:18px;font-size:12px;color:#386b47;text-align:center}.foot{text-align:center;color:#9ba4af;font-size:11px;margin-top:15px}.simpleinput{display:block;width:100%;border:1px solid #dce2e9;border-radius:10px;background:#fff;padding:11px;font-size:14px;color:#263448;margin:5px 0 8px}.optionline{padding:9px 2px;font-size:13px}.optionline input{accent-color:#315b93}.formlabel{font-size:12px;font-weight:650;color:#556273;margin-top:8px;display:block}.manage-results{max-height:290px;overflow:auto}.manage-result{display:block;width:100%;padding:9px 3px;text-align:left;background:white;border:0;border-bottom:1px solid #eef1f4;font-size:13px}.manage-result small{display:block;color:#8793a0;margin-top:3px}.occ-card{padding:9px;background:#f6f8fb;border-radius:9px;font-size:12px;margin-top:8px}.occ-card button{display:block;width:100%;border:0;background:none;text-align:left;padding:7px;color:#315b93}.special-label{font-size:11px;color:#9b751c;font-weight:650}@media(min-width:640px){.app{padding-top:26px}} 
-.special-star{border:0;background:transparent;color:#a4acb7;font-size:25px;line-height:1;padding:3px 7px;min-width:38px;min-height:32px}.special-star[aria-pressed="true"]{color:#bd8e23}.ebd-small{font-size:11px;color:#8793a0;display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ebd-small input{accent-color:#315b93;width:13px;height:13px;margin:0}.date-choices{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.date-choices .ebd-small{white-space:nowrap}</style>
+.special-star{border:0;background:transparent;color:#a4acb7;font-size:25px;line-height:1;padding:3px 7px;min-width:38px;min-height:32px}.special-star[aria-pressed="true"]{color:#bd8e23}.ebd-small{font-size:11px;color:#8793a0;display:inline-flex;align-items:center;gap:4px;cursor:pointer}.ebd-small input{accent-color:#315b93;width:13px;height:13px;margin:0}.date-choices{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.date-choices .ebd-small{white-space:nowrap}.draft-buttons{display:flex;gap:8px;margin-top:8px}.draft-buttons button{flex:1;min-width:0;font-size:12px;padding:10px 7px}</style>
 </head><body><main class="app">
 <header class="top"><h1>♫ Louvores</h1><span class="muted" id="connectivity" aria-live="polite">Conectando...</span></header>
 <nav class="nav"><button data-page="editor" class="on">Montar</button><button data-page="preview">Imagem</button><button data-page="history">Histórico</button><button data-page="manage">Louvores</button></nav>
@@ -26,7 +26,7 @@
 <div id="resultcount" class="resultcount" aria-live="polite">Calculando resultados...</div><div class="hint" id="catalogstatus">Catálogo em carregamento. A pesquisa funciona offline após a primeira sincronização.</div></div>
 <div class="card"><div class="row" style="margin-bottom:9px"><div class="sectiontitle" style="margin:0">Repertório</div><div class="date-choices"><span id="sundayOption" class="hidden"><label class="ebd-small" title="Escola Bíblica Dominical"><input type="checkbox" id="ebd"> EBD</label></span><input id="date" class="date" type="date"></div></div>
 
-<div id="slots"></div><p class="hint">Toque em um espaço para escrever o número e o nome diretamente, ou escolha uma música no catálogo acima. Louvores digitados não entram no histórico de última execução.</p><button id="remove" class="outline full" style="margin-top:8px">Remover selecionado</button></div>
+<div id="slots"></div><p class="hint">Toque em um espaço para escrever o número e o nome diretamente, ou escolha uma música no catálogo acima. Louvores digitados não entram no histórico de última execução.</p><div class="draft-buttons"><button id="remove" class="outline full">Remover selecionado</button><button id="clearDraft" class="outline full" type="button">Limpar montagem</button></div></div>
 <div class="actions"><p id="offlinenote" class="hint hidden" style="text-align:center;margin:0 0 3px">Modo offline — repertório não será salvo no histórico.</p><button id="save" class="primary full">Salvar e compartilhar</button><div class="status" id="status"></div></div>
 </section>
 <section id="previewpage" class="hidden"><div id="previewCard" class="preview"></div><div class="actions" style="margin-top:12px"><button id="share" class="primary full">Compartilhar imagem</button><button id="download" class="outline full">Baixar PNG</button><button id="editFromPreview" class="outline full hidden">Editar repertório</button><button id="back" class="outline full">Voltar à montagem</button></div><p class="hint">No celular, o botão de compartilhar tenta abrir o menu nativo. Caso não esteja disponível, baixa a imagem.</p><div class="status" id="sharestatus"></div></section>
@@ -34,7 +34,7 @@
 <div class="card"><div class="sectiontitle">Pesquisar no histórico</div><input class="simpleinput" id="historySearch" placeholder="Dia, data, louvor ou nome especial..." aria-label="Pesquisar no histórico"><div class="filter" id="periodFilters" style="margin-top:9px"><button data-period="all" class="on">Todos</button><button data-period="30">30 dias</button><button data-period="90">3 meses</button><button data-period="365">1 ano</button></div><div id="historyCount" class="hint"></div><div id="songOccurrences" class="hidden"></div></div>
 <div class="card"><div class="sectiontitle">Histórico compartilhado</div><div id="historylist"></div></div><div class="hint"><span id="historynote">Histórico sincronizado quando houver internet.</span></div></section>
 <section id="manage" class="hidden">
-<div class="card"><div class="sectiontitle">Gerenciar louvores</div><p class="hint">Adicione músicas ou corrija nome, número, categoria e tom do catálogo. As mudanças ficam na planilha e não alteram cultos antigos.</p><input id="manageSearch" class="simpleinput" placeholder="Encontrar louvor pelo número ou nome..."><div id="manageResults" class="manage-results"></div><button class="outline full" id="newSong" style="margin-top:9px">+ Cadastrar novo louvor</button></div>
+<div class="card"><div class="row"><div class="sectiontitle">Gerenciar louvores</div><button id="forgetPin" type="button" class="outline" style="font-size:10px;padding:6px">Esquecer senha</button></div><p class="hint">Adicione músicas ou corrija nome, número, categoria e tom do catálogo. As mudanças ficam na planilha e não alteram cultos antigos.</p><input id="manageSearch" class="simpleinput" placeholder="Encontrar louvor pelo número ou nome..."><div id="manageResults" class="manage-results"></div><button class="outline full" id="newSong" style="margin-top:9px">+ Cadastrar novo louvor</button></div>
 <div class="card hidden" id="manageForm"><div class="sectiontitle" id="manageFormTitle">Cadastro do louvor</div>
 <label class="formlabel">Categoria</label><select id="songCat" class="simpleinput"><option>Coletânea</option><option>Avulsos</option><option>CIA</option></select>
 <label class="formlabel">Número / identificação</label><input id="songNumber" class="simpleinput" maxlength="40" placeholder="Ex.: 037, AVULSO, CIA">
@@ -51,13 +51,39 @@ let catalog=sampleCatalog;
 let baseCatalog=sampleCatalog, catalogChanges=[],manageEditing=null,manageOpened=null;
 try{const saved=JSON.parse(localStorage.getItem('louvores_catalogo_manual_cache_v1')||'[]');if(Array.isArray(saved))catalogChanges=saved}catch{}
 function catRef(m){return m.cat+'|'+m.id+'|'+m.name;}
+// O nome original fica guardado na referência da fonte, nunca exibido na edição.
+// Para louvores numerados, categoria + número identifica a mesma música mesmo se a fonte renomeá-la.
+// Para registros sem número estável, só associamos por referência exata; não fundimos homônimos.
+function numberedSourceKey(cat,number){
+ const n=String(number||'').trim();
+ if(cat==='Coletânea' && /^\d+$/.test(n))return cat+'|'+Number(n);
+ if(cat==='CIA' && /^(?:CIA\s*)?\d+$/i.test(n))return cat+'|'+Number(n.replace(/CIA\s*/i,''));
+ return '';
+}
+function findBaseForOverride(o){
+ const exact=baseCatalog.find(m=>catRef(m)===o.ref);
+ if(exact)return exact;
+ const p=String(o.ref||'').split('|');if(p.length<3)return null;
+ const stable=numberedSourceKey(p[0],p[1]);if(!stable)return null;
+ const matches=baseCatalog.filter(m=>numberedSourceKey(m.cat,m.id)===stable);
+ return matches.length===1?matches[0]:null;
+}
 function applyCatalogChanges(){
- const excludes=new Set(catalogChanges.filter(x=>x.excluido).map(x=>x.ref).filter(Boolean));
- const merged=baseCatalog.filter(m=>!excludes.has(catRef(m))).map(m=>{
-  const ov=catalogChanges.find(x=>x.ref===catRef(m)&&!x.excluido);
-  return ov?{...m,id:ov.numero,name:ov.nome,cat:ov.cat,tom:ov.tom,key:m.key,overrideId:ov.id}:m;
+ const matches=new Map();const matchedOverrides=new Set();
+ for(const o of catalogChanges.filter(x=>x.ref)){
+  const m=findBaseForOverride(o);
+  if(m && !matches.has(m.key)){matches.set(m.key,o);matchedOverrides.add(o.id)}
+ }
+ const merged=baseCatalog.filter(m=>!matches.get(m.key)?.excluido).map(m=>{
+  const ov=matches.get(m.key);
+  return ov?{...m,id:ov.numero,name:ov.nome,cat:ov.cat,tom:ov.tom,key:m.key,overrideId:ov.id,originalRef:ov.ref}:m;
  });
- for(const o of catalogChanges){if(!o.ref&&!o.excluido)merged.push({id:o.numero,name:o.nome,cat:o.cat,tom:o.tom,key:o.id,overrideId:o.id})}
+ for(const o of catalogChanges){
+  if(!o.excluido && (!o.ref || !matchedOverrides.has(o.id))){
+   // Se a origem sumiu, preserve a edição manual em vez de perdê-la.
+   merged.push({id:o.numero,name:o.nome,cat:o.cat,tom:o.tom,key:o.id,overrideId:o.id,originalRef:o.ref||''});
+  }
+ }
  catalog=merged;
  updateCount();refreshLastDates();renderSlots();if(state.page==='manage')renderManage();
 }
@@ -72,7 +98,8 @@ function songDisplay(m){
  return {...m,name:tone?title.slice(0,tone.index).trimEnd():title,tom:m.tom|| (tone?tone[1]:null)};
 }
 const $=id=>document.getElementById(id);
-// Não recuperar rascunhos antigos: cada abertura começa com uma montagem limpa.
+// Rascunho local vale somente no dia em que foi montado; edição do histórico não é persistida.
+const DRAFT_KEY='louvores_rascunho_diario_v1';
 try{localStorage.removeItem('repertorio_demo_v4')}catch{}
 const state={slots:[null,null,null],active:0,date:localISO(new Date()),ebd:false,especial:false,titulo:'',cat:'Todos',search:'',history:[],editing:null,editingVersion:null,latest:null,temporary:null,historySelection:null,page:'editor',pending:null,saving:false,historyReady:false,period:'all'};
 function localISO(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
@@ -80,11 +107,26 @@ function fromISO(s){return new Date(s+'T12:00:00')}
 function day(s){return new Intl.DateTimeFormat('pt-BR',{weekday:'long'}).format(fromISO(s))}
 function fmt(s){const [y,m,d]=s.split('-');return `${d}/${m}/${y}`}
 function since(m,date){if(!m || !m.lastDate)return '';const d=fromISO(date),last=fromISO(m.lastDate);const days=Math.round((d-last)/86400000);if(days<0||days>30)return '';if(days===0)return 'Última vez hoje';if(days===1)return 'Última vez ontem';if(days<14){const weeks=Math.floor(days/7);const w=new Intl.DateTimeFormat('pt-BR',{weekday:'long'}).format(last);const prep=['domingo','sábado'].includes(w)?'no':'na';return `Última vez há ${weeks?weeks+' semana':days+' dias'}, ${prep} ${w}`}return `Última vez há ${Math.floor(days/7)} semanas`}
-function persist(){/* Montagem temporária: nenhuma alteração local é armazenada. */}
-function resetDraft(){
+function persist(){
+ if(state.editing)return;
+ try{localStorage.setItem(DRAFT_KEY,JSON.stringify({day:localISO(new Date()),slots:state.slots,active:state.active,date:state.date,ebd:state.ebd}))}catch{}
+}
+function restoreDraft(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null');
+  if(!saved || saved.day!==localISO(new Date())){localStorage.removeItem(DRAFT_KEY);return false;}
+  if(!Array.isArray(saved.slots)||saved.slots.length>80)return false;
+  state.slots=saved.slots;state.active=Math.max(0,Math.min(Number(saved.active)||0,saved.slots.length-1));
+  state.date=/^\d{4}-\d{2}-\d{2}$/.test(saved.date)?saved.date:localISO(new Date());
+  state.ebd=!!saved.ebd && isSunday(state.date);ensureBlank();
+  $('date').value=state.date;renderServiceOptions();return true;
+ }catch{return false;}
+}
+function resetDraft(recover=false){
  state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());state.ebd=false;state.especial=false;state.titulo='';
  state.editing=null;state.editingVersion=null;state.pending=null;state.temporary=null;
  state.search='';$('search').value='';$('date').value=state.date;
+ if(recover){if(!restoreDraft())persist();}else{try{localStorage.removeItem(DRAFT_KEY)}catch{}}
  $('status').textContent='';renderServiceOptions();renderSlots();renderResults(false);refreshEditMode();
 }
 function isSunday(s){return fromISO(s).getDay()===0}
@@ -243,13 +285,19 @@ async function sendWrite(payload){
  }
  throw new Error('O Google não confirmou o salvamento. Confira o histórico antes de tentar novamente.');
 }
+function getEditPin(){
+ let pin='';try{pin=localStorage.getItem('louvores_edit_pin_v1')||''}catch{}
+ if(!pin){pin=prompt('Senha para editar o Louvores (será lembrada neste aparelho):')||'';
+  if(pin)try{localStorage.setItem('louvores_edit_pin_v1',pin)}catch{}
+ }
+ return pin;
+}
 async function save(){
  const songs=selected();if(!songs.length){$('status').textContent='Escolha pelo menos um louvor.';return}
  if(state.saving)return;
  if(!navigator.onLine && state.editing){$('status').textContent='Conecte-se para editar um culto já registrado.';return}if(!navigator.onLine){state.temporary={id:'offline',date:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,songs:songs.map(k=>typeof k==='object'?{...k}:k)};$('status').textContent='';$('sharestatus').textContent='';page('preview');return}
- const pin=sessionStorage.getItem('louvoresPin')||prompt('Senha de edição do Louvores (fornecida pela igreja):');
- if(!pin)return;
- sessionStorage.setItem('louvoresPin',pin);
+ const pin=state.editing?getEditPin():'';
+ if(state.editing&&!pin)return;
  const musicas=apiSongs(), signature=JSON.stringify({editing:state.editing,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,musicas});
  const retry=state.pending&&state.pending.signature===signature?state.pending:null;
  const recordId=state.editing||(retry?retry.id:'r'+(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)));
@@ -258,8 +306,16 @@ async function save(){
  state.saving=true;$('save').disabled=true;$('status').textContent='Enviando ao Google e conferindo o registro...';
  try{
   const confirmed=await sendWrite(payload);
-  state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);state.editing=null;state.editingVersion=null;state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());state.ebd=false;state.especial=false;state.titulo='';$('date').value=state.date;renderServiceOptions();renderSlots();
-  await loadHistory();$('status').textContent='Repertório salvo e confirmado no Google.';$('sharestatus').textContent='';page('preview');
+  const previousIndex=state.history.findIndex(r=>r.id===confirmed.id);
+  if(previousIndex>=0)state.history.splice(previousIndex,1);
+  state.history.unshift(confirmed);state.history.sort((a,b)=>b.data.localeCompare(a.data));state.historyReady=true;
+  state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);
+  state.editing=null;state.editingVersion=null;state.slots=[null,null,null];state.active=0;
+  state.date=localISO(new Date());state.ebd=false;state.especial=false;state.titulo='';$('date').value=state.date;
+  try{localStorage.removeItem(DRAFT_KEY)}catch{}
+  renderServiceOptions();renderSlots();refreshLastDates();
+  $('status').textContent='Repertório salvo e confirmado no Google.';$('sharestatus').textContent='';page('preview');
+  loadHistory().catch(err=>{console.warn('Reconsulta do histórico falhou; mantendo o registro já confirmado.',err)});
  }catch(err){$('status').textContent=err.message||'Falha ao salvar. Confira o histórico.';}
  finally{state.saving=false;$('save').disabled=false;}
 }
@@ -322,8 +378,7 @@ function openSongForm(m){
 function hideSongForm(){$('manageForm').classList.add('hidden');manageOpened=null;manageEditing=null}
 async function catalogWrite(action,musica){
  if(!navigator.onLine)throw Error('É necessário estar online para alterar o catálogo.');
- const pin=sessionStorage.getItem('louvoresPin')||prompt('Senha de edição do Louvores:');if(!pin)throw Error('Operação cancelada.');
- sessionStorage.setItem('louvoresPin',pin);
+ const pin=getEditPin();if(!pin)throw Error('Operação cancelada.');
  const body=new URLSearchParams({payload:JSON.stringify({action,pin,musica})});
  await fetch(API_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body}).catch(()=>{});
  for(let i=0;i<6;i++){
@@ -340,7 +395,7 @@ async function saveSong(){
  if(!$('songName').value.trim()){ $('manageStatus').textContent='Informe o nome.';return;}
  const cat=$('songCat').value,numero=$('songNumber').value.trim()|| (cat==='CIA'?'CIA':'AVULSO');
  const nome=$('songName').value.trim(),tom=$('songTone').value.trim();
- const m={id:manageEditing?.id||'',ref:manageEditing?.ref||(manageOpened?catRef(baseCatalog.find(x=>x.key===manageOpened.key)||manageOpened):''),
+ const m={id:manageEditing?.id||'',ref:manageEditing?.ref||(manageOpened?(manageOpened.originalRef||catRef(baseCatalog.find(x=>x.key===manageOpened.key)||manageOpened)) :''),
   cat,numero,nome,tom,versao:manageEditing?.versao||0};
  let action=manageOpened?'editar_musica':'criar_musica';
  if(manageOpened&&!manageEditing){
@@ -443,12 +498,12 @@ function pngBlob(canvas){return new Promise(resolve=>canvas.toBlob(resolve,'imag
 async function share(downloadOnly=false){const label=$('sharestatus');if(!previewRecord()){label.textContent='Salve o repertório primeiro.';return}try{const blob=await pngBlob(canvasImage());if(!blob)throw Error('Não foi possível gerar a imagem');const file=new File([blob],`louvores-${previewRecord().date}.png`,{type:'image/png'});if(!downloadOnly&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Louvores'});label.textContent='Imagem enviada para o compartilhamento.';return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);label.textContent='PNG gerado. Você pode enviá-lo pelo WhatsApp.'}catch(err){if(err.name==='AbortError')return;label.textContent='Falha ao compartilhar: '+err.message}}
 $('date').value=state.date;renderServiceOptions();
 $('date').onchange=e=>{state.date=e.target.value||localISO(new Date());renderServiceOptions();persist();refreshLastDates();renderSlots();refreshEditMode()};
-$('ebd').onchange=e=>{if(isSunday(state.date))state.ebd=e.target.checked;renderServiceOptions()};$('especial').onclick=()=>{if(!state.editing)return;state.especial=!state.especial;renderServiceOptions()};
+$('ebd').onchange=e=>{if(isSunday(state.date))state.ebd=e.target.checked;renderServiceOptions();persist()};$('especial').onclick=()=>{if(!state.editing)return;state.especial=!state.especial;renderServiceOptions()};
 $('specialTitle').oninput=e=>{state.titulo=e.target.value};
 $('historySearch').oninput=renderHistory;
 document.querySelectorAll('#periodFilters button').forEach(b=>b.onclick=()=>{state.period=b.dataset.period;document.querySelectorAll('#periodFilters button').forEach(x=>x.classList.toggle('on',x===b));renderHistory()});
-$('manageSearch').oninput=renderManage;$('newSong').onclick=()=>openSongForm(null);
-$('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel').onclick=hideSongForm;$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft();page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft();page('editor')};$('save').onclick=save;$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};ensureBlank();renderSlots();renderPreview();updateCount();loadCatalog();if(navigator.onLine)loadHistory().catch(err=>{$('historynote').textContent='Não foi possível carregar o histórico: '+err.message;});
+$('forgetPin').onclick=()=>{try{localStorage.removeItem('louvores_edit_pin_v1')}catch{};alert('Senha de edição esquecida neste aparelho.')};$('manageSearch').oninput=renderManage;$('newSong').onclick=()=>openSongForm(null);
+$('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel').onclick=hideSongForm;$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('clearDraft').onclick=()=>{if(!confirm('Limpar todas as músicas desta montagem? O histórico não será alterado.'))return;resetDraft(false);page('editor')};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft(true);page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft(true);page('editor')};$('save').onclick=save;$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};restoreDraft();ensureBlank();renderSlots();renderPreview();updateCount();loadCatalog();if(navigator.onLine)loadHistory().catch(err=>{$('historynote').textContent='Não foi possível carregar o histórico: '+err.message;});
 })();
 </script>
 <script>
