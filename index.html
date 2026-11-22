@@ -257,13 +257,18 @@ function notifyProjectionChange(){
  projectionNoticeTimer=setTimeout(()=>label.classList.add('hidden'),12000);
 }
 function storedProfile(){try{const p=localStorage.getItem(PROFILE_KEY);return p==='instrument'||p==='projection'?p:null}catch{return null}}
+const CULTO_DURATION_MS=90*60*1000;
+function cultoExpired(record){
+ const started=Date.parse(record?.criadoEm||record?.criado_em||record?.createdAt||record?.created_at||'');
+ return Number.isFinite(started)&&Date.now()>=started+CULTO_DURATION_MS;
+}
 function projectionToday(){
  const date=localISO(new Date()),records=state.history.filter(r=>r.data===date);
  if(!records.length)return null;
  const latest=chronologicalDay(records,date).at(-1)||records[0];
  // Ao encerrar o último culto do dia, a aba Lista volta ao aviso de lista vazia.
  // O registro encerrado permanece integralmente disponível no Histórico.
- return latest.encerrado?null:historyToPreview(latest);
+ return latest.encerrado||cultoExpired(latest)?null:historyToPreview(latest);
 }
 function loadCachedHistory(){
  try{const cache=JSON.parse(localStorage.getItem(PROJECTION_CACHE_KEY)||'null');if(!state.historyReady&&Array.isArray(cache?.records)){state.history=cache.records;state.historyReady=true}}catch{}
@@ -571,7 +576,8 @@ async function loadHistory(){
  projectionLastChecked=Date.now();
  if(state.page==='projection'){
   const record=state.history.filter(r=>r.data===localISO(new Date()));
-  const current=projectionSignature(chronologicalDay(record,localISO(new Date())).at(-1)||null);
+  const todayLatest=chronologicalDay(record,localISO(new Date())).at(-1)||null;
+  const current=projectionSignature(todayLatest&&cultoExpired(todayLatest)?{...todayLatest,encerrado:true}:todayLatest);
   if(projectionSeenSignature!==null&&projectionSeenSignature!==current){
    const just=chronologicalDay(record,localISO(new Date())).at(-1);
    const previousCount=oldToday?.id===just?.id?(oldToday?.musicas||[]).filter(m=>m.aposPalavra).length:0;
@@ -894,7 +900,7 @@ $('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel'
 const savedProfile=storedProfile();if(savedProfile)startProfile(savedProfile);else showProfileChoice();
 renderSlots();renderPreview();updateCount();refreshPending();loadCatalog();
 if(navigator.onLine)syncPending().catch(console.warn);window.addEventListener('online',()=>syncPending().catch(console.warn));document.addEventListener('visibilitychange',()=>{if(!document.hidden){syncPending().catch(console.warn);if(state.page==='projection')refreshProjection().catch(console.warn)}});
-setInterval(()=>{if(state.page==='projection'&&!document.hidden){renderProjection();if(navigator.onLine)refreshProjection().catch(console.warn)}},8000);
+setInterval(()=>{if(state.page==='projection'&&!document.hidden){renderProjection();if(navigator.onLine&&projectionToday())refreshProjection().catch(console.warn)}},8000);
 })();
 </script>
 <script>
