@@ -185,7 +185,7 @@ function checkVibrationOnUpdate(activeRecord){
  if(arm.signature!==signature){
   const shouldVibrate=vibrationEnabled&&!document.hidden&&!!userProfile;
   setVibrationArm({date,cultoId:activeRecord.id,signature});
-  if(shouldVibrate&&typeof navigator.vibrate==='function')navigator.vibrate(30);
+  if(shouldVibrate&&typeof navigator.vibrate==='function')navigator.vibrate(100);
  }else if(!arm.cultoId){
   setVibrationArm({date,cultoId:activeRecord.id,signature});
  }
@@ -1045,7 +1045,7 @@ $('testVibration').onclick=()=>{
   label.textContent='Este navegador não oferece a função de vibração.';
   return;
  }
- const accepted=navigator.vibrate(30);
+ const accepted=navigator.vibrate(100);
  label.textContent=accepted?'Teste enviado. Se não sentiu nada, confira o modo silencioso/não perturbe e a vibração do Android.':'O navegador recusou a vibração. Verifique as configurações ou teste no Chrome para Android.';
 };
 $('vibrationEnabled').onchange=event=>{
