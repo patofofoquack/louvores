@@ -16,6 +16,7 @@
 <header class="top"><h1>♫ Louvores</h1><span class="muted" id="connectivity" aria-live="polite">Conectando...</span></header>
 <nav class="nav"><button data-page="editor" class="on">Montar</button><button data-page="preview">Imagem</button><button data-page="history">Histórico</button></nav>
 <section id="editor">
+<div id="editingnotice" class="card hidden" role="status" style="border:1px solid #e5b568;background:#fff7e8"><strong id="editinglabel">Editando culto anterior</strong><p class="hint" style="margin:6px 0 10px">As alterações neste modo modificam um registro do histórico. Para montar um novo culto, saia da edição.</p><button type="button" id="newRepertoire" class="outline full">Sair da edição e montar novo</button></div>
 <div class="card"><div class="sectiontitle">Escolher louvor <span id="slotlabel" class="muted"></span></div>
 <div class="filter" id="filters"><button data-cat="Todos" class="on">Todos</button><button data-cat="Coletânea">Coletânea</button><button data-cat="Avulsos">Avulsos</button><button data-cat="CIA">CIA</button></div>
 <div class="searchwrap"><div class="field"><span style="color:#92a0af;margin-right:7px">⌕</span><input id="search" autocomplete="off" placeholder="Número ou nome do louvor..." aria-label="Pesquisar louvor"><span style="font-size:10px;color:#9aa6b3">▾</span></div><div id="results" class="results"></div></div>
@@ -42,14 +43,28 @@ function songDisplay(m){
  return {...m,name:tone?title.slice(0,tone.index).trimEnd():title,tom:tone?tone[1]:null};
 }
 const $=id=>document.getElementById(id);
-const persisted=(()=>{try{return JSON.parse(localStorage.getItem('repertorio_demo_v4'))||{}}catch{return {}}})();
-const state={slots:persisted.slots||[null,null,null],active:0,date:persisted.date||localISO(new Date()),cat:'Todos',search:'',history:[],editing:null,editingVersion:null,latest:null,temporary:null,historySelection:null,page:'editor',pending:null,saving:false,historyReady:false};
+// Não recuperar rascunhos antigos: cada abertura começa com uma montagem limpa.
+try{localStorage.removeItem('repertorio_demo_v4')}catch{}
+const state={slots:[null,null,null],active:0,date:localISO(new Date()),cat:'Todos',search:'',history:[],editing:null,editingVersion:null,latest:null,temporary:null,historySelection:null,page:'editor',pending:null,saving:false,historyReady:false};
 function localISO(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function fromISO(s){return new Date(s+'T12:00:00')}
 function day(s){return new Intl.DateTimeFormat('pt-BR',{weekday:'long'}).format(fromISO(s))}
 function fmt(s){const [y,m,d]=s.split('-');return `${d}/${m}/${y}`}
 function since(m,date){if(!m || !m.lastDate)return '';const d=fromISO(date),last=fromISO(m.lastDate);const days=Math.round((d-last)/86400000);if(days<0||days>30)return '';if(days===0)return 'Última vez hoje';if(days===1)return 'Última vez ontem';if(days<14){const weeks=Math.floor(days/7);const w=new Intl.DateTimeFormat('pt-BR',{weekday:'long'}).format(last);const prep=['domingo','sábado'].includes(w)?'no':'na';return `Última vez há ${weeks?weeks+' semana':days+' dias'}, ${prep} ${w}`}return `Última vez há ${Math.floor(days/7)} semanas`}
-function persist(){try{localStorage.setItem('repertorio_demo_v4',JSON.stringify({slots:state.slots,date:state.date}))}catch{}}
+function persist(){/* Montagem temporária: nenhuma alteração local é armazenada. */}
+function resetDraft(){
+ state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());
+ state.editing=null;state.editingVersion=null;state.pending=null;state.temporary=null;
+ state.search='';$('search').value='';$('date').value=state.date;
+ $('status').textContent='';renderSlots();renderResults(false);refreshEditMode();
+}
+function refreshEditMode(){
+ const editing=!!state.editing;
+ $('editingnotice').classList.toggle('hidden',!editing);
+ if(editing)$('editinglabel').textContent='Editando culto de '+fmt(state.date);
+ $('save').textContent=editing?'Salvar alterações no histórico':'Salvar e compartilhar';
+}
+
 function ensureBlank(){if(!state.slots.some(x=>x===null))state.slots.push(null)}
 function validSlot(key){const m=byKey(key);return !!(m&&m.name)}
 function nextEmptyAfter(i){ensureBlank();let j=state.slots.findIndex((v,k)=>k>i&&!validSlot(v));if(j<0)j=state.slots.findIndex(v=>!validSlot(v));return j}
@@ -117,7 +132,7 @@ function renderResults(show=true){
  if(!all.length){const e=document.createElement('div');e.className='hint';e.style.padding='12px';e.textContent='Nenhum louvor encontrado';r.append(e)}
  r.classList.add('show');
 }
-function page(p){state.page=p;$('editor').classList.toggle('hidden',p!=='editor');$('previewpage').classList.toggle('hidden',p!=='preview');$('history').classList.toggle('hidden',p!=='history');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===p));if(p==='preview'){ $('editFromPreview').classList.toggle('hidden',!state.historySelection);$('editFromPreview').disabled=!navigator.onLine; $('back').textContent=state.historySelection?'Voltar ao histórico':'Voltar à montagem';renderPreview();}if(p==='history'){renderHistory();if(navigator.onLine)loadHistory().catch(()=>{});}window.scrollTo({top:0,behavior:'instant'})}
+function page(p){state.page=p;$('editor').classList.toggle('hidden',p!=='editor');$('previewpage').classList.toggle('hidden',p!=='preview');$('history').classList.toggle('hidden',p!=='history');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===p));if(p==='preview'){ $('editFromPreview').classList.toggle('hidden',!state.historySelection);$('editFromPreview').disabled=!navigator.onLine; $('back').textContent=state.historySelection?'Voltar ao histórico':'Voltar à montagem';renderPreview();}if(p==='editor')refreshEditMode();if(p==='history'){renderHistory();if(navigator.onLine)loadHistory().catch(()=>{});}window.scrollTo({top:0,behavior:'instant'})}
 function selected(){return state.slots.filter(validSlot)}
 const API_URL='https://script.google.com/macros/s/AKfycbz3zHDc2w_2ty5_KxnR4sLt7CyiIoRYl8_dfChsSJNcesUepkiJ8IGI88sJDv3ilU92/exec';
 let apiSequence=0;
@@ -182,7 +197,7 @@ async function sendWrite(payload){
 async function save(){
  const songs=selected();if(!songs.length){$('status').textContent='Escolha pelo menos um louvor.';return}
  if(state.saving)return;
- if(!navigator.onLine){state.temporary={id:'offline',date:state.date,songs:songs.map(k=>typeof k==='object'?{...k}:k)};$('status').textContent='';$('sharestatus').textContent='';page('preview');return}
+ if(!navigator.onLine && state.editing){$('status').textContent='Conecte-se para editar um culto já registrado.';return}if(!navigator.onLine){state.temporary={id:'offline',date:state.date,songs:songs.map(k=>typeof k==='object'?{...k}:k)};$('status').textContent='';$('sharestatus').textContent='';page('preview');return}
  const pin=sessionStorage.getItem('louvoresPin')||prompt('Senha de edição do Louvores (fornecida pela igreja):');
  if(!pin)return;
  sessionStorage.setItem('louvoresPin',pin);
@@ -194,7 +209,7 @@ async function save(){
  state.saving=true;$('save').disabled=true;$('status').textContent='Enviando ao Google e conferindo o registro...';
  try{
   const confirmed=await sendWrite(payload);
-  state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);state.editing=null;state.editingVersion=null;
+  state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);state.editing=null;state.editingVersion=null;state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());$('date').value=state.date;renderSlots();
   await loadHistory();$('status').textContent='Repertório salvo e confirmado no Google.';$('sharestatus').textContent='';page('preview');
  }catch(err){$('status').textContent=err.message||'Falha ao salvar. Confira o histórico.';}
  finally{state.saving=false;$('save').disabled=false;}
@@ -234,7 +249,7 @@ function editHistoryRecord(rec){
  state.active=state.slots.length-1;
  state.date=rec.data;state.editing=rec.id;state.editingVersion=rec.versao;
  $('date').value=state.date;
- persist();renderSlots();page('editor');
+ persist();renderSlots();refreshEditMode();page('editor');
 }
 function renderHistory(){
  const list=$('historylist');list.replaceChildren();
@@ -310,7 +325,7 @@ function canvasImage(){
 }
 function pngBlob(canvas){return new Promise(resolve=>canvas.toBlob(resolve,'image/png'))}
 async function share(downloadOnly=false){const label=$('sharestatus');if(!previewRecord()){label.textContent='Salve o repertório primeiro.';return}try{const blob=await pngBlob(canvasImage());if(!blob)throw Error('Não foi possível gerar a imagem');const file=new File([blob],`louvores-${previewRecord().date}.png`,{type:'image/png'});if(!downloadOnly&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Louvores'});label.textContent='Imagem enviada para o compartilhamento.';return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);label.textContent='PNG gerado. Você pode enviá-lo pelo WhatsApp.'}catch(err){if(err.name==='AbortError')return;label.textContent='Falha ao compartilhar: '+err.message}}
-$('date').value=state.date;$('date').onchange=e=>{state.date=e.target.value||localISO(new Date());persist();refreshLastDates();renderSlots()};$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;page(b.dataset.page)});$('save').onclick=save;$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};ensureBlank();renderSlots();renderPreview();updateCount();loadCatalog();if(navigator.onLine)loadHistory().catch(err=>{$('historynote').textContent='Não foi possível carregar o histórico: '+err.message;});
+$('date').value=state.date;$('date').onchange=e=>{state.date=e.target.value||localISO(new Date());persist();refreshLastDates();renderSlots()};$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft();page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft();page('editor')};$('save').onclick=save;$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};ensureBlank();renderSlots();renderPreview();updateCount();loadCatalog();if(navigator.onLine)loadHistory().catch(err=>{$('historynote').textContent='Não foi possível carregar o histórico: '+err.message;});
 })();
 </script>
 <script>
@@ -320,7 +335,7 @@ $('date').value=state.date;$('date').onchange=e=>{state.date=e.target.value||loc
     status.textContent = navigator.onLine ? 'Online' : 'Modo offline';
     const save = document.getElementById('save');
     const note = document.getElementById('offlinenote');
-    if (save) save.textContent = navigator.onLine ? 'Salvar e compartilhar' : 'Gerar imagem sem salvar';
+    if (save) save.textContent = navigator.onLine ? (document.getElementById('editingnotice')?.classList.contains('hidden') ? 'Salvar e compartilhar' : 'Salvar alterações no histórico') : 'Gerar imagem sem salvar';
     if (note) note.classList.toggle('hidden', navigator.onLine);
   }
   window.addEventListener('online', updateStatus);
