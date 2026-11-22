@@ -900,7 +900,18 @@ $('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel'
 const savedProfile=storedProfile();if(savedProfile)startProfile(savedProfile);else showProfileChoice();
 renderSlots();renderPreview();updateCount();refreshPending();loadCatalog();
 if(navigator.onLine)syncPending().catch(console.warn);window.addEventListener('online',()=>syncPending().catch(console.warn));document.addEventListener('visibilitychange',()=>{if(!document.hidden){syncPending().catch(console.warn);if(state.page==='projection')refreshProjection().catch(console.warn)}});
-setInterval(()=>{if(state.page==='projection'&&!document.hidden){renderProjection();if(navigator.onLine&&projectionToday())refreshProjection().catch(console.warn)}},8000);
+// Durante o culto: atualizações rápidas. Antes do primeiro repertório do dia:
+ // consulta leve a cada 30s; depois do encerramento (manual ou automático), para.
+setInterval(()=>{
+ if(state.page!=='projection'||document.hidden)return;
+ renderProjection();
+ if(navigator.onLine&&projectionToday())refreshProjection().catch(console.warn);
+},8000);
+setInterval(()=>{
+ if(state.page!=='projection'||document.hidden||!navigator.onLine||projectionLoading)return;
+ const records=chronologicalDay(state.history,localISO(new Date()));
+ if(!records.length)refreshProjection().catch(console.warn);
+},30000);
 })();
 </script>
 <script>
