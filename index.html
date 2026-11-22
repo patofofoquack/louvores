@@ -10,11 +10,11 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#1f2937;background:#f5f6f8;--blue:#315b93;--line:#e7eaf0}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.35;cursor:default}.app{max-width:510px;margin:auto;padding:15px 14px 32px}.top{display:flex;justify-content:space-between;align-items:center;margin:5px 1px 14px}.top h1{font-size:23px;margin:0;letter-spacing:-.5px}.muted{font-size:12px;color:#84909e}.card{background:white;border:1px solid #e9edf2;border-radius:17px;padding:15px;margin-bottom:12px;box-shadow:0 2px 12px #17263a08}.nav{display:flex;background:#e9edf3;border-radius:11px;padding:3px;margin-bottom:14px;gap:3px}.nav button{flex:1;border:0;border-radius:9px;background:transparent;padding:11px 5px;color:#526175;font-size:13px;font-weight:650}.nav button.on{background:#fff;color:#1d2b3e;box-shadow:0 1px 5px #00000013}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.sectiontitle{font-size:14px;font-weight:750;margin-bottom:9px}.date{border:1px solid var(--line);background:white;color:#263448;border-radius:9px;padding:9px 10px;font-size:13px;max-width:163px}.slot{display:flex;align-items:stretch;gap:6px;margin:6px 0}.slot-main{flex:1;min-width:0;text-align:left;display:flex;gap:10px;align-items:center;border:1px solid #e4e8ee;border-radius:10px;padding:11px 10px;min-height:48px;background:white;color:#223044}.slot-main.active{border:2px solid var(--blue);padding:10px 9px;background:#f5f8fd}.slotnum{font-size:13px;color:#8b96a3;min-width:17px}.slot-fields{display:flex;flex:1;min-width:0;gap:6px;align-items:center}.slot-fields input{min-width:0;border:1px solid #dce2e9;border-radius:7px;padding:8px 7px;font-size:13px;background:#fff;color:#243246}.slot-fields .custom-id{width:85px;flex:none;text-align:center}.slot-fields .custom-name{flex:1}.slot-fields input:focus{outline:2px solid #8eb0df;outline-offset:0}.slot-selected{flex:1;min-width:0;display:flex;gap:10px;align-items:center}.slotname{font-size:13px;font-weight:600;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.empty{color:#a0a9b5;font-weight:450}.arrows{display:flex;flex-direction:column;gap:2px}.arrow{width:34px;height:24px;border:0;border-radius:6px;background:#f2f4f7;color:#64748b;font-size:17px;line-height:18px}.outline{background:#fff;border:1px solid #dde3eb;color:#516174;border-radius:9px;padding:10px 12px;font-size:13px;font-weight:650}.full{width:100%}.filter{display:flex;gap:3px;background:#f1f3f6;padding:3px;border-radius:10px;margin-bottom:10px}.filter button{flex:1;min-width:0;background:transparent;border:0;border-radius:8px;padding:9px 3px;font-weight:650;font-size:12px;color:#7d8998}.filter button.on{background:#fff;color:#244d7b;box-shadow:0 1px 4px #00000013}.field{display:flex;align-items:center;border:1px solid #dce2e9;border-radius:10px;background:#fff;padding:0 10px}.field input{min-width:0;flex:1;outline:none;border:0;padding:13px 3px;font-size:14px}.searchwrap{position:relative}.results{display:none;position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:5;background:#fff;border:1px solid #e1e6ee;border-radius:11px;box-shadow:0 9px 25px #172b4b26;max-height:260px;overflow:auto}.results.show{display:block}.resultcount{margin:7px 2px 0;color:#7b8796;font-size:11px;text-align:right;min-height:16px}.more-results{display:block;width:100%;padding:12px;background:#f6f8fb;color:#315b93;border:0;font-size:12px;font-weight:700}.more-results:active{background:#e8eef8}.result{display:block;width:100%;text-align:left;background:white;border:0;border-bottom:1px solid #f0f1f4;padding:10px 12px}.result:active{background:#eff4fc}.result strong{font-size:13px;font-weight:650}.result small{display:block;color:#8693a3;margin-top:3px;font-size:11px}.primary{border:0;border-radius:11px;padding:13px;background:#315b93;color:white;font-weight:750;font-size:14px}.hint{font-size:11px;color:#8b96a3;margin-top:8px;line-height:1.5}.actions{display:grid;gap:9px}.hidden{display:none!important}.historyitem{padding:12px 0;border-bottom:1px solid var(--line)}.historyitem:last-child{border:0}.history-open{display:block;flex:1;min-width:0;text-align:left;background:transparent;border:0;padding:8px 0;color:inherit}.history-open strong{display:block;margin-bottom:4px}.history-open:active{opacity:.65}.chip{font-size:10px;color:#748093;background:#f3f5f8;padding:4px 7px;border-radius:20px}.preview{background:#fff;border:1px solid #e8e8e8;border-radius:15px;padding:21px 17px;box-shadow:0 7px 25px #00000009}.pvhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.pvtitle{font-weight:780;font-size:27px;letter-spacing:-.65px}.pvdate{text-align:right;font-size:13px;font-weight:700}.pvdate span{display:block;color:#8b96a3;font-size:12px;font-weight:450;margin-top:3px}.pvline{height:1px;background:#e5e7eb;margin:17px 0 3px}.pvitem{padding:18px 0;border-bottom:1px solid #edf0f3;display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center}.pvitem:last-child{border:0}.pvnum{font-size:14px;font-weight:750;align-self:center;white-space:nowrap;text-align:center;line-height:1.3}.pvname{font-size:14px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}.pvsub{font-size:11px;color:#8c99a8;margin-top:5px;line-height:1.45}.status{min-height:18px;font-size:12px;color:#386b47;text-align:center}.foot{text-align:center;color:#9ba4af;font-size:11px;margin-top:15px}@media(min-width:640px){.app{padding-top:26px}} 
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#1f2937;background:#f5f6f8;--blue:#315b93;--line:#e7eaf0}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.35;cursor:default}.app{max-width:510px;margin:auto;padding:15px 14px 32px}.top{display:flex;justify-content:space-between;align-items:center;margin:5px 1px 14px}.top h1{font-size:23px;margin:0;letter-spacing:-.5px}.muted{font-size:12px;color:#84909e}.card{background:white;border:1px solid #e9edf2;border-radius:17px;padding:15px;margin-bottom:12px;box-shadow:0 2px 12px #17263a08}.nav{display:flex;background:#e9edf3;border-radius:11px;padding:3px;margin-bottom:14px;gap:3px}.nav button{flex:1;border:0;border-radius:9px;background:transparent;padding:11px 5px;color:#526175;font-size:13px;font-weight:650}.nav button.on{background:#fff;color:#1d2b3e;box-shadow:0 1px 5px #00000013}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.sectiontitle{font-size:14px;font-weight:750;margin-bottom:9px}.date{border:1px solid var(--line);background:white;color:#263448;border-radius:9px;padding:9px 10px;font-size:13px;max-width:163px}.slot{display:flex;align-items:stretch;gap:6px;margin:6px 0}.slot-main{flex:1;min-width:0;text-align:left;display:flex;gap:10px;align-items:center;border:1px solid #e4e8ee;border-radius:10px;padding:11px 10px;min-height:48px;background:white;color:#223044}.slot-main.active{border:2px solid var(--blue);padding:10px 9px;background:#f5f8fd}.slotnum{font-size:13px;color:#8b96a3;min-width:17px}.slot-fields{display:flex;flex:1;min-width:0;gap:6px;align-items:center}.slot-fields input{min-width:0;border:1px solid #dce2e9;border-radius:7px;padding:8px 7px;font-size:13px;background:#fff;color:#243246}.slot-fields .custom-id{width:85px;flex:none;text-align:center}.slot-fields .custom-name{flex:1}.slot-fields input:focus{outline:2px solid #8eb0df;outline-offset:0}.slot-selected{flex:1;min-width:0;display:flex;gap:10px;align-items:center}.slotname{font-size:13px;font-weight:600;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.empty{color:#a0a9b5;font-weight:450}.arrows{display:flex;flex-direction:column;gap:2px}.arrow{width:34px;height:24px;border:0;border-radius:6px;background:#f2f4f7;color:#64748b;font-size:17px;line-height:18px}.outline{background:#fff;border:1px solid #dde3eb;color:#516174;border-radius:9px;padding:10px 12px;font-size:13px;font-weight:650}.full{width:100%}.filter{display:flex;gap:3px;background:#f1f3f6;padding:3px;border-radius:10px;margin-bottom:10px}.filter button{flex:1;min-width:0;background:transparent;border:0;border-radius:8px;padding:9px 3px;font-weight:650;font-size:12px;color:#7d8998}.filter button.on{background:#fff;color:#244d7b;box-shadow:0 1px 4px #00000013}.field{display:flex;align-items:center;border:1px solid #dce2e9;border-radius:10px;background:#fff;padding:0 10px}.field input{min-width:0;flex:1;outline:none;border:0;padding:13px 3px;font-size:14px}.searchwrap{position:relative}.results{display:none;position:absolute;top:calc(100% + 5px);left:0;right:0;z-index:5;background:#fff;border:1px solid #e1e6ee;border-radius:11px;box-shadow:0 9px 25px #172b4b26;max-height:260px;overflow:auto}.results.show{display:block}.resultcount{margin:7px 2px 0;color:#7b8796;font-size:11px;text-align:right;min-height:16px}.more-results{display:block;width:100%;padding:12px;background:#f6f8fb;color:#315b93;border:0;font-size:12px;font-weight:700}.more-results:active{background:#e8eef8}.result{display:block;width:100%;text-align:left;background:white;border:0;border-bottom:1px solid #f0f1f4;padding:10px 12px}.result:active{background:#eff4fc}.result strong{font-size:13px;font-weight:650}.result small{display:block;color:#8693a3;margin-top:3px;font-size:11px}.primary{border:0;border-radius:11px;padding:13px;background:#315b93;color:white;font-weight:750;font-size:14px}.hint{font-size:11px;color:#8b96a3;margin-top:8px;line-height:1.5}.actions{display:grid;gap:9px}.hidden{display:none!important}.historyitem{padding:12px 0;border-bottom:1px solid var(--line)}.historyitem:last-child{border:0}.history-open{display:block;flex:1;min-width:0;text-align:left;background:transparent;border:0;padding:8px 0;color:inherit}.history-open strong{display:block;margin-bottom:4px}.history-open:active{opacity:.65}.chip{font-size:10px;color:#748093;background:#f3f5f8;padding:4px 7px;border-radius:20px}.preview{background:#fff;border:1px solid #e8e8e8;border-radius:15px;padding:21px 17px;box-shadow:0 7px 25px #00000009}.pvhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.pvtitle{font-weight:780;font-size:27px;letter-spacing:-.65px}.pvdate{text-align:right;font-size:13px;font-weight:700}.pvdate span{display:block;color:#8b96a3;font-size:12px;font-weight:450;margin-top:3px}.pvline{height:1px;background:#e5e7eb;margin:17px 0 3px}.pvitem{padding:18px 0;border-bottom:1px solid #edf0f3;display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center}.pvitem:last-child{border:0}.pvnum{font-size:14px;font-weight:750;align-self:center;white-space:nowrap;text-align:center;line-height:1.3}.pvname{font-size:14px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}.pvsub{font-size:11px;color:#8c99a8;margin-top:5px;line-height:1.45}.status{min-height:18px;font-size:12px;color:#386b47;text-align:center}.foot{text-align:center;color:#9ba4af;font-size:11px;margin-top:15px}.simpleinput{display:block;width:100%;border:1px solid #dce2e9;border-radius:10px;background:#fff;padding:11px;font-size:14px;color:#263448;margin:5px 0 8px}.optionline{padding:9px 2px;font-size:13px}.optionline input{accent-color:#315b93}.formlabel{font-size:12px;font-weight:650;color:#556273;margin-top:8px;display:block}.manage-results{max-height:290px;overflow:auto}.manage-result{display:block;width:100%;padding:9px 3px;text-align:left;background:white;border:0;border-bottom:1px solid #eef1f4;font-size:13px}.manage-result small{display:block;color:#8793a0;margin-top:3px}.occ-card{padding:9px;background:#f6f8fb;border-radius:9px;font-size:12px;margin-top:8px}.occ-card button{display:block;width:100%;border:0;background:none;text-align:left;padding:7px;color:#315b93}.special-label{font-size:11px;color:#9b751c;font-weight:650}@media(min-width:640px){.app{padding-top:26px}} 
 </style>
 </head><body><main class="app">
 <header class="top"><h1>♫ Louvores</h1><span class="muted" id="connectivity" aria-live="polite">Conectando...</span></header>
-<nav class="nav"><button data-page="editor" class="on">Montar</button><button data-page="preview">Imagem</button><button data-page="history">Histórico</button></nav>
+<nav class="nav"><button data-page="editor" class="on">Montar</button><button data-page="preview">Imagem</button><button data-page="history">Histórico</button><button data-page="manage">Louvores</button></nav>
 <section id="editor">
 <div id="editingnotice" class="card hidden" role="status" style="border:1px solid #e5b568;background:#fff7e8"><strong id="editinglabel">Editando culto anterior</strong><p class="hint" style="margin:6px 0 10px">As alterações neste modo modificam um registro do histórico. Para montar um novo culto, saia da edição.</p><button type="button" id="newRepertoire" class="outline full">Sair da edição e montar novo</button></div>
 <div class="card"><div class="sectiontitle">Escolher louvor <span id="slotlabel" class="muted"></span></div>
@@ -22,11 +22,24 @@
 <div class="searchwrap"><div class="field"><span style="color:#92a0af;margin-right:7px">⌕</span><input id="search" autocomplete="off" placeholder="Número ou nome do louvor..." aria-label="Pesquisar louvor"><span style="font-size:10px;color:#9aa6b3">▾</span></div><div id="results" class="results"></div></div>
 <div id="resultcount" class="resultcount" aria-live="polite">Calculando resultados...</div><div class="hint" id="catalogstatus">Catálogo em carregamento. A pesquisa funciona offline após a primeira sincronização.</div></div>
 <div class="card"><div class="row" style="margin-bottom:9px"><div class="sectiontitle" style="margin:0">Repertório</div><input id="date" class="date" type="date"></div>
+<div id="sundayOption" class="optionline hidden"><label><input type="checkbox" id="ebd"> Escola Bíblica Dominical (EBD)</label></div>
+<div class="optionline"><label><input type="checkbox" id="especial"> ⭐ Marcar como culto especial</label></div>
+<div id="specialName" class="hidden"><label class="formlabel" for="specialTitle">Nome do culto especial (opcional)</label><input id="specialTitle" class="simpleinput" maxlength="120" placeholder="Ex.: Natal 2026"></div>
 <div id="slots"></div><p class="hint">Toque em um espaço para escrever o número e o nome diretamente, ou escolha uma música no catálogo acima. Louvores digitados não entram no histórico de última execução.</p><button id="remove" class="outline full" style="margin-top:8px">Remover selecionado</button></div>
 <div class="actions"><p id="offlinenote" class="hint hidden" style="text-align:center;margin:0 0 3px">Modo offline — repertório não será salvo no histórico.</p><button id="save" class="primary full">Salvar e compartilhar</button><div class="status" id="status"></div></div>
 </section>
 <section id="previewpage" class="hidden"><div id="previewCard" class="preview"></div><div class="actions" style="margin-top:12px"><button id="share" class="primary full">Compartilhar imagem</button><button id="download" class="outline full">Baixar PNG</button><button id="editFromPreview" class="outline full hidden">Editar repertório</button><button id="back" class="outline full">Voltar à montagem</button></div><p class="hint">No celular, o botão de compartilhar tenta abrir o menu nativo. Caso não esteja disponível, baixa a imagem.</p><div class="status" id="sharestatus"></div></section>
-<section id="history" class="hidden"><div class="card"><div class="sectiontitle">Histórico compartilhado</div><div id="historylist"></div></div><div class="hint"><span id="historynote">Histórico sincronizado quando houver internet.</span></div></section>
+<section id="history" class="hidden">
+<div class="card"><div class="sectiontitle">Pesquisar no histórico</div><input class="simpleinput" id="historySearch" placeholder="Dia, data, louvor ou nome especial..." aria-label="Pesquisar no histórico"><div class="filter" id="periodFilters" style="margin-top:9px"><button data-period="all" class="on">Todos</button><button data-period="30">30 dias</button><button data-period="90">3 meses</button><button data-period="365">1 ano</button></div><div id="historyCount" class="hint"></div><div id="songOccurrences" class="hidden"></div></div>
+<div class="card"><div class="sectiontitle">Histórico compartilhado</div><div id="historylist"></div></div><div class="hint"><span id="historynote">Histórico sincronizado quando houver internet.</span></div></section>
+<section id="manage" class="hidden">
+<div class="card"><div class="sectiontitle">Gerenciar louvores</div><p class="hint">Adicione músicas ou corrija nome, número, categoria e tom do catálogo. As mudanças ficam na planilha e não alteram cultos antigos.</p><input id="manageSearch" class="simpleinput" placeholder="Encontrar louvor pelo número ou nome..."><div id="manageResults" class="manage-results"></div><button class="outline full" id="newSong" style="margin-top:9px">+ Cadastrar novo louvor</button></div>
+<div class="card hidden" id="manageForm"><div class="sectiontitle" id="manageFormTitle">Cadastro do louvor</div>
+<label class="formlabel">Categoria</label><select id="songCat" class="simpleinput"><option>Coletânea</option><option>Avulsos</option><option>CIA</option></select>
+<label class="formlabel">Número / identificação</label><input id="songNumber" class="simpleinput" maxlength="40" placeholder="Ex.: 037, AVULSO, CIA">
+<label class="formlabel">Nome</label><input id="songName" class="simpleinput" maxlength="240" placeholder="Nome do louvor">
+<label class="formlabel">Tom</label><input id="songTone" class="simpleinput" maxlength="24" placeholder="Ex.: C, F#m, Bb, D7">
+<div class="actions" style="margin-top:14px"><button id="songSave" class="primary full">Salvar louvor</button><button id="songDelete" class="outline full hidden">Excluir louvor</button><button id="songCancel" class="outline full">Cancelar</button></div><p id="manageStatus" class="status"></p></div></section>
 <div class="foot">Louvores • histórico via Google Sheets • geração de imagem offline</div>
 </main>
 <script>
@@ -34,18 +47,33 @@
 // Amostra demonstrativa: conferir categoria e numeração antes de usar como catálogo oficial.
 const sampleCatalog=[{"id":"001","name":"O Sangue de Jesus Tem Poder","cat":"Coletânea","ago":null},{"id":"002","name":"O Sangue de Jesus Tem Poder para Salvar","cat":"Coletânea","ago":null},{"id":"003","name":"Clamo a Ti","cat":"Coletânea","ago":null},{"id":"004","name":"Quando Te Prostrares","cat":"Coletânea","ago":null},{"id":"005","name":"Clamando Estou","cat":"Coletânea","ago":null},{"id":"006","name":"Jesus, Ó Meu Jesus","cat":"Coletânea","ago":null},{"id":"007","name":"Nesta Hora em Oração","cat":"Coletânea","ago":null},{"id":"008","name":"Pelo Sangue de Jesus","cat":"Coletânea","ago":null},{"id":"009","name":"Senhor, Me Chego a Ti","cat":"Coletânea","ago":null},{"id":"010","name":"Vamos Lavar as Vestes","cat":"Coletânea","ago":null},{"id":"011","name":"Reveste, Senhor, Teu Povo","cat":"Coletânea","ago":null},{"id":"012","name":"Há Vitória para Mim","cat":"Coletânea","ago":null},{"id":"013","name":"Põe Teu Sangue Sobre Mim","cat":"Coletânea","ago":null},{"id":"014","name":"Em Teu Altar, Senhor","cat":"Coletânea","ago":null},{"id":"015","name":"Clamarei, Clamarei","cat":"Coletânea","ago":null},{"id":"016","name":"Se Andarmos na Luz","cat":"Coletânea","ago":null},{"id":"017","name":"Em Tua Presença Entramos","cat":"Coletânea","ago":null},{"id":"018","name":"Prostrado Estou Diante de Ti","cat":"Coletânea","ago":null},{"id":"019","name":"Teu Povo Clama","cat":"Coletânea","ago":null},{"id":"020","name":"O Teu Pecado Tu Queres Deixar?","cat":"Coletânea","ago":null},{"id":"021","name":"Nesta Hora de Clamor","cat":"Coletânea","ago":null},{"id":"022","name":"Bendito Seja o Cordeiro","cat":"Coletânea","ago":null},{"id":"023","name":"Senhor, Ouve a Minha Oração","cat":"Coletânea","ago":null},{"id":"024","name":"Eis o Cordeiro de Deus","cat":"Coletânea","ago":null},{"id":"025","name":"Senhor, A Ti Clamo","cat":"Coletânea","ago":null},{"id":"026","name":"Seja Só o Senhor Louvado Aqui","cat":"Coletânea","ago":null},{"id":"027","name":"Cordeiro Eterno","cat":"Coletânea","ago":null},{"id":"028","name":"O Poder do Sangue de Jesus","cat":"Coletânea","ago":null},{"id":"029","name":"Transborda-me, Senhor","cat":"Coletânea","ago":null},{"id":"030","name":"Oh! Que Precioso Sangue","cat":"Coletânea","ago":null},{"id":"031","name":"Junto a Ti Suplico, Ó Pai","cat":"Coletânea","ago":null},{"id":"032","name":"O Sangue de Jesus, Vertido Ali na Cruz","cat":"Coletânea","ago":null},{"id":"033","name":"Eu Me Prostro em Teu Altar","cat":"Coletânea","ago":null},{"id":"034","name":"Quando Buscamos","cat":"Coletânea","ago":null},{"id":"035","name":"A Meu Senhor","cat":"Coletânea","ago":null},{"id":"036","name":"Crucificado Foi Meu Jesus","cat":"Coletânea","ago":null},{"id":"037","name":"Nesta Hora Esqueço o Mundo","cat":"Coletânea","ago":null},{"id":"038","name":"Pelo Sangue de Jesus Irei Clamar","cat":"Coletânea","ago":null},{"id":"039","name":"Jesus, Tu És o Meu Deus","cat":"Coletânea","ago":null},{"id":"040","name":"Oh! Que Sangue Poderoso","cat":"Coletânea","ago":null},{"id":"041","name":"Além do Véu Eu Quero Estar","cat":"Coletânea","ago":null},{"id":"042","name":"Senhor, Suplico a Ti em Oração","cat":"Coletânea","ago":null},{"id":"043","name":"Vou Clamar","cat":"Coletânea","ago":null},{"id":"044","name":"Conforme a Sua Infinita Graça","cat":"Coletânea","ago":null},{"id":"045","name":"Nos Átrios do Senhor Entramos","cat":"Coletânea","ago":null},{"id":"046","name":"Ao Sentir o Teu Perdão","cat":"Coletânea","ago":null},{"id":"047","name":"É Teu Sangue","cat":"Coletânea","ago":null},{"id":"048","name":"Pelo Sangue de Jesus Eu Vou Clamar","cat":"Coletânea","ago":null},{"id":"049","name":"Na Hora em Que Eu Quiser Falar com Deus","cat":"Coletânea","ago":null},{"id":"050","name":"O Sangue de Jesus","cat":"Coletânea","ago":null},{"id":"051","name":"O Cordeiro que na Cruz Morreu","cat":"Coletânea","ago":null},{"id":"052","name":"Escuta-me, Senhor","cat":"Coletânea","ago":null},{"id":"053","name":"O Sangue do Cordeiro de Deus","cat":"Coletânea","ago":null},{"id":"054","name":"Há Vitória Sempre em Ti, Senhor","cat":"Coletânea","ago":null},{"id":"055","name":"Senhor, Meu Deus e Pai","cat":"Coletânea","ago":null},{"id":"056","name":"Vitória Sobre Vitória","cat":"Coletânea","ago":null},{"id":"057","name":"Em Fervente Oração","cat":"Coletânea","ago":null},{"id":"058","name":"Atende a Voz do Meu Clamor","cat":"Coletânea","ago":null},{"id":"059","name":"Se Orarmos ao Senhor","cat":"Coletânea","ago":null},{"id":"060","name":"Bem de Manhã, Embora o Céu Sereno","cat":"Coletânea","ago":null},{"id":"061","name":"Suba a Minha Oração","cat":"Coletânea","ago":null},{"id":"062","name":"No Silêncio da Noite","cat":"Coletânea","ago":null},{"id":"063","name":"Invoca-me e Te Responderei","cat":"Coletânea","ago":null},{"id":"064","name":"Brilhe Sobre Mim","cat":"Coletânea","ago":null},{"id":"065","name":"Quando o Dia Amanhece","cat":"Coletânea","ago":null},{"id":"066","name":"De Madrugada Eu Busco a Face do Senhor","cat":"Coletânea","ago":null},{"id":"067","name":"Toca pela Fé","cat":"Coletânea","ago":null},{"id":"068","name":"Lá no Cimo do Monte","cat":"Coletânea","ago":null},{"id":"069","name":"O Anjo do Senhor Está Passeando","cat":"Coletânea","ago":null},{"id":"AVULSO","name":"Ainda Há Tempo","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"A Melhor Coisa","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"A Palavra de Poder","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Buscar-te-ei","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Com Meu Coração","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Como Não Entoar Teu Louvor?","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Como Ovelhas Perdidas","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Cordeiro de Deus","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Deus El Shaday","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Em Caminhos de Dor","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Eu Clamo pelo Sangue de Jesus","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Faz Me Lembrar","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Firme Estarei","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Jesus É a Porta","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Jesus, o Amigo Incomparável","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Jesus Passou Seu Sangue Aqui","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Maravilhoso (Emanuel, Deus Que Conosco Está)","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"O Senhor É Minha Rocha","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Perante a Tua Grandeza","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Porque Deus Ama","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Profecia","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Quando Entrei Neste Lugar","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Quando Você Foi Formado (Amor Incondicional)","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Uma Voz Mansa e Delicada","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Um Lar de Fé","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Abre o Coração","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Abriga-me","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Acabou-se o Tempo da Derrota","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Acende a Minha Candeia","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"A Colheita Final","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Adeus Lodebar","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Adoração","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Adorador Eu Sou","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"A Esperança","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"A Formosa Jerusalém","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Agnus Dei","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Águas que Saram","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Ah! Filho Meu Pequenino","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"A Igreja Vem","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Ainda que a Figueira Não Floresça","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Ajoelhado","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Ajuntamento","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Alegrei-me","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Aleluia ao Cordeiro","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Aleluia (A Terra Vai Um Dia Contemplar)","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Aleluia! Cristo É Vivo","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Alguém Me Falou do Amor","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Aliança","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"Amigo Maior","cat":"Avulsos","ago":null},{"id":"AVULSO","name":"A Minh'Alma Espera","cat":"Avulsos","ago":null},{"id":"CIA 015","name":"Exemplo infantil (fictício)","cat":"CIA","ago":null},{"id":"CIA","name":"Exemplo infantil sem número (fictício)","cat":"CIA","ago":null}].map((x,i)=>({...x,key:'m'+i}));
 let catalog=sampleCatalog;
-const byKey=k=>k&&typeof k==='object'&&k.custom?{id:(k.id||'').trim()||'AVULSO',name:(k.name||'').trim(),cat:'Personalizado',custom:true}:catalog.find(x=>x.key===k)||sampleCatalog.find(x=>x.key===k);
+let baseCatalog=sampleCatalog, catalogChanges=[],manageEditing=null,manageOpened=null;
+try{const saved=JSON.parse(localStorage.getItem('louvores_catalogo_manual_cache_v1')||'[]');if(Array.isArray(saved))catalogChanges=saved}catch{}
+function catRef(m){return m.cat+'|'+m.id+'|'+m.name;}
+function applyCatalogChanges(){
+ const excludes=new Set(catalogChanges.filter(x=>x.excluido).map(x=>x.ref).filter(Boolean));
+ const merged=baseCatalog.filter(m=>!excludes.has(catRef(m))).map(m=>{
+  const ov=catalogChanges.find(x=>x.ref===catRef(m)&&!x.excluido);
+  return ov?{...m,id:ov.numero,name:ov.nome,cat:ov.cat,tom:ov.tom,key:m.key,overrideId:ov.id}:m;
+ });
+ for(const o of catalogChanges){if(!o.ref&&!o.excluido)merged.push({id:o.numero,name:o.nome,cat:o.cat,tom:o.tom,key:o.id,overrideId:o.id})}
+ catalog=merged;
+ updateCount();refreshLastDates();renderSlots();if(state.page==='manage')renderManage();
+}
+async function loadCatalogChanges(){const r=await apiGet('catalogo_manual');if(!r.sucesso||!Array.isArray(r.mudancas))throw Error('Cadastro manual indisponível');catalogChanges=r.mudancas;try{localStorage.setItem('louvores_catalogo_manual_cache_v1',JSON.stringify(catalogChanges))}catch{}applyCatalogChanges();}
+
+const byKey=k=>k&&typeof k==='object'&&(k.custom||k.historical)?{id:String(k.id||'AVULSO').trim(),name:String(k.name||'').trim(),tom:k.tom||'',cat:'Personalizado',custom:!!k.custom}:catalog.find(x=>x.key===k)||sampleCatalog.find(x=>x.key===k);
 // Separa apenas tons musicais no final do título; parênteses de subtítulos permanecem intactos.
 function songDisplay(m){
  if(!m)return null;
  const title=String(m.name||'');
  const tone=title.match(/\s*\(\s*([A-G](?:#|b)?(?:m|maj7|m7|7|sus2|sus4|add9)?(?:\/[A-G](?:#|b)?)?)\s*\)\s*$/i);
- return {...m,name:tone?title.slice(0,tone.index).trimEnd():title,tom:tone?tone[1]:null};
+ return {...m,name:tone?title.slice(0,tone.index).trimEnd():title,tom:m.tom|| (tone?tone[1]:null)};
 }
 const $=id=>document.getElementById(id);
 // Não recuperar rascunhos antigos: cada abertura começa com uma montagem limpa.
 try{localStorage.removeItem('repertorio_demo_v4')}catch{}
-const state={slots:[null,null,null],active:0,date:localISO(new Date()),cat:'Todos',search:'',history:[],editing:null,editingVersion:null,latest:null,temporary:null,historySelection:null,page:'editor',pending:null,saving:false,historyReady:false};
+const state={slots:[null,null,null],active:0,date:localISO(new Date()),ebd:false,especial:false,titulo:'',cat:'Todos',search:'',history:[],editing:null,editingVersion:null,latest:null,temporary:null,historySelection:null,page:'editor',pending:null,saving:false,historyReady:false,period:'all'};
 function localISO(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function fromISO(s){return new Date(s+'T12:00:00')}
 function day(s){return new Intl.DateTimeFormat('pt-BR',{weekday:'long'}).format(fromISO(s))}
@@ -53,10 +81,16 @@ function fmt(s){const [y,m,d]=s.split('-');return `${d}/${m}/${y}`}
 function since(m,date){if(!m || !m.lastDate)return '';const d=fromISO(date),last=fromISO(m.lastDate);const days=Math.round((d-last)/86400000);if(days<0||days>30)return '';if(days===0)return 'Última vez hoje';if(days===1)return 'Última vez ontem';if(days<14){const weeks=Math.floor(days/7);const w=new Intl.DateTimeFormat('pt-BR',{weekday:'long'}).format(last);const prep=['domingo','sábado'].includes(w)?'no':'na';return `Última vez há ${weeks?weeks+' semana':days+' dias'}, ${prep} ${w}`}return `Última vez há ${Math.floor(days/7)} semanas`}
 function persist(){/* Montagem temporária: nenhuma alteração local é armazenada. */}
 function resetDraft(){
- state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());
+ state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());state.ebd=false;state.especial=false;state.titulo='';
  state.editing=null;state.editingVersion=null;state.pending=null;state.temporary=null;
  state.search='';$('search').value='';$('date').value=state.date;
- $('status').textContent='';renderSlots();renderResults(false);refreshEditMode();
+ $('status').textContent='';renderServiceOptions();renderSlots();renderResults(false);refreshEditMode();
+}
+function isSunday(s){return fromISO(s).getDay()===0}
+function renderServiceOptions(){
+ if(!isSunday(state.date))state.ebd=false;
+ $('sundayOption').classList.toggle('hidden',!isSunday(state.date));$('ebd').checked=state.ebd;
+ $('especial').checked=state.especial;$('specialName').classList.toggle('hidden',!state.especial);$('specialTitle').value=state.titulo;
 }
 function refreshEditMode(){
  const editing=!!state.editing;
@@ -132,7 +166,7 @@ function renderResults(show=true){
  if(!all.length){const e=document.createElement('div');e.className='hint';e.style.padding='12px';e.textContent='Nenhum louvor encontrado';r.append(e)}
  r.classList.add('show');
 }
-function page(p){state.page=p;$('editor').classList.toggle('hidden',p!=='editor');$('previewpage').classList.toggle('hidden',p!=='preview');$('history').classList.toggle('hidden',p!=='history');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===p));if(p==='preview'){ $('editFromPreview').classList.toggle('hidden',!state.historySelection);$('editFromPreview').disabled=!navigator.onLine; $('back').textContent=state.historySelection?'Voltar ao histórico':'Voltar à montagem';renderPreview();}if(p==='editor')refreshEditMode();if(p==='history'){renderHistory();if(navigator.onLine)loadHistory().catch(()=>{});}window.scrollTo({top:0,behavior:'instant'})}
+function page(p){state.page=p;$('editor').classList.toggle('hidden',p!=='editor');$('previewpage').classList.toggle('hidden',p!=='preview');$('history').classList.toggle('hidden',p!=='history');$('manage').classList.toggle('hidden',p!=='manage');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===p));if(p==='preview'){ $('editFromPreview').classList.toggle('hidden',!state.historySelection);$('editFromPreview').disabled=!navigator.onLine; $('back').textContent=state.historySelection?'Voltar ao histórico':'Voltar à montagem';renderPreview();}if(p==='editor'){renderServiceOptions();refreshEditMode()}if(p==='manage'){renderManage();if(navigator.onLine)loadCatalogChanges().catch(()=>{})}if(p==='history'){renderHistory();if(navigator.onLine)loadHistory().catch(()=>{});}window.scrollTo({top:0,behavior:'instant'})}
 function selected(){return state.slots.filter(validSlot)}
 const API_URL='https://script.google.com/macros/s/AKfycbz3zHDc2w_2ty5_KxnR4sLt7CyiIoRYl8_dfChsSJNcesUepkiJ8IGI88sJDv3ilU92/exec';
 let apiSequence=0;
@@ -148,17 +182,22 @@ function apiGet(action){
   document.head.append(script);
  });
 }
-function historyToSlots(record){return record.musicas.map(m=>{
- const found=catalog.find(x=>String(x.id)===String(m.numero)&&norm(songDisplay(x).name)===norm(songDisplay({name:m.nome}).name));
- return !m.personalizado&&found?found.key:{custom:true,id:m.numero,name:m.nome};
-});}
+function historyToSlots(record){return record.musicas.map(m=>({historical:true,id:m.numero,name:m.nome,tom:m.tom||'',catalogoId:m.catalogoId||'',personalizado:!!m.personalizado}));}
 function historyToPreview(record){return {...record,date:record.data,songs:historyToSlots(record)}}
+function matchSong(a,m){
+ if(a.personalizado)return false;
+ const original=baseCatalog.find(x=>x.key===m.key);
+ const stable=original?catRef(original):'';
+ return (a.catalogoId && (a.catalogoId===m.key || a.catalogoId===stable || a.catalogoId===m.overrideId)) ||
+   (m.cat==='Coletânea' && a.catalogoId && /^coletanea-\d+$/i.test(a.catalogoId) && Number(a.catalogoId.split('-')[1])===Number(m.id)) ||
+   (String(a.numero).replace(/^0+/,'')===String(m.id).replace(/^0+/,'') && norm(songDisplay({name:a.nome}).name)===norm(songDisplay(m).name));
+}
 function refreshLastDates(){
  for(const m of catalog){
   let latest='';
   for(const rec of state.history){
    if(state.editing===rec.id || rec.data>state.date)continue;
-   if(rec.musicas.some(x=>!x.personalizado&&String(x.numero)===String(m.id)&&norm(songDisplay({name:x.nome}).name)===norm(songDisplay(m).name))){
+   if(rec.musicas.some(x=>matchSong(x,m))){
     if(rec.data>latest)latest=rec.data;
    }
   }
@@ -171,17 +210,19 @@ async function loadHistory(){
  const result=await apiGet('historico');
  if(!result || !result.sucesso || !Array.isArray(result.historico))throw new Error('Histórico indisponível');
  state.history=result.historico;state.historyReady=true;
- const latest=state.history[0];
- if(latest && !state.latest)state.latest=historyToPreview(latest);
+ // Não carregar automaticamente um repertório antigo na aba Imagem.
  refreshLastDates();if(state.page==='history')renderHistory();
  $('historynote').textContent='Histórico atualizado pelo Google Sheets.';
  return state.history;
 }
 function apiSongs(){return selected().map(key=>{
  const m=byKey(key),custom=!!(key&&typeof key==='object'&&key.custom);
- return {catalogoId:custom?'':String(m.cat)+'|'+String(m.id)+'|'+String(m.name),numero:String(m.id),nome:String(m.name),personalizado:custom};
+ if(key&&typeof key==='object'&&key.historical){return {catalogoId:key.catalogoId||'',numero:String(m.id),nome:String(m.name),tom:String(m.tom||''),personalizado:!!key.personalizado}}
+ const original=baseCatalog.find(x=>x.key===key);
+ const ref=custom?'':(original?catRef(original):(m.overrideId||String(m.cat)+'|'+String(m.id)+'|'+String(m.name)));
+ return {catalogoId:ref,numero:String(m.id),nome:String(songDisplay(m).name),tom:String(songDisplay(m).tom||''),personalizado:custom};
 });}
-function equalSongList(a,b){return a.length===b.length && a.every((m,i)=>String(m.numero)===String(b[i].numero)&&String(m.nome)===String(b[i].nome)&&Boolean(m.personalizado)===Boolean(b[i].personalizado));}
+function equalSongList(a,b){return a.length===b.length && a.every((m,i)=>String(m.numero)===String(b[i].numero)&&String(m.nome)===String(b[i].nome)&&String(m.tom||'')===String(b[i].tom||'')&&Boolean(m.personalizado)===Boolean(b[i].personalizado));}
 async function sendWrite(payload){
  // Resposta de POST de outro domínio não é legível. Só confirmamos após uma nova consulta.
  const body=new URLSearchParams({payload:JSON.stringify(payload)});
@@ -189,7 +230,7 @@ async function sendWrite(payload){
  for(let i=0;i<6;i++){
   const history=await apiGet('historico').then(x=>x.historico||[]).catch(()=>[]);
   const rec=history.find(r=>r.id===payload.culto.id);
-  if(rec && rec.data===payload.culto.data && equalSongList(rec.musicas,payload.culto.musicas))return rec;
+  if(rec && rec.data===payload.culto.data && rec.ebd===!!payload.culto.ebd && rec.especial===!!payload.culto.especial && rec.titulo===(payload.culto.titulo||'') && equalSongList(rec.musicas,payload.culto.musicas))return rec;
   await new Promise(resolve=>setTimeout(resolve,750*(i+1)));
  }
  throw new Error('O Google não confirmou o salvamento. Confira o histórico antes de tentar novamente.');
@@ -197,25 +238,25 @@ async function sendWrite(payload){
 async function save(){
  const songs=selected();if(!songs.length){$('status').textContent='Escolha pelo menos um louvor.';return}
  if(state.saving)return;
- if(!navigator.onLine && state.editing){$('status').textContent='Conecte-se para editar um culto já registrado.';return}if(!navigator.onLine){state.temporary={id:'offline',date:state.date,songs:songs.map(k=>typeof k==='object'?{...k}:k)};$('status').textContent='';$('sharestatus').textContent='';page('preview');return}
+ if(!navigator.onLine && state.editing){$('status').textContent='Conecte-se para editar um culto já registrado.';return}if(!navigator.onLine){state.temporary={id:'offline',date:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,songs:songs.map(k=>typeof k==='object'?{...k}:k)};$('status').textContent='';$('sharestatus').textContent='';page('preview');return}
  const pin=sessionStorage.getItem('louvoresPin')||prompt('Senha de edição do Louvores (fornecida pela igreja):');
  if(!pin)return;
  sessionStorage.setItem('louvoresPin',pin);
- const musicas=apiSongs(), signature=JSON.stringify({editing:state.editing,data:state.date,musicas});
+ const musicas=apiSongs(), signature=JSON.stringify({editing:state.editing,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,musicas});
  const retry=state.pending&&state.pending.signature===signature?state.pending:null;
  const recordId=state.editing||(retry?retry.id:'r'+(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)));
  state.pending={id:recordId,signature};
- const payload={action:state.editing?'editar':'salvar',pin,culto:{id:recordId,data:state.date,versao:state.editingVersion,musicas}};
+ const payload={action:state.editing?'editar':'salvar',pin,culto:{id:recordId,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.especial?state.titulo:'',versao:state.editingVersion,musicas}};
  state.saving=true;$('save').disabled=true;$('status').textContent='Enviando ao Google e conferindo o registro...';
  try{
   const confirmed=await sendWrite(payload);
-  state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);state.editing=null;state.editingVersion=null;state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());$('date').value=state.date;renderSlots();
+  state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);state.editing=null;state.editingVersion=null;state.slots=[null,null,null];state.active=0;state.date=localISO(new Date());state.ebd=false;state.especial=false;state.titulo='';$('date').value=state.date;renderServiceOptions();renderSlots();
   await loadHistory();$('status').textContent='Repertório salvo e confirmado no Google.';$('sharestatus').textContent='';page('preview');
  }catch(err){$('status').textContent=err.message||'Falha ao salvar. Confira o histórico.';}
  finally{state.saving=false;$('save').disabled=false;}
 }
 function previewRecord(){return state.historySelection ? historyToPreview(state.historySelection) : (state.temporary || state.latest)}
-function renderPreview(){const rec=previewRecord();const root=$('previewCard');root.replaceChildren();$('share').disabled=!rec;$('download').disabled=!rec;if(!rec){const msg=document.createElement('p');msg.className='hint';msg.textContent='Nenhuma imagem disponível. Monte um repertório e use o botão de geração.';root.append(msg);return;}const head=document.createElement('div');head.className='pvhead';const title=document.createElement('div');title.className='pvtitle';title.textContent='Louvores';const dr=document.createElement('div');dr.className='pvdate';dr.append(document.createTextNode(cap(day(rec.date))));const ds=document.createElement('span');ds.textContent=fmt(rec.date);dr.append(ds);head.append(title,dr);root.append(head);const divider=document.createElement('div');divider.className='pvline';root.append(divider);rec.songs.forEach(key=>{const m=byKey(key);if(!m)return;const r=document.createElement('div');r.className='pvitem';const num=document.createElement('div');num.className='pvnum';num.textContent=m.id;const txt=document.createElement('div');const name=document.createElement('div');name.className='pvname';const shown=songDisplay(m);name.textContent=shown.name;txt.append(name);if(shown.tom){const tone=document.createElement('div');tone.className='pvsub';tone.textContent=`Tom: ${shown.tom}`;txt.append(tone)}r.append(num,txt);root.append(r)})}
+function renderPreview(){const rec=previewRecord();const root=$('previewCard');root.replaceChildren();$('share').disabled=!rec;$('download').disabled=!rec;if(!rec){const msg=document.createElement('p');msg.className='hint';msg.textContent='Nenhuma imagem disponível. Monte um repertório e use o botão de geração.';root.append(msg);return;}const head=document.createElement('div');head.className='pvhead';const title=document.createElement('div');title.className='pvtitle';title.textContent=rec.especial&&rec.titulo?rec.titulo:'Louvores';const dr=document.createElement('div');dr.className='pvdate';dr.append(document.createTextNode(cap(day(rec.date))));const ds=document.createElement('span');ds.textContent=fmt(rec.date);dr.append(ds);if(rec.ebd){const e=document.createElement('span');e.textContent='EBD';dr.append(e)}if(rec.especial){const e=document.createElement('span');e.textContent='⭐ Culto especial';dr.append(e)}head.append(title,dr);root.append(head);const divider=document.createElement('div');divider.className='pvline';root.append(divider);rec.songs.forEach(key=>{const m=byKey(key);if(!m)return;const r=document.createElement('div');r.className='pvitem';const num=document.createElement('div');num.className='pvnum';num.textContent=m.id;const txt=document.createElement('div');const name=document.createElement('div');name.className='pvname';const shown=songDisplay(m);name.textContent=shown.name;txt.append(name);if(shown.tom){const tone=document.createElement('div');tone.className='pvsub';tone.textContent=`Tom: ${shown.tom}`;txt.append(tone)}r.append(num,txt);root.append(r)})}
 
 async function loadCatalog(){
  const status=$('catalogstatus');
@@ -226,14 +267,14 @@ async function loadCatalog(){
   if(!Array.isArray(data.songs)||!data.songs.length)throw Error('Catálogo vazio');
   const next=data.songs.filter(x=>x.name&&x.id&&['Coletânea','Avulsos','CIA'].includes(x.cat)).map((x,i)=>({...x,key:x.key||('c'+i),ago:null}));
   if(!next.length)throw Error('Catálogo inválido');
-  catalog=next;
+  baseCatalog=next;applyCatalogChanges();
   status.textContent=`${next.length} louvores no catálogo · disponível offline após carregar uma vez`;
   refreshLastDates();renderSlots();
   if(state.page==='preview')renderPreview();
-  renderResults(false);
+  renderResults(false);if(navigator.onLine)loadCatalogChanges().catch(()=>{});
  }catch(err){
   status.textContent='Catálogo de demonstração · publicação do catálogo completo pendente';
-  console.warn('Catálogo completo ainda não disponível:',err);
+  console.warn('Catálogo completo ainda não disponível:',err);applyCatalogChanges();
  }
 }
 
@@ -247,35 +288,102 @@ function editHistoryRecord(rec){
  state.historySelection=null;
  state.slots=[...historyToSlots(rec),null];
  state.active=state.slots.length-1;
- state.date=rec.data;state.editing=rec.id;state.editingVersion=rec.versao;
+ state.date=rec.data;state.ebd=!!rec.ebd;state.especial=!!rec.especial;state.titulo=rec.titulo||'';state.editing=rec.id;state.editingVersion=rec.versao;renderServiceOptions();
  $('date').value=state.date;
  persist();renderSlots();refreshEditMode();page('editor');
 }
+function renderManage(){
+ const list=$('manageResults');list.replaceChildren();const q=norm($('manageSearch').value.trim());
+ const results=catalog.filter(m=>!q||norm(m.id+' '+songDisplay(m).name+' '+m.cat).includes(q)).slice(0,60);
+ for(const m of results){const btn=document.createElement('button');btn.type='button';btn.className='manage-result';
+  const title=document.createElement('strong');title.textContent=m.id+' — '+songDisplay(m).name;
+  const sub=document.createElement('small');sub.textContent=m.cat+(songDisplay(m).tom?' · Tom: '+songDisplay(m).tom:'');
+  btn.append(title,sub);btn.onclick=()=>openSongForm(m);list.append(btn)}
+ if(!results.length)list.textContent='Nenhum louvor encontrado.';
+}
+function openSongForm(m){
+ manageOpened=m||null;
+ const ov=m?catalogChanges.find(x=>x.id===m.overrideId):null;
+ manageEditing=ov||null;
+ $('manageForm').classList.remove('hidden');$('manageFormTitle').textContent=m?'Editar louvor':'Cadastrar novo louvor';
+ $('songCat').value=m?.cat||'Avulsos';$('songNumber').value=m?.id||'';
+ $('songName').value=m?songDisplay(m).name:'';$('songTone').value=m?(songDisplay(m).tom||''):'';
+ $('songDelete').classList.toggle('hidden',!m);$('manageStatus').textContent='';
+ $('manageForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function hideSongForm(){$('manageForm').classList.add('hidden');manageOpened=null;manageEditing=null}
+async function catalogWrite(action,musica){
+ if(!navigator.onLine)throw Error('É necessário estar online para alterar o catálogo.');
+ const pin=sessionStorage.getItem('louvoresPin')||prompt('Senha de edição do Louvores:');if(!pin)throw Error('Operação cancelada.');
+ sessionStorage.setItem('louvoresPin',pin);
+ const body=new URLSearchParams({payload:JSON.stringify({action,pin,musica})});
+ await fetch(API_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body}).catch(()=>{});
+ for(let i=0;i<6;i++){
+  await new Promise(r=>setTimeout(r,550*(i+1)));
+  const response=await apiGet('catalogo_manual');const arr=response.mudancas||[];
+  let found;
+  if(['criar_musica','criar_override','ocultar_base'].includes(action))found=arr.find(x=>x.ref===(action==='criar_musica'?'':musica.ref)&&x.excluido===(action==='ocultar_base')&&x.nome===musica.nome&&x.numero===musica.numero&&x.cat===musica.cat&&x.tom===musica.tom);
+  else found=arr.find(x=>x.id===musica.id&&(action==='excluir_musica'?x.excluido:x.versao===musica.versao+1&&!x.excluido&&x.nome===musica.nome&&x.tom===musica.tom));
+  if(found){catalogChanges=arr;try{localStorage.setItem('louvores_catalogo_manual_cache_v1',JSON.stringify(catalogChanges))}catch{}applyCatalogChanges();return found;}
+ }
+ throw Error('Não foi possível confirmar o cadastro. Consulte novamente antes de repetir.');
+}
+async function saveSong(){
+ if(!$('songName').value.trim()){ $('manageStatus').textContent='Informe o nome.';return;}
+ const cat=$('songCat').value,numero=$('songNumber').value.trim()|| (cat==='CIA'?'CIA':'AVULSO');
+ const nome=$('songName').value.trim(),tom=$('songTone').value.trim();
+ const m={id:manageEditing?.id||'',ref:manageEditing?.ref||(manageOpened?catRef(baseCatalog.find(x=>x.key===manageOpened.key)||manageOpened):''),
+  cat,numero,nome,tom,versao:manageEditing?.versao||0};
+ let action=manageOpened?'editar_musica':'criar_musica';
+ if(manageOpened&&!manageEditing){
+  // First edit of imported song: create a new override using the original reference.
+  action='criar_override';
+ }
+ $('songSave').disabled=true;$('manageStatus').textContent='Salvando...';
+ try{await catalogWrite(action,m);hideSongForm();$('manageStatus').textContent=''}
+ catch(e){$('manageStatus').textContent=e.message}
+ finally{$('songSave').disabled=false}
+}
+async function deleteSong(){
+ if(!manageOpened||!confirm('Excluir este louvor do catálogo? Cultos antigos serão preservados.'))return;
+ $('songDelete').disabled=true;
+ try{
+  const base=baseCatalog.find(x=>x.key===manageOpened.key);
+  const m={id:manageEditing?.id||'',ref:manageEditing?.ref||(base?catRef(base):''),cat:manageOpened.cat,numero:manageOpened.id,nome:manageOpened.name,tom:manageOpened.tom||'',versao:manageEditing?.versao||0};
+  await catalogWrite(manageEditing?'excluir_musica':'ocultar_base',m);
+  hideSongForm();
+ }catch(e){$('manageStatus').textContent=e.message}finally{$('songDelete').disabled=false}
+}
+
+function historicSearchData(rec){
+ const parts=[rec.data,fmt(rec.data),day(rec.data),String(fromISO(rec.data).getMonth()+1),
+ new Intl.DateTimeFormat('pt-BR',{month:'long'}).format(fromISO(rec.data)),rec.titulo||'',rec.ebd?'EBD':'',rec.especial?'especial':''];
+ for(const m of rec.musicas)parts.push(m.numero||'',m.nome||'');
+ return norm(parts.join(' '));
+}
 function renderHistory(){
  const list=$('historylist');list.replaceChildren();
- if(!state.history.length){
-  list.textContent=state.historyReady?'Nenhum repertório salvo ainda.':'Conecte-se para consultar o histórico.';
-  list.className='muted';return;
+ const query=norm($('historySearch').value.trim());
+ const today=fromISO(localISO(new Date()));
+ const cutoff=new Date(today);if(state.period!=='all')cutoff.setDate(cutoff.getDate()-Number(state.period));
+ const filtered=state.history.filter(r=>(state.period==='all'||fromISO(r.data)>=cutoff)&&(!query||historicSearchData(r).includes(query)));
+ $('historyCount').textContent=`${filtered.length} de ${state.history.length} culto(s)`;
+ const matches=[];
+ if(query){for(const rec of filtered){for(const m of rec.musicas){if(norm(m.nome+' '+m.numero).includes(query))matches.push({rec,m});}}}
+ const occ=$('songOccurrences');occ.replaceChildren();occ.classList.toggle('hidden',!matches.length);
+ if(matches.length){const card=document.createElement('div');card.className='occ-card';
+  const title=document.createElement('strong');title.textContent=`${matches.length} apresentação(ões) encontrada(s)`;card.append(title);
+  for(const x of matches){const btn=document.createElement('button');btn.type='button';btn.textContent=`${x.m.numero} — ${x.m.nome} · ${fmt(x.rec.data)}${x.rec.ebd?' (EBD)':''}`;btn.onclick=()=>openHistoryRecord(x.rec);card.append(btn)}occ.append(card);
  }
+ if(!filtered.length){list.textContent=state.historyReady?'Nenhum culto encontrado.':'Conecte-se para consultar o histórico.';list.className='muted';return}
  list.className='';
- state.history.forEach(rec=>{
-  const div=document.createElement('div');div.className='historyitem';
-  const row=document.createElement('div');row.className='row';
-  const info=document.createElement('button');
-  info.className='history-open';
-  info.type='button';
-  info.setAttribute('aria-label','Ver repertório de '+fmt(rec.data));
-  const name=document.createElement('strong');
-  name.style.fontSize='14px';
-  name.textContent=`${cap(day(rec.data))} · ${fmt(rec.data)}`;
-  const sub=document.createElement('div');sub.className='muted';
-  sub.textContent=`${rec.musicas.length} louvor(es) · Toque para consultar`;
-  info.append(name,sub);
-  info.onclick=()=>openHistoryRecord(rec);
-  const edit=document.createElement('button');
-  edit.type='button';edit.className='outline';edit.textContent='Editar';
-  edit.disabled=!navigator.onLine;
-  edit.onclick=()=>editHistoryRecord(rec);
+ filtered.forEach(rec=>{
+  const div=document.createElement('div');div.className='historyitem';const row=document.createElement('div');row.className='row';
+  const info=document.createElement('button');info.className='history-open';info.type='button';info.setAttribute('aria-label','Ver repertório de '+fmt(rec.data));
+  const name=document.createElement('strong');name.style.fontSize='14px';name.textContent=`${rec.especial?'⭐ ':''}${cap(day(rec.data))} · ${fmt(rec.data)}${rec.ebd?' · EBD':''}`;
+  const sub=document.createElement('div');sub.className='muted';sub.textContent=`${rec.titulo?rec.titulo+' · ':''}${rec.musicas.length} louvor(es) · Toque para consultar`;
+  info.append(name,sub);info.onclick=()=>openHistoryRecord(rec);
+  const edit=document.createElement('button');edit.type='button';edit.className='outline';edit.textContent='Editar';edit.disabled=!navigator.onLine;edit.onclick=()=>editHistoryRecord(rec);
   row.append(info,edit);div.append(row);list.append(div);
  });
 }
@@ -302,9 +410,9 @@ function canvasImage(){
  const H=headerHeight+layout.reduce((sum,r)=>sum+r.rowHeight,0)+bottom;
  canvas.width=W*scale;canvas.height=H*scale;ctx.scale(scale,scale);
  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
- ctx.fillStyle='#1f2937';ctx.font='bold 44px Arial';ctx.textAlign='left';ctx.fillText('Louvores',pad,77);
+ ctx.fillStyle='#1f2937';ctx.font='bold 44px Arial';ctx.textAlign='left';ctx.fillText(rec.especial&&rec.titulo?rec.titulo:'Louvores',pad,77);
  ctx.textAlign='right';ctx.font='bold 23px Arial';ctx.fillText(cap(day(rec.date)),W-pad,55);
- ctx.fillStyle='#8a95a5';ctx.font='20px Arial';ctx.fillText(fmt(rec.date),W-pad,84);
+ ctx.fillStyle='#8a95a5';ctx.font='20px Arial';ctx.fillText(fmt(rec.date)+(rec.ebd?' · EBD':''),W-pad,84);
  ctx.textAlign='left';ctx.strokeStyle='#e6e9ee';ctx.lineWidth=1;
  ctx.beginPath();ctx.moveTo(pad,115);ctx.lineTo(W-pad,115);ctx.stroke();
  let top=headerHeight;
@@ -325,7 +433,14 @@ function canvasImage(){
 }
 function pngBlob(canvas){return new Promise(resolve=>canvas.toBlob(resolve,'image/png'))}
 async function share(downloadOnly=false){const label=$('sharestatus');if(!previewRecord()){label.textContent='Salve o repertório primeiro.';return}try{const blob=await pngBlob(canvasImage());if(!blob)throw Error('Não foi possível gerar a imagem');const file=new File([blob],`louvores-${previewRecord().date}.png`,{type:'image/png'});if(!downloadOnly&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Louvores'});label.textContent='Imagem enviada para o compartilhamento.';return}const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);label.textContent='PNG gerado. Você pode enviá-lo pelo WhatsApp.'}catch(err){if(err.name==='AbortError')return;label.textContent='Falha ao compartilhar: '+err.message}}
-$('date').value=state.date;$('date').onchange=e=>{state.date=e.target.value||localISO(new Date());persist();refreshLastDates();renderSlots()};$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft();page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft();page('editor')};$('save').onclick=save;$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};ensureBlank();renderSlots();renderPreview();updateCount();loadCatalog();if(navigator.onLine)loadHistory().catch(err=>{$('historynote').textContent='Não foi possível carregar o histórico: '+err.message;});
+$('date').value=state.date;renderServiceOptions();
+$('date').onchange=e=>{state.date=e.target.value||localISO(new Date());renderServiceOptions();persist();refreshLastDates();renderSlots();refreshEditMode()};
+$('ebd').onchange=e=>{state.ebd=e.target.checked};$('especial').onchange=e=>{state.especial=e.target.checked;renderServiceOptions()};
+$('specialTitle').oninput=e=>{state.titulo=e.target.value};
+$('historySearch').oninput=renderHistory;
+document.querySelectorAll('#periodFilters button').forEach(b=>b.onclick=()=>{state.period=b.dataset.period;document.querySelectorAll('#periodFilters button').forEach(x=>x.classList.toggle('on',x===b));renderHistory()});
+$('manageSearch').oninput=renderManage;$('newSong').onclick=()=>openSongForm(null);
+$('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel').onclick=hideSongForm;$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft();page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft();page('editor')};$('save').onclick=save;$('share').onclick=()=>share(false);$('download').onclick=()=>share(true);$('back').onclick=()=>{if(state.historySelection){state.historySelection=null;page('history')}else page('editor')};$('editFromPreview').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};ensureBlank();renderSlots();renderPreview();updateCount();loadCatalog();if(navigator.onLine)loadHistory().catch(err=>{$('historynote').textContent='Não foi possível carregar o histórico: '+err.message;});
 })();
 </script>
 <script>
