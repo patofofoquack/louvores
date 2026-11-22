@@ -15,7 +15,7 @@
 </style>
 </head><body><main class="app">
 <header class="top"><h1>♫ Louvores</h1><span class="muted" id="connectivity" aria-live="polite">Conectando...</span></header>
-<nav class="nav hidden" id="mainNav"><button data-page="projection">Projeção</button><button data-page="editor">Montar</button><button data-page="preview">Imagem</button><button data-page="history">Histórico</button><button data-page="manage">Louvores</button></nav>
+<nav class="nav hidden" id="mainNav"><button data-page="projection">Lista</button><button data-page="editor">Montar</button><button data-page="preview">Imagem</button><button data-page="history">Histórico</button><button data-page="manage">Louvores</button></nav>
 <section id="profileChoice" class="card hidden"><div class="profile-options"><button class="outline full" id="chooseInstrument">♫ Instrumentista</button><button class="outline full" id="chooseProjection">▣ Projeção</button></div></section>
 <section id="projectionpage" class="hidden"><div id="projectionCard" class="preview"></div><p id="projectionStatus" class="hint" style="text-align:center;margin-top:9px" aria-live="polite"></p></section>
 <section id="editor" class="hidden">
@@ -108,7 +108,7 @@ function storedProfile(){try{const p=localStorage.getItem(PROFILE_KEY);return p=
 function projectionToday(){
  const date=localISO(new Date()),records=state.history.filter(r=>r.data===date);
  if(!records.length)return null;
- return chronologicalDay(records,date).at(-1)||records[0];
+ return historyToPreview(chronologicalDay(records,date).at(-1)||records[0]);
 }
 function loadCachedHistory(){
  try{const cache=JSON.parse(localStorage.getItem(PROJECTION_CACHE_KEY)||'null');if(!state.historyReady&&Array.isArray(cache?.records)){state.history=cache.records;state.historyReady=true}}catch{}
@@ -511,7 +511,7 @@ async function loadCatalog(){
   baseCatalog=next;applyCatalogChanges();
   status.textContent=`${next.length} louvores no catálogo · disponível offline após carregar uma vez`;
   refreshLastDates();renderSlots();
-  if(state.page==='preview')renderPreview();
+  if(state.page==='preview')renderPreview();if(state.page==='projection')renderProjection();
   renderResults(false);if(navigator.onLine)loadCatalogChanges().catch(()=>{});
  }catch(err){
   status.textContent='Catálogo de demonstração · publicação do catálogo completo pendente';
