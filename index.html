@@ -40,7 +40,10 @@ html:not(.app-ready) .app{visibility:hidden}
 <p id="projectionNotice" class="projection-notice hidden" role="status" aria-live="polite">Repertório atualizado</p><p id="projectionStatus" class="hint" style="text-align:center;margin-top:9px" aria-live="polite"></p>
 <label id="vibrationSetting" class="hint hidden" style="display:flex;align-items:center;justify-content:center;gap:7px;margin:8px auto 0">
 <input id="vibrationEnabled" type="checkbox" checked> Vibração discreta ao atualizar
-</label></section>
+</label>
+<button id="testVibration" type="button" class="outline" style="display:block;margin:7px auto 0;padding:7px 12px;font-size:12px">Testar vibração</button>
+<p id="vibrationTestStatus" class="hint" style="text-align:center" aria-live="polite"></p>
+</section>
 <section id="editor" class="hidden">
 <div id="editingnotice" class="card hidden" role="status" style="border:1px solid #e5b568;background:#fff7e8"><div class="row"><strong id="editinglabel">Editando culto anterior</strong><button type="button" id="especial" class="special-star" aria-label="Marcar como culto especial" aria-pressed="false" title="Culto especial">☆</button></div>
 <p class="hint" style="margin:6px 0 10px">As alterações neste modo modificam um registro do histórico. Para montar um novo culto, saia da edição.</p>
@@ -160,7 +163,9 @@ function armVibrationForCurrentList(){
  if(!active&&latest&&(latest.encerrado||cultoExpired(latest)))return;
  // Uma visita anterior à Lista no mesmo culto continua valendo neste aparelho.
  if(previous?.date===date&&(!previous.cultoId||previous.cultoId===active?.id||!active))return;
- vibrationBaselinePending=true;
+ // Se a lista ainda está vazia, a próxima confirmação deve gerar vibração.
+ // Só usamos a primeira consulta como referência se já havia lista ativa.
+ vibrationBaselinePending=!!active;
  setVibrationArm({date,cultoId:active?.id||null,signature:active?projectionSignature(active):''});
 }
 function checkVibrationOnUpdate(activeRecord){
@@ -178,7 +183,7 @@ function checkVibrationOnUpdate(activeRecord){
   return;
  }
  if(arm.signature!==signature){
-  const shouldVibrate=vibrationEnabled&&state.page==='projection'&&!document.hidden&&!!userProfile;
+  const shouldVibrate=vibrationEnabled&&!document.hidden&&!!userProfile;
   setVibrationArm({date,cultoId:activeRecord.id,signature});
   if(shouldVibrate&&typeof navigator.vibrate==='function')navigator.vibrate(30);
  }else if(!arm.cultoId){
@@ -676,10 +681,11 @@ async function loadHistory(){
  state.history=result.historico;state.historyReady=true;
  projectionLastChecked=Date.now();
  if(vibrationBaselinePending){
-  // A primeira consulta após abrir a Lista estabelece o ponto de partida,
-  // sem vibrar por dados que já existiam antes de abrir.
+  // A primeira consulta apenas evita notificar mudanças já existentes
+  // quando a Lista foi aberta com um repertório carregado do cache.
   const active=projectionToday(),arm=readVibrationArm();
-  if(arm?.date===localISO(new Date())&&active)setVibrationArm({date:arm.date,cultoId:active.id,signature:projectionSignature(active)});
+  if(arm?.date===localISO(new Date())&&active?.id===arm.cultoId)setVibrationArm({date:arm.date,cultoId:active.id,signature:projectionSignature(active)});
+  else checkVibrationOnUpdate(active);
   vibrationBaselinePending=false;
  }else checkVibrationOnUpdate(projectionToday());
  if(state.page==='projection'){
@@ -805,6 +811,7 @@ function renderProjection(){
  renderRepertoireCard($('projectionCard'),display,'Nenhum repertório registrado para hoje.');
  $('projectionShareActions').classList.toggle('hidden',!rec);
  $('vibrationSetting').classList.toggle('hidden',!rec);
+ $('testVibration').classList.toggle('hidden',!rec);
  refreshAfterWordActions();
  const status=projectionLoading?'Atualizando repertório...':timeSinceChecked();
  $('projectionStatus').textContent=!navigator.onLine?(status?status+' · Offline':'Offline · último histórico consultado'):status;
@@ -1032,6 +1039,15 @@ $('afterWordSearch').oninput=afterWordMatches;
 document.querySelectorAll('#afterWordFilters button').forEach(button=>button.onclick=()=>{afterWordCategory=button.dataset.afterCat;document.querySelectorAll('#afterWordFilters button').forEach(x=>x.classList.toggle('on',x===button));afterWordMatches()});
 $('afterWordUndo').onclick=undoAfterWord;
 $('vibrationEnabled').checked=vibrationEnabled;
+$('testVibration').onclick=()=>{
+ const label=$('vibrationTestStatus');
+ if(typeof navigator.vibrate!=='function'){
+  label.textContent='Este navegador não oferece a função de vibração.';
+  return;
+ }
+ const accepted=navigator.vibrate(30);
+ label.textContent=accepted?'Teste enviado. Se não sentiu nada, confira o modo silencioso/não perturbe e a vibração do Android.':'O navegador recusou a vibração. Verifique as configurações ou teste no Chrome para Android.';
+};
 $('vibrationEnabled').onchange=event=>{
  vibrationEnabled=event.target.checked;
  try{localStorage.setItem(VIBRATION_KEY,vibrationEnabled?'on':'off')}catch{}
