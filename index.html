@@ -125,10 +125,10 @@ function lastAfterWord(){try{return JSON.parse(localStorage.getItem(AFTER_WORD_L
 function setLastAfterWord(value){try{if(value)localStorage.setItem(AFTER_WORD_LAST_KEY,JSON.stringify(value));else localStorage.removeItem(AFTER_WORD_LAST_KEY)}catch{}}
 function afterWordSong(m){const shown=songDisplay(m),base=baseCatalog.find(x=>x.key===m.key);return {catalogoId:base?catRef(base):m.overrideId||'',numero:String(m.id),nome:String(shown.name),tom:String(shown.tom||''),personalizado:false}}
 function refreshAfterWordActions(){
- const rec=projectionToday(),canView=userProfile==='instrument'&&!!rec;
+ const rec=projectionToday(),closed=!!rec?.encerrado;
+ const canView=userProfile==='instrument'&&!!rec&&!closed;
  $('afterWordActions').classList.toggle('hidden',!canView);
- if(!canView)return;
- const closed=!!rec.encerrado;
+ if(!canView){afterWordExpanded=false;afterWordEditingId=null;return;}
  $('afterWordAdd').classList.toggle('hidden',closed);
  $('afterWordAdd').disabled=afterWordBusy||!navigator.onLine;
  $('endService').classList.toggle('hidden',closed);
@@ -237,7 +237,7 @@ async function endService(){
  try{
   await postAfterWord({action:'encerrar_culto',cultoId:rec.id,versao:rec.versao},r=>r.encerrado===true);
   afterWordExpanded=false;setLastAfterWord(null);
-  $('projectionNotice').textContent='Culto encerrado';notifyProjectionChange();
+  $('projectionNotice').classList.add('hidden');clearTimeout(projectionNoticeTimer);
  }catch(e){alert(e.message)}
  finally{afterWordBusy=false;renderProjection()}
 }
