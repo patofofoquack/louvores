@@ -135,7 +135,7 @@ function sameRepertoire(a,b){
  });
 }
 function chronologicalDay(records,date){
- return records.filter(r=>r.data===date).slice().sort((a,b)=>{
+ return records.filter(r=>r.data===date).slice().reverse().sort((a,b)=>{
   const dateOf=r=>{const value=r.criadoEm||r.criado_em||r.createdAt||r.created_at||r.criado||'';
    const time=Date.parse(value);return Number.isFinite(time)?time:0;};
   return dateOf(a)-dateOf(b);
