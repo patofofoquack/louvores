@@ -149,12 +149,18 @@ let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTime
 const VIBRATION_KEY='louvores_vibracao_v1';
 const VIBRATION_ARM_KEY='louvores_lista_acompanhamento_v1';
 let vibrationEnabled=localStorage.getItem(VIBRATION_KEY)!=='off';
+let vibrationBaselinePending=false;
 function readVibrationArm(){try{return JSON.parse(localStorage.getItem(VIBRATION_ARM_KEY)||'null')}catch{return null}}
 function setVibrationArm(value){try{if(value)localStorage.setItem(VIBRATION_ARM_KEY,JSON.stringify(value));else localStorage.removeItem(VIBRATION_ARM_KEY)}catch{}}
 function armVibrationForCurrentList(){
  const date=localISO(new Date()),active=projectionToday(),previous=readVibrationArm();
+ const todayRecords=chronologicalDay(state.history,date);
+ const latest=todayRecords.at(-1);
+ // Um culto encerrado não reativa avisos sem que um novo culto seja aberto.
+ if(!active&&latest&&(latest.encerrado||cultoExpired(latest)))return;
  // Uma visita anterior à Lista no mesmo culto continua valendo neste aparelho.
  if(previous?.date===date&&(!previous.cultoId||previous.cultoId===active?.id||!active))return;
+ vibrationBaselinePending=true;
  setVibrationArm({date,cultoId:active?.id||null,signature:active?projectionSignature(active):''});
 }
 function checkVibrationOnUpdate(activeRecord){
@@ -669,7 +675,13 @@ async function loadHistory(){
  const oldToday=state.page==='projection'?chronologicalDay(state.history,localISO(new Date())).at(-1):null;
  state.history=result.historico;state.historyReady=true;
  projectionLastChecked=Date.now();
- checkVibrationOnUpdate(projectionToday());
+ if(vibrationBaselinePending){
+  // A primeira consulta após abrir a Lista estabelece o ponto de partida,
+  // sem vibrar por dados que já existiam antes de abrir.
+  const active=projectionToday(),arm=readVibrationArm();
+  if(arm?.date===localISO(new Date())&&active)setVibrationArm({date:arm.date,cultoId:active.id,signature:projectionSignature(active)});
+  vibrationBaselinePending=false;
+ }else checkVibrationOnUpdate(projectionToday());
  if(state.page==='projection'){
   const record=state.history.filter(r=>r.data===localISO(new Date()));
   const todayLatest=chronologicalDay(record,localISO(new Date())).at(-1)||null;
