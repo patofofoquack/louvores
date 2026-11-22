@@ -123,6 +123,39 @@ function addPending(payload){
 function sameCulto(a,b){
  return a.id===b.id&&a.data===b.data&&!!a.ebd===!!b.ebd&&!!a.especial===!!b.especial&&String(a.titulo||'')===String(b.titulo||'')&&equalSongList(a.musicas,b.musicas);
 }
+// A comparação de duplicidade considera a sequência dos louvores, independentemente
+// do ID do culto, do marcador EBD ou de alterações futuras no tom do catálogo.
+function sameRepertoire(a,b){
+ const x=a.musicas||[],y=b.musicas||[];
+ return a.data===b.data&&x.length===y.length&&x.every((m,i)=>{
+  const n=y[i];if(!n)return false;
+  const idA=String(m.numero||'').trim().toUpperCase(),idB=String(n.numero||'').trim().toUpperCase();
+  const nameA=norm(m.nome||''),nameB=norm(n.nome||'');
+  return idA===idB&&nameA===nameB&&!!m.personalizado===!!n.personalizado;
+ });
+}
+function chronologicalDay(records,date){
+ return records.filter(r=>r.data===date).slice().sort((a,b)=>{
+  const dateOf=r=>{const value=r.criadoEm||r.criado_em||r.createdAt||r.created_at||r.criado||'';
+   const time=Date.parse(value);return Number.isFinite(time)?time:0;};
+  return dateOf(a)-dateOf(b);
+ });
+}
+function secondOfDay(record,history){
+ const dayRecords=chronologicalDay(history,record.data);
+ return !isSunday(record.data)&&dayRecords.length>1&&dayRecords.findIndex(r=>r.id===record.id)>0;
+}
+async function markFirstSundayEbd(history,second){
+ if(!isSunday(second.data))return false;
+ const first=chronologicalDay(history,second.data).find(r=>r.id!==second.id);
+ if(!first||first.ebd)return true;
+ let pin='';try{pin=localStorage.getItem('louvores_edit_pin_v1')||''}catch{}
+ if(!pin)return false; // Não exige PIN dos instrumentistas para salvar cultos novos.
+ const payload={action:'editar',pin,culto:{id:first.id,data:first.data,ebd:true,especial:!!first.especial,titulo:first.titulo||'',versao:first.versao,musicas:first.musicas}};
+ const confirmed=await sendWrite(payload);
+ confirmedLocal(confirmed);
+ return true;
+}
 function confirmedLocal(rec){
  const i=state.history.findIndex(r=>r.id===rec.id);if(i>=0)state.history.splice(i,1);
  state.history.unshift(rec);state.history.sort((a,b)=>b.data.localeCompare(a.data));state.historyReady=true;
@@ -146,13 +179,20 @@ async function syncPending(){
      if(!sameCulto(old,c))throw Error('O ID já existe com conteúdo diferente; confira o Histórico.');
      confirmed=old;
     }else{
-     if(result.historico.some(r=>r.data===c.data&&!!r.ebd===!!c.ebd))throw Error('Já existe um culto neste dia e tipo. Confira o Histórico.');
-     confirmed=await sendWrite(p);
+     const duplicate=result.historico.find(r=>sameRepertoire(r,c));
+     if(duplicate){confirmed=duplicate;} // Um culto igual já existe: não reenviar.
+     else{
+      confirmed=await sendWrite(p);
+      if(isSunday(c.data)){
+       try{await markFirstSundayEbd([...result.historico,confirmed],confirmed)}
+       catch(e){console.warn('EBD automático pendente:',e)}
+      }
+     }
     }
     // Só retira da fila com confirmação completa do servidor.
     setPending(pendingList().filter(x=>x.payload.culto.id!==c.id));
     confirmedLocal(confirmed);
-    $('status').textContent='Culto pendente sincronizado com o Google.';
+    $('status').textContent=confirmed.id===c.id?'Culto pendente sincronizado com o Google.':'Registro idêntico encontrado: não foi duplicado.';
    }catch(err){
     const q=pendingList(),old=q.find(x=>x.payload.culto.id===c.id);
     if(old){old.error=String(err?.message||'Falha ao sincronizar').slice(0,220);setPending(q)}
@@ -376,14 +416,24 @@ async function save(){
  }
  state.saving=true;$('save').disabled=true;$('status').textContent='Enviando ao Google e conferindo o registro...';
  try{
-  const confirmed=await sendWrite(payload);
+  let existingHistory=null;
+  if(!state.editing){
+   const result=await apiGet('historico');if(!result?.sucesso||!Array.isArray(result.historico))throw Error('Não foi possível conferir duplicações. Tente novamente.');
+   existingHistory=result.historico;
+  }
+  const duplicate=existingHistory?.find(r=>sameRepertoire(r,payload.culto));
+  const confirmed=duplicate||await sendWrite(payload);
+  if(!duplicate&&existingHistory&&isSunday(payload.culto.data)){
+   try{await markFirstSundayEbd([...existingHistory,confirmed],confirmed)}
+   catch(e){console.warn('EBD automático pendente:',e)}
+  }
   confirmedLocal(confirmed);
   state.historySelection=null;state.temporary=null;state.pending=null;state.latest=historyToPreview(confirmed);
   state.editing=null;state.editingVersion=null;state.slots=[null,null,null];state.active=0;
   state.date=localISO(new Date());state.ebd=false;state.especial=false;state.titulo='';$('date').value=state.date;
   try{localStorage.removeItem(DRAFT_KEY)}catch{}
   renderServiceOptions();renderSlots();refreshLastDates();
-  $('status').textContent='Repertório salvo e confirmado no Google.';$('sharestatus').textContent='';page('preview');
+  $('status').textContent=duplicate?'Este repertório já estava registrado hoje. Nenhuma cópia foi criada.':'Repertório salvo e confirmado no Google.';$('sharestatus').textContent='';page('preview');
   loadHistory().catch(err=>console.warn('Reconsulta falhou, mantendo o registro confirmado.',err));
   syncPending().catch(console.warn);
  }catch(err){$('status').textContent=err.message||'Falha ao salvar. Confira o histórico.'}
@@ -513,7 +563,8 @@ function renderHistory(){
  filtered.forEach(rec=>{
   const div=document.createElement('div');div.className='historyitem';const row=document.createElement('div');row.className='row';
   const info=document.createElement('button');info.className='history-open';info.type='button';info.setAttribute('aria-label','Ver repertório de '+fmt(rec.data));
-  const name=document.createElement('strong');name.style.fontSize='14px';name.textContent=`${rec.especial?'⭐ ':''}${cap(day(rec.data))} · ${fmt(rec.data)}${rec.ebd?' · EBD':''}`;
+  const name=document.createElement('strong');name.style.fontSize='14px';name.textContent=`${rec.especial?'⭐ ':''}${cap(day(rec.data))} · ${fmt(rec.data)}${rec.ebd||isSunday(rec.data)&&chronologicalDay(state.history,rec.data).length>1&&chronologicalDay(state.history,rec.data)[0].id===rec.id?' · EBD':''}`;
+  if(secondOfDay(rec,state.history)){const warning=document.createElement('span');warning.textContent=' ⚠';warning.title='Mais de um culto registrado nesta data';warning.setAttribute('aria-label','Segundo registro nesta data');warning.style.cssText='color:#d93333;font-size:11px;font-weight:400';name.append(warning)}
   const sub=document.createElement('div');sub.className='muted';sub.textContent=`${rec.titulo?rec.titulo+' · ':''}${rec.musicas.length} louvor(es) · Toque para consultar`;
   info.append(name,sub);info.onclick=()=>openHistoryRecord(rec);
   const edit=document.createElement('button');edit.type='button';edit.className='outline';edit.textContent='Editar';edit.disabled=!navigator.onLine;edit.onclick=()=>editHistoryRecord(rec);
