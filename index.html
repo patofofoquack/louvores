@@ -585,11 +585,14 @@ function renderSlots(){
    sel.addEventListener('click',()=>{state.active=i;renderSlots()});main.append(sel);
   }
   main.addEventListener('click',e=>{if(e.target===main&&!active){state.active=i;renderSlots()}});
-  // Remoção afastada das setas à direita.
-  const removeSlot=document.createElement('button');removeSlot.type='button';removeSlot.className='slot-remove';
-  removeSlot.textContent='×';removeSlot.title='Remover louvor';removeSlot.setAttribute('aria-label','Remover louvor do espaço '+(i+1));
-  removeSlot.disabled=!validSlot(key);removeSlot.onclick=()=>{state.slots[i]=null;persist();renderSlots()};
-  line.append(removeSlot,main);
+  // Só reserva espaço para remover quando este louvor está preenchido e selecionado.
+  if(active&&validSlot(key)){
+   const removeSlot=document.createElement('button');removeSlot.type='button';removeSlot.className='slot-remove';
+   removeSlot.textContent='×';removeSlot.title='Remover louvor';removeSlot.setAttribute('aria-label','Remover louvor do espaço '+(i+1));
+   removeSlot.onclick=()=>{state.slots[i]=null;persist();renderSlots()};
+   line.append(removeSlot);
+  }
+  line.append(main);
   const arrows=document.createElement('div');arrows.className='arrows';
   [-1,1].forEach(dir=>{const b=document.createElement('button');b.className='arrow';b.textContent=dir===-1?'⌃':'⌄';b.setAttribute('aria-label',dir===-1?'Mover para cima':'Mover para baixo');b.disabled=!validSlot(key)||i+dir<0||i+dir>=state.slots.length;b.onclick=()=>{const j=i+dir;[state.slots[i],state.slots[j]]=[state.slots[j],state.slots[i]];if(state.active===i)state.active=j;else if(state.active===j)state.active=i;persist();renderSlots()};arrows.append(b)});
   line.append(arrows);$('slots').append(line);
