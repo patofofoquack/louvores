@@ -998,7 +998,7 @@ function renderHistory(){
  const query=norm($('historySearch').value.trim());
  const today=fromISO(localISO(new Date()));
  const cutoff=new Date(today);if(state.period!=='all')cutoff.setDate(cutoff.getDate()-Number(state.period));
- const filtered=state.history.filter(r=>(state.period==='all'||fromISO(r.data)>=cutoff)&&(!query||historicSearchData(r).includes(query))).sort((a,b)=>b.data.localeCompare(a.data)||(Number(b.ebd)-Number(a.ebd))||(Date.parse(a.criadoEm||0)-Date.parse(b.criadoEm||0)));
+ const filtered=state.history.filter(r=>(state.period==='all'||fromISO(r.data)>=cutoff)&&(!query||historicSearchData(r).includes(query))).sort((a,b)=>b.data.localeCompare(a.data)||(Number(a.ebd)-Number(b.ebd))||(Date.parse(b.criadoEm||b.criado_em||b.createdAt||b.created_at||0)-Date.parse(a.criadoEm||a.criado_em||a.createdAt||a.created_at||0)));
  $('historyCount').textContent=`${filtered.length} de ${state.history.length} culto(s)`;
  const matches=[];
  if(query){for(const rec of filtered){for(const m of rec.musicas){if(norm(m.nome+' '+m.numero).includes(query))matches.push({rec,m});}}}
