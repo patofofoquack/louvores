@@ -38,9 +38,6 @@ html:not(.app-ready) .app{visibility:hidden}
 <div id="projectionShareStatus" class="status"></div>
 </div>
 <p id="projectionNotice" class="projection-notice hidden" role="status" aria-live="polite">Repertório atualizado</p><p id="projectionStatus" class="hint" style="text-align:center;margin-top:9px" aria-live="polite"></p>
-<label id="vibrationSetting" class="hint hidden" style="display:flex;align-items:center;justify-content:center;gap:7px;margin:8px auto 0">
-<input id="vibrationEnabled" type="checkbox" checked> Vibração discreta ao atualizar
-</label>
 <button id="enableNotifications" class="outline hidden" type="button" style="display:block;margin:7px auto 0;padding:7px 12px;font-size:12px">Ativar avisos de atualização</button>
 <button id="testVibration" type="button" class="outline" style="display:block;margin:7px auto 0;padding:7px 12px;font-size:12px">Testar vibração</button>
 <p id="vibrationTestStatus" class="hint" style="text-align:center" aria-live="polite"></p>
@@ -153,7 +150,6 @@ const $=id=>document.getElementById(id);
 const PROFILE_KEY='louvores_perfil_v1',PROJECTION_CACHE_KEY='louvores_projecao_historico_v1';
 let userProfile=null,projectionLoading=false,profileStarting=false;
 let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTimer=null;
-const VIBRATION_KEY='louvores_vibracao_v1';
 const VIBRATION_ARM_KEY='louvores_lista_acompanhamento_v1';
 function canNotify(){return 'Notification' in window&&'serviceWorker' in navigator&&Notification.permission==='granted'}
 function refreshNotificationOption(){
@@ -167,7 +163,6 @@ async function sendListNotification(){
   await registration.showNotification('Louvores',{body:'A lista do culto foi atualizada.',icon:'./icon-192.png',tag:'louvores-lista-atualizada',renotify:false,data:{url:new URL('./',location.href).href}});
  }catch(error){console.warn('Aviso do sistema indisponível:',error)}
 }
-let vibrationEnabled=localStorage.getItem(VIBRATION_KEY)!=='off';
 let vibrationBaselinePending=false;
 function readVibrationArm(){try{return JSON.parse(localStorage.getItem(VIBRATION_ARM_KEY)||'null')}catch{return null}}
 function setVibrationArm(value){try{if(value)localStorage.setItem(VIBRATION_ARM_KEY,JSON.stringify(value));else localStorage.removeItem(VIBRATION_ARM_KEY)}catch{}}
@@ -199,7 +194,7 @@ function checkVibrationOnUpdate(activeRecord){
   return;
  }
  if(arm.signature!==signature){
-  const shouldVibrate=vibrationEnabled&&!document.hidden&&!!userProfile;
+  const shouldVibrate=!document.hidden&&!!userProfile;
   setVibrationArm({date,cultoId:activeRecord.id,signature});
   if(shouldVibrate&&typeof navigator.vibrate==='function')navigator.vibrate(500);
   if(!document.hidden&&state.page==='projection'&&userProfile)sendListNotification().catch(console.warn);
@@ -869,7 +864,6 @@ function renderProjection(){
  }
  renderRepertoireCard($('projectionCard'),display,'Nenhum repertório registrado para hoje.');
  $('projectionShareActions').classList.toggle('hidden',!rec);
- $('vibrationSetting').classList.toggle('hidden',!rec);
  $('testVibration').classList.toggle('hidden',!rec);
  refreshNotificationOption();
  refreshAfterWordActions();
@@ -1168,7 +1162,6 @@ $('afterWordCancel').onclick=()=>{afterWordExpanded=false;afterWordEditingId=nul
 $('afterWordSearch').oninput=afterWordMatches;
 document.querySelectorAll('#afterWordFilters button').forEach(button=>button.onclick=()=>{afterWordCategory=button.dataset.afterCat;document.querySelectorAll('#afterWordFilters button').forEach(x=>x.classList.toggle('on',x===button));afterWordMatches()});
 $('afterWordUndo').onclick=undoAfterWord;
-$('vibrationEnabled').checked=vibrationEnabled;
 $('testVibration').onclick=()=>{
  const label=$('vibrationTestStatus');
  if(typeof navigator.vibrate!=='function'){
@@ -1184,10 +1177,6 @@ $('enableNotifications').onclick=async()=>{
   refreshNotificationOption();
   if(permission!=='granted')console.info('Notificações do Louvores não autorizadas.');
  }catch(error){console.warn('Não foi possível ativar notificações:',error)}
-};
-$('vibrationEnabled').onchange=event=>{
- vibrationEnabled=event.target.checked;
- try{localStorage.setItem(VIBRATION_KEY,vibrationEnabled?'on':'off')}catch{}
 };
 $('endService').onclick=endService;
 $('cancelService').onclick=cancelService;
