@@ -1,5 +1,5 @@
 // Atualize este identificador a cada publicação para substituir o cache antigo.
-const CACHE = 'louvores-shell-v44-confirmacao-pendente';
+const CACHE = 'louvores-shell-v45-notificacoes-lista';
 const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './catalogo.json'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
@@ -21,4 +21,15 @@ self.addEventListener('fetch', event => {
     }
     return response;
   }).catch(async () => (await caches.match(req)) || (req.mode === 'navigate' ? await caches.match('./index.html') : Response.error())));
+});
+
+// Ao tocar no aviso de atualização, volta ao Louvores aberto.
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = new URL('./', self.registration.scope).href;
+  event.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(async clients => {
+    const opened = clients.find(client => client.url.startsWith(self.registration.scope));
+    if(opened)return opened.focus();
+    if(self.clients.openWindow)return self.clients.openWindow(target);
+  }));
 });
