@@ -151,10 +151,17 @@ const PROFILE_KEY='louvores_perfil_v1',PROJECTION_CACHE_KEY='louvores_projecao_h
 let userProfile=null,projectionLoading=false,profileStarting=false;
 let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTimer=null;
 const VIBRATION_ARM_KEY='louvores_lista_acompanhamento_v1';
+const NOTIFICATION_PROMPT_KEY='louvores_notificacao_solicitada_v1';
+function askNotificationOnFirstListOpen(){
+ if(!('Notification' in window)||!('serviceWorker' in navigator)||Notification.permission!=='default')return;
+ try{if(localStorage.getItem(NOTIFICATION_PROMPT_KEY))return;localStorage.setItem(NOTIFICATION_PROMPT_KEY,'1')}catch{}
+ // Chamado pelo toque na Lista, quando o navegador permite solicitar autorização.
+ try{Promise.resolve(Notification.requestPermission()).then(refreshNotificationOption).catch(console.warn)}catch(error){console.warn('Solicitação de notificação indisponível:',error)}
+}
 function canNotify(){return 'Notification' in window&&'serviceWorker' in navigator&&Notification.permission==='granted'}
 function refreshNotificationOption(){
  const supported='Notification' in window&&'serviceWorker' in navigator;
- $('enableNotifications').classList.toggle('hidden',!supported||Notification.permission!=='default'||!projectionToday()||state.page!=='projection');
+ $('enableNotifications').classList.toggle('hidden',!supported||Notification.permission!=='default'||state.page!=='projection');
 }
 async function sendListNotification(){
  if(!canNotify()||document.hidden||state.page!=='projection')return;
@@ -864,7 +871,6 @@ function renderProjection(){
  }
  renderRepertoireCard($('projectionCard'),display,'Nenhum repertório registrado para hoje.');
  $('projectionShareActions').classList.toggle('hidden',!rec);
- $('testVibration').classList.toggle('hidden',!rec);
  refreshNotificationOption();
  refreshAfterWordActions();
  const status=projectionLoading?'Atualizando repertório...':timeSinceChecked();
@@ -1182,7 +1188,7 @@ $('endService').onclick=endService;
 $('cancelService').onclick=cancelService;
 $('projectionShare').onclick=()=>share();
 $('chooseInstrument').onclick=()=>startProfile('instrument');
-$('chooseProjection').onclick=()=>startProfile('projection');
+$('chooseProjection').onclick=()=>{askNotificationOnFirstListOpen();startProfile('projection')};
 $('resetProfile').onclick=()=>{if(!confirm('Trocar perfil deste aparelho? Os registros não serão apagados.'))return;try{localStorage.removeItem(PROFILE_KEY)}catch{}showProfileChoice()};
 $('date').onchange=e=>{state.date=e.target.value||localISO(new Date());renderServiceOptions();persist();refreshLastDates();renderSlots();refreshEditMode()};
 $('date').onclick=e=>{if(typeof e.currentTarget.showPicker==='function'){try{e.currentTarget.showPicker()}catch{}}};
@@ -1198,6 +1204,7 @@ document.querySelectorAll('#manageCategoryFilters button').forEach(button=>butto
 });$('onlyNoTone').onclick=()=>{manageOnlyNoTone=!manageOnlyNoTone;$('onlyNoTone').setAttribute('aria-pressed',String(manageOnlyNoTone));renderManage()};$('newSong').onclick=()=>openSongForm(null);
 $('songSave').onclick=saveSong;$('songDelete').onclick=deleteSong;$('songCancel').onclick=hideSongForm;$('remove').onclick=()=>{state.slots[state.active]=null;persist();renderSlots()};$('clearDraft').onclick=()=>{if(!confirm('Limpar todas as músicas desta montagem? O histórico não será alterado.'))return;resetDraft(false);page('editor')};$('search').oninput=e=>{state.search=e.target.value;resultsShown=80;renderResults(true)};$('search').onfocus=()=>renderResults(true);$('search').onkeydown=e=>{if(e.key==='Escape')renderResults(false);if(e.key==='Enter'&&filtered().length){e.preventDefault();$('results').querySelector('.result')?.click()}};document.addEventListener('click',e=>{if(!e.target.closest('.searchwrap'))renderResults(false)});document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;resultsShown=80;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderResults(false)});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{
  if(window.history.state?.louvoresHistoryDetail)window.history.replaceState(null,'',window.location.href);
+ if(b.dataset.page==='projection')askNotificationOnFirstListOpen();
  state.historySelection=null;if(state.editing && b.dataset.page!=='preview')resetDraft(true);page(b.dataset.page)});$('newRepertoire').onclick=()=>{resetDraft(true);page('editor')};$('save').onclick=save;$('pendingSync').onclick=()=>{if(!navigator.onLine){alert('O culto está guardado neste aparelho até voltar a internet.');return}syncPending().then(()=>{const x=pendingList().find(x=>x.error);if(x)alert('Pendente: '+x.error)}).catch(console.warn)};$('share').onclick=()=>share();
 $('historyShare').onclick=()=>share();
 $('historyEdit').onclick=()=>{if(state.historySelection)editHistoryRecord(state.historySelection)};
