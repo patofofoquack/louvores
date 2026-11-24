@@ -245,7 +245,7 @@ async function postAfterWord(body,check){
   }catch(e){if(/A lista mudou/.test(e.message))throw e}
   await new Promise(resolve=>setTimeout(resolve,700*(i+1)));
  }
- throw Error('Não foi possível confirmar a alteração. Confira o Histórico antes de tentar novamente.');
+ throw Error('A alteração foi enviada, mas a confirmação ainda não chegou. Confira a Lista antes de tentar novamente.');
 }
 async function appendAfterWord(m){
  const rec=projectionToday();if(!rec||rec.encerrado||afterWordBusy)return;
@@ -420,9 +420,9 @@ function pendingList(){
  }catch{return []}
 }
 function refreshPending(){
- const q=pendingList(),btn=$('pendingSync'),error=q.find(x=>x.error);
+ const q=pendingList(),btn=$('pendingSync'),error=q.find(x=>x.error),uncertain=q.some(x=>x.confirmationPending);
  btn.classList.toggle('hidden',q.length===0);
- if(q.length){btn.textContent=(error?'⚠ ':'↻ ')+q.length+(q.length===1?' culto pendente':' cultos pendentes')+(error?' · Verificar':' · Sincronizar');btn.title=error?error.error:'Envio automático quando voltar a internet';}
+ if(q.length){btn.textContent=(error?'⚠ ':'↻ ')+q.length+(q.length===1?' culto pendente':' cultos pendentes')+(uncertain?' · Verificar confirmação':error?' · Verificar':' · Sincronizar');btn.title=uncertain?'O envio pode ter sido recebido pelo Google; apenas a confirmação será consultada.':error?error.error:'Envio automático quando voltar a internet';}
 }
 function setPending(q){localStorage.setItem(OFFLINE_QUEUE_KEY,JSON.stringify(q));refreshPending()}
 function addPending(payload){
@@ -486,6 +486,10 @@ async function syncPending(){
        c.ebd=false; // O primeiro culto será marcado EBD pelo próprio servidor.
        const saved=pendingList(),item=saved.find(x=>x.payload.culto.id===c.id);
        if(item){item.payload.culto.ebd=false;setPending(saved)}
+      }
+      if(item.confirmationPending){
+       // O POST anterior pode ter sido aceito. Não reenviar automaticamente.
+       throw Error('Envio aguardando confirmação; apenas consultando o Histórico.');
       }
       confirmed=await sendWrite(p);
      }
@@ -749,7 +753,7 @@ async function sendWrite(payload){
   if(rec && rec.data===payload.culto.data && rec.ebd===!!payload.culto.ebd && rec.especial===!!payload.culto.especial && rec.titulo===(payload.culto.titulo||'') && equalSongList(rec.musicas,payload.culto.musicas))return rec;
   await new Promise(resolve=>setTimeout(resolve,750*(i+1)));
  }
- throw new Error('O Google não confirmou o salvamento. Confira o histórico antes de tentar novamente.');
+ const err=new Error('O envio pode ter sido concluído, mas a confirmação ainda não chegou.');err.confirmationPending=true;throw err;
 }
 function getEditPin(){
  let pin='';try{pin=localStorage.getItem('louvores_edit_pin_v1')||''}catch{}
@@ -770,6 +774,10 @@ async function save(){
  if((state.editing||future||past)&&!pin)return;
  const musicas=apiSongs(),signature=JSON.stringify({editing:state.editing,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,musicas});
  const retry=state.pending?.signature===signature?state.pending:null;
+ if(!state.editing&&retry&&pendingList().some(x=>x.confirmationPending&&x.payload.culto.id===retry.id)){
+  $('status').textContent='O envio anterior ainda está em verificação. Consulte o Histórico antes de tentar novamente.';
+  syncPending().catch(console.warn);return;
+ }
  const recordId=state.editing||(retry?retry.id:'r'+(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)));
  state.pending={id:recordId,signature};
  const payload={action:state.editing?'editar':'salvar',pin,culto:{id:recordId,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.especial?state.titulo:'',versao:state.editingVersion,musicas}};
@@ -805,7 +813,16 @@ async function save(){
   if(state.page==='history')openHistoryRecord(confirmed);
   loadHistory().catch(err=>console.warn('Reconsulta falhou, mantendo o registro confirmado.',err));
   syncPending().catch(console.warn);
- }catch(err){$('status').textContent=err.message||'Falha ao salvar. Confira o histórico.'}
+ }catch(err){
+   if(err.confirmationPending&&!state.editing){
+    try{
+     addPending(payload);
+     const q=pendingList(),item=q.find(x=>x.payload.culto.id===recordId);
+     if(item){item.confirmationPending=true;item.error='Aguardando confirmação do Google';setPending(q)}
+     $('status').textContent='Envio ainda não confirmado. Registro preservado neste aparelho; use Verificar confirmação. Não envie uma nova cópia.';
+    }catch(storageError){$('status').textContent='Envio sem confirmação; não foi possível guardar uma cópia local. Consulte o Histórico antes de tentar novamente.';console.warn(storageError)}
+   }else $('status').textContent=err.message||'Não foi possível confirmar a operação. Confira o Histórico.';
+  }
  finally{state.saving=false;$('save').disabled=false}
 }
 function previewRecord(){return state.page==='projection'?projectionToday():state.historySelection?historyToPreview(state.historySelection):(state.temporary||state.latest)}
