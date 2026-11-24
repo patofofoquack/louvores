@@ -41,6 +41,7 @@ html:not(.app-ready) .app{visibility:hidden}
 <label id="vibrationSetting" class="hint hidden" style="display:flex;align-items:center;justify-content:center;gap:7px;margin:8px auto 0">
 <input id="vibrationEnabled" type="checkbox" checked> Vibração discreta ao atualizar
 </label>
+<button id="enableNotifications" class="outline hidden" type="button" style="display:block;margin:7px auto 0;padding:7px 12px;font-size:12px">Ativar avisos de atualização</button>
 <button id="testVibration" type="button" class="outline" style="display:block;margin:7px auto 0;padding:7px 12px;font-size:12px">Testar vibração</button>
 <p id="vibrationTestStatus" class="hint" style="text-align:center" aria-live="polite"></p>
 </section>
@@ -154,6 +155,18 @@ let userProfile=null,projectionLoading=false,profileStarting=false;
 let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTimer=null;
 const VIBRATION_KEY='louvores_vibracao_v1';
 const VIBRATION_ARM_KEY='louvores_lista_acompanhamento_v1';
+function canNotify(){return 'Notification' in window&&'serviceWorker' in navigator&&Notification.permission==='granted'}
+function refreshNotificationOption(){
+ const supported='Notification' in window&&'serviceWorker' in navigator;
+ $('enableNotifications').classList.toggle('hidden',!supported||Notification.permission!=='default'||!projectionToday()||state.page!=='projection');
+}
+async function sendListNotification(){
+ if(!canNotify()||document.hidden||state.page!=='projection')return;
+ try{
+  const registration=await navigator.serviceWorker.ready;
+  await registration.showNotification('Louvores',{body:'A lista do culto foi atualizada.',icon:'./icon-192.png',tag:'louvores-lista-atualizada',renotify:false,data:{url:new URL('./',location.href).href}});
+ }catch(error){console.warn('Aviso do sistema indisponível:',error)}
+}
 let vibrationEnabled=localStorage.getItem(VIBRATION_KEY)!=='off';
 let vibrationBaselinePending=false;
 function readVibrationArm(){try{return JSON.parse(localStorage.getItem(VIBRATION_ARM_KEY)||'null')}catch{return null}}
@@ -189,6 +202,7 @@ function checkVibrationOnUpdate(activeRecord){
   const shouldVibrate=vibrationEnabled&&!document.hidden&&!!userProfile;
   setVibrationArm({date,cultoId:activeRecord.id,signature});
   if(shouldVibrate&&typeof navigator.vibrate==='function')navigator.vibrate(350);
+  if(!document.hidden&&state.page==='projection'&&userProfile)sendListNotification().catch(console.warn);
  }else if(!arm.cultoId){
   setVibrationArm({date,cultoId:activeRecord.id,signature});
  }
@@ -857,6 +871,7 @@ function renderProjection(){
  $('projectionShareActions').classList.toggle('hidden',!rec);
  $('vibrationSetting').classList.toggle('hidden',!rec);
  $('testVibration').classList.toggle('hidden',!rec);
+ refreshNotificationOption();
  refreshAfterWordActions();
  const status=projectionLoading?'Atualizando repertório...':timeSinceChecked();
  $('projectionStatus').textContent=!navigator.onLine?(status?status+' · Offline':'Offline · último histórico consultado'):status;
@@ -1162,6 +1177,13 @@ $('testVibration').onclick=()=>{
  }
  const accepted=navigator.vibrate(350);
  label.textContent=accepted?'Teste enviado. Se não sentiu nada, confira o modo silencioso/não perturbe e a vibração do Android.':'O navegador recusou a vibração. Verifique as configurações ou teste no Chrome para Android.';
+};
+$('enableNotifications').onclick=async()=>{
+ try{
+  const permission=await Notification.requestPermission();
+  refreshNotificationOption();
+  if(permission!=='granted')console.info('Notificações do Louvores não autorizadas.');
+ }catch(error){console.warn('Não foi possível ativar notificações:',error)}
 };
 $('vibrationEnabled').onchange=event=>{
  vibrationEnabled=event.target.checked;
