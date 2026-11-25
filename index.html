@@ -150,6 +150,7 @@ const $=id=>document.getElementById(id);
 const PROFILE_KEY='louvores_perfil_v1',PROJECTION_CACHE_KEY='louvores_projecao_historico_v1';
 let userProfile=null,projectionLoading=false,profileStarting=false;
 let projectionLastChecked=null,projectionSeenSignature=null,projectionNoticeTimer=null;
+let projectionServerUnavailable=false;
 const VIBRATION_ARM_KEY='louvores_lista_acompanhamento_v1';
 const NOTIFICATION_PROMPT_KEY='louvores_notificacao_solicitada_v1';
 function askNotificationOnFirstListOpen(){
@@ -723,6 +724,7 @@ async function loadHistory(){
  const oldToday=state.page==='projection'?chronologicalDay(state.history,localISO(new Date())).at(-1):null;
  state.history=result.historico;state.historyReady=true;
  projectionLastChecked=Date.now();
+ projectionServerUnavailable=false;
  if(vibrationBaselinePending){
   // A primeira consulta apenas evita notificar mudanças já existentes
   // quando a Lista foi aberta com um repertório carregado do cache.
@@ -874,12 +876,12 @@ function renderProjection(){
  refreshNotificationOption();
  refreshAfterWordActions();
  const status=projectionLoading?'Atualizando repertório...':timeSinceChecked();
- $('projectionStatus').textContent=!navigator.onLine?(status?status+' · Offline':'Offline · último histórico consultado'):status;
+ $('projectionStatus').textContent=!navigator.onLine?(status?status+' · Offline':'Offline · último histórico consultado'):(projectionServerUnavailable?'Sem resposta do Google'+(projectionLastChecked?' · '+timeSinceChecked():' · tentando novamente'):status);
 }
 async function refreshProjection(){
  if(projectionLoading||!navigator.onLine||state.page!=='projection')return;
  projectionLoading=true;renderProjection();
- try{await loadHistory()}catch(e){console.warn('Projeção não pôde atualizar:',e)}
+ try{await loadHistory()}catch(e){projectionServerUnavailable=true;console.warn('Projeção não pôde atualizar:',e)}
  finally{projectionLoading=false;renderProjection()}
 }
 
