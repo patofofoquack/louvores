@@ -805,7 +805,10 @@ async function save(){
  // Edição já autorizada mantém o PIN deste aparelho; data futura pede a senha sempre.
  const pin=future?(prompt('Senha para registrar culto futuro:')||''):((state.editing||past)?getEditPin():'');
  if((state.editing||future||past)&&!pin)return;
- const musicas=apiSongs(),signature=JSON.stringify({editing:state.editing,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,musicas});
+ const musicas=apiSongs();
+ // A seção Após a Palavra deve ficar depois dos louvores iniciais, mesmo se a edição mudar a ordem.
+ if(state.editing)musicas.sort((a,b)=>Number(!!a.aposPalavra)-Number(!!b.aposPalavra));
+ const signature=JSON.stringify({editing:state.editing,data:state.date,ebd:state.ebd,especial:state.especial,titulo:state.titulo,musicas});
  const retry=state.pending?.signature===signature?state.pending:null;
  if(!state.editing&&retry&&pendingList().some(x=>x.confirmationPending&&x.payload.culto.id===retry.id)){
   $('status').textContent='O envio anterior ainda está em verificação. Consulte o Histórico antes de tentar novamente.';
